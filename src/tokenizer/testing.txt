@@ -1,0 +1,4 @@
+print[ x ]; # hi
+ab = 34;
+# hello this is a comment
+pi = 3.14
