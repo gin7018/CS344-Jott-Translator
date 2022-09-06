@@ -1,3 +1,5 @@
+package parser;
+
 /**
  * Interface for all Jott parse tree nodes
  *
