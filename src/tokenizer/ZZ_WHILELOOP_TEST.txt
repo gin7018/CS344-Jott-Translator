@@ -1,0 +1,6 @@
+i = 0;
+# is a line comment
+while [i < 5] { # is an inline comment
+    print [ "hi " + i ];
+    i = i + 1;
+}

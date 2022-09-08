@@ -55,4 +55,11 @@ public class Token {
     public TokenType getTokenType() {
         return type;
     }
+
+    @Override
+    public String toString() {
+        return "Token: " + token + "\n" +
+                "Type: " + type + "\n" +
+                "Line #: " + lineNum + "\n";
+    }
 }

@@ -1,0 +1,2 @@
+print[ "hello world!" ];
+print[ x + 3.2 ];
