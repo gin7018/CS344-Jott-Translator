@@ -9,7 +9,7 @@ public class Program implements JottTree {
     @Override
     public String convertToJott() {
         // TODO Auto-generated method stub
-        return child.convertToJott();
+        return child.convertToJott;
     }
 
     @Override
