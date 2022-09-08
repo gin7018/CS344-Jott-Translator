@@ -1,4 +1,5 @@
-package nodes;
+package parser.nodes;
+
 public class FunctionList implements JottTree {
    // FunctionDef lchild;
     FunctionList rchild;
@@ -32,5 +33,5 @@ public class FunctionList implements JottTree {
         // TODO Auto-generated method stub
         return false;
     }
-    
+
 }
