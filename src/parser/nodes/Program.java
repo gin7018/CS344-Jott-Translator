@@ -1,6 +1,4 @@
-package parser.nodes;
-
-import parser.JottTree;
+package nodes;
 
 public class Program implements JottTree {
     @Override
