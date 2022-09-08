@@ -1,11 +1,12 @@
 package nodes;
 public class FunctionList implements JottTree {
-    FunctionDef lchild;
+   // FunctionDef lchild;
     FunctionList rchild;
     @Override
     public String convertToJott() {
         // TODO Auto-generated method stub
-        return lchild.convertToJott+rchild.convertToJott();
+       // return lchild.convertToJott+rchild.convertToJott();
+       return null;
     }
 
     @Override
