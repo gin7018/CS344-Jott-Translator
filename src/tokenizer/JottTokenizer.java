@@ -21,7 +21,7 @@ public class JottTokenizer {
   /**
    * Takes in a filename and tokenizes that file into Tokens
    * based on the rules of the Jott Language
-   * 
+   *
    * @param filename the name of the file to tokenize; can be relative or absolute
    *                 path
    * @return an ArrayList of Jott Tokens
@@ -40,129 +40,115 @@ public class JottTokenizer {
 
     ArrayList<Token> tokens = new ArrayList<>();
     int lineNum = 1;
-    for (int i = 0; i < jottChars.size(); i++) {
-      String currentChar = String.valueOf(jottChars.get(i));
-      if (currentChar.equals("[")) {
-        tokens.add(new Token(currentChar, filename, lineNum, TokenType.L_BRACKET));
-      } else if (currentChar.equals("]")) {
-        tokens.add(new Token(currentChar, filename, lineNum, TokenType.R_BRACKET));
-      } else if (currentChar.equals("{")) {
-        tokens.add(new Token(currentChar, filename, lineNum, TokenType.L_BRACE));
-      } else if (currentChar.equals("}")) {
-        tokens.add(new Token(currentChar, filename, lineNum, TokenType.R_BRACE));
-      } else if (currentChar.equals(",")) {
-        tokens.add(new Token(currentChar, filename, lineNum, TokenType.COMMA));
-      }
-
-      else if (currentChar.equals("#")) {
-        if (jottChars.get(i - 1).equals('\n')) {
-          lineNum++; // do not increment if inline comment
-        }
-        while (!jottChars.get(i).equals('\n')) {
+    try {
+      for (int i = 0; i < jottChars.size(); i++) {
+        String currentChar = String.valueOf(jottChars.get(i));
+        if (currentChar.equals("\n")) {
+          lineNum++;
+        } else if (currentChar.equals("[")) {
+          tokens.add(new Token(currentChar, filename, lineNum, TokenType.L_BRACKET));
+        } else if (currentChar.equals("]")) {
+          tokens.add(new Token(currentChar, filename, lineNum, TokenType.R_BRACKET));
+        } else if (currentChar.equals("{")) {
+          tokens.add(new Token(currentChar, filename, lineNum, TokenType.L_BRACE));
+        } else if (currentChar.equals("}")) {
+          tokens.add(new Token(currentChar, filename, lineNum, TokenType.R_BRACE));
+        } else if (currentChar.equals(",")) {
+          tokens.add(new Token(currentChar, filename, lineNum, TokenType.COMMA));
+        } else if (currentChar.equals("#")) {
+          while (jottChars.size() > i + 1 && !jottChars.get(i + 1).equals('\n')) {
+            i++;
+          }
+        } else if (currentChar.equals("=")) {
+          if (i + 1 < jottChars.size() && jottChars.get(i + 1).toString().equals("=")) {
+            tokens.add(
+                    new Token(currentChar + jottChars.get(i + 1).toString(), filename, lineNum, TokenType.REL_OP));
+            i++;
+          } else {
+            tokens.add(new Token(currentChar, filename, lineNum, TokenType.ASSIGN));
+          }
+        } else if (currentChar.equals("<") || currentChar.equals(">")) {
+          if (jottChars.size() > i + 1 && jottChars.get(i + 1).toString().equals("=")) {
+            tokens.add(
+                    new Token(currentChar + jottChars.get(i + 1).toString(), filename, lineNum, TokenType.REL_OP));
+            i++;
+          } else {
+            tokens.add(new Token(currentChar, filename, lineNum, TokenType.REL_OP));
+          }
+        } else if (currentChar.equals("/") || currentChar.equals("+") || currentChar.equals("*") || currentChar.equals("-")) {
+          tokens.add(new Token(currentChar, filename, lineNum, TokenType.MATH_OP));
+        } else if (currentChar.equals(";")) {
+          tokens.add(new Token(currentChar, filename, lineNum, TokenType.SEMICOLON));
+        } else if (currentChar.equals(".")) {
           i++;
-        }
-      }
 
-      else if (currentChar.equals("=")) {
-        if (i + 1 < jottChars.size() && jottChars.get(i + 1).toString().equals("=")) {
-          tokens.add(
-              new Token(currentChar + jottChars.get(i + 1).toString(), filename, lineNum, TokenType.REL_OP));
-          i++;
-        } else {
-          tokens.add(new Token(currentChar, filename, lineNum, TokenType.ASSIGN));
-        }
-      }
+          if (jottChars.size() <= i || !Character.isDigit(jottChars.get(i))) {
+            throw new SyntaxException("Unexpected character '.'");
+          }
 
-      else if (currentChar.equals("<")) {
-        if (jottChars.get(i + 1).toString().equals("=")) {
-          tokens.add(
-              new Token(currentChar + jottChars.get(i + 1).toString(), filename, lineNum, TokenType.REL_OP));
-          i++;
-        } else {
-          tokens.add(new Token(currentChar, filename, lineNum, TokenType.REL_OP));
-        }
-      }
-
-      else if (currentChar.equals("/") || currentChar.equals("+") || currentChar.equals("*") || currentChar.equals("-")) {
-        tokens.add(new Token(currentChar, filename, lineNum, TokenType.MATH_OP));
-      }
-      else if (currentChar.equals(";")) {
-        tokens.add(new Token(currentChar, filename, lineNum, TokenType.SEMICOLON));
-        lineNum++; // line numbers are determined by ;
-      }
-
-      else if (currentChar.equals(".")) {
-        i++;
-        if (Character.isDigit(jottChars.get(i))) {
-          String number = ".";
-          while (Character.isDigit(jottChars.get(i))) {
-            number += jottChars.get(i);
+          var number = new StringBuilder(".");
+          while (jottChars.size() > i && Character.isDigit(jottChars.get(i))) {
+            number.append(jottChars.get(i));
             i++;
           }
           i--;
-          tokens.add(new Token(number, filename, lineNum, TokenType.NUMBER));
-        } else {
-          // report error
-        }
-      }
 
-      else if (Character.isDigit(jottChars.get(i))) {
-        String number = "";
-        while (Character.isDigit(jottChars.get(i))) {
-          number += jottChars.get(i);
-          i++;
-        }
-        if (jottChars.get(i) == '.') {
-          number += jottChars.get(i);
-          i++;
-          while (i < jottChars.size() && Character.isDigit(jottChars.get(i))) {
-            number += jottChars.get(i);
+          tokens.add(new Token(number.toString(), filename, lineNum, TokenType.NUMBER));
+        } else if (Character.isDigit(jottChars.get(i))) {
+          var number = new StringBuilder();
+          while (jottChars.size() > i && Character.isDigit(jottChars.get(i))) {
+            number.append(jottChars.get(i));
             i++;
           }
-        }
-        i--;
-        tokens.add(new Token(number, filename, lineNum, TokenType.NUMBER));
-      }
+          if (jottChars.get(i) == '.') {
+            number.append(jottChars.get(i));
+            i++;
+            while (jottChars.size() > i && Character.isDigit(jottChars.get(i))) {
+              number.append(jottChars.get(i));
+              i++;
+            }
+          }
+          i--;
+          tokens.add(new Token(number.toString(), filename, lineNum, TokenType.NUMBER));
+        } else if (Character.isAlphabetic(jottChars.get(i))) {
+          var string = new StringBuilder();
+          while (jottChars.size() > i && (Character.isAlphabetic(jottChars.get(i)) || Character.isDigit(jottChars.get(i)))) {
+            string.append(jottChars.get(i));
+            i++;
+          }
+          i--;
+          tokens.add(new Token(string.toString(), filename, lineNum, TokenType.ID_KEYWORD));
+        } else if (currentChar.equals(":")) {
+          tokens.add(new Token(currentChar, filename, lineNum, TokenType.COLON));
+        } else if (currentChar.equals("!")) {
+          if (jottChars.size() <= i + 1 || !jottChars.get(i + 1).toString().equals("=")) {
+            throw new SyntaxException("Invalid token \"!\"");
+          }
 
-      else if (Character.isAlphabetic(jottChars.get(i))) {
-        String string = "";
-        while (Character.isAlphabetic(jottChars.get(i)) || Character.isDigit(jottChars.get(i))) {
-          string += jottChars.get(i);
-          i++;
-        }
-        i--;
-        tokens.add(new Token(string, filename, lineNum, TokenType.ID_KEYWORD));
-      }
-
-      else if (currentChar.equals(":")) {
-        tokens.add(new Token(currentChar, filename, lineNum, TokenType.COLON));
-      }
-
-      else if (currentChar.equals("!")) {
-        if (jottChars.get(i + 1).toString().equals("=")) {
-          tokens.add(new Token(currentChar, filename, lineNum, TokenType.REL_OP));
           // NOT EQUALS TO BE SPECIFIC (not supported by TokenType, might add later)
-        } else {
-          // report error
-        }
-      }
-
-      else if (currentChar.equals("\"")) {
-        String string = "\"";
-        i++;
-        while (!jottChars.get(i).toString().equals("\"")) {
-          string += jottChars.get(i);
+          tokens.add(new Token("!=", filename, lineNum, TokenType.REL_OP));
           i++;
-        }
-        if (jottChars.get(i).toString().equals("\"")) {
-          string += "\"";
-          tokens.add(new Token(string, filename, lineNum, TokenType.STRING));
-        } else {
-          // report error
+        } else if (currentChar.equals("\"")) {
+          var string = new StringBuilder("\"");
+          i++;
+          while (jottChars.size() > i && (Character.isAlphabetic(jottChars.get(i)) || Character.isDigit(jottChars.get(i)) || jottChars.get(i) == ' ')) {
+            string.append(jottChars.get(i));
+            i++;
+          }
+
+          if (!jottChars.get(i).toString().equals("\"")) {
+            throw new SyntaxException("Unexpected character '\"'");
+          }
+
+          string.append("\"");
+          tokens.add(new Token(string.toString(), filename, lineNum, TokenType.STRING));
         }
       }
+    } catch (SyntaxException e) {
+      e.report(filename, lineNum);
+      return null;
     }
-//    System.out.println(tokens);
+
     return tokens;
   }
 
@@ -172,5 +158,21 @@ public class JottTokenizer {
 //    tokenize("src/tokenizer/ZZ_ASSIGN_TEST.txt");
 //    tokenize("testing/tokenizerTestCases/strings.jott");
     tokenize("testing/tokenizerTestCases/errorTokens1.jott");
+  }
+
+  static class SyntaxException extends Exception {
+    public SyntaxException(String message) {
+      super(message);
+    }
+
+    /**
+     * Reports the exception as a syntax error with the given file name and line number.
+     *
+     * @param fileName   The name of the file the error was found on
+     * @param lineNumber The 1-indexed line number
+     */
+    public void report(String fileName, int lineNumber) {
+      System.err.printf("Syntax Error:\n%s\n%s:%d", getMessage(), fileName, lineNumber);
+    }
   }
 }
