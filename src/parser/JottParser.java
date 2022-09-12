@@ -1,15 +1,16 @@
- /**
+package parser;
+
+import java.util.ArrayList;
+
+import parser.nodes.JottTree;
+import utils.Token;
+
+/**
  * This class is responsible for paring Jott Tokens
  * into a Jott parse tree.
  *
  * @author
  */
-
-import java.util.ArrayList;
-
-import nodes.JottTree;
-import utils.Token;
-
 public class JottParser {
 
     /**
