@@ -5,65 +5,67 @@ import java.util.ArrayList;
 import utils.Token;
 import utils.TokenType;
 
-public class IntExpr implements JottTree {
+public class DExpr implements JottTree {
     ArrayList<JottTree> nodes;
+    ArrayList<Token> tokens;
     Token operator;
     Token Id;
     Token Number1;
     Token Number2;
 
-    public IntExpr(){
+    public DExpr(){
+        nodes = new ArrayList<>();
         this.operator = null;
         this.Id=null;
         this.Number1=null;
         this.Number2=null;
     }
 
-    public static IntExpr createIntExpr(ArrayList<Token> tokens){
-        IntExpr iExpr = new IntExpr();
+    public static DExpr createDExpr(ArrayList<Token> tokens){
+        DExpr dExpr = new DExpr();
         Token t1 = tokens.get(0);
         Token t2 = tokens.get(1);
         if(t1.getTokenType() == TokenType.ID_KEYWORD){
             if(t2.getTokenType() == TokenType.MATH_OP){
-                iExpr.operator = tokens.remove(1);
-                iExpr.nodes.add(createIntExpr(tokens));
-                iExpr.nodes.add(createIntExpr(tokens));
+                dExpr.operator = tokens.remove(1);
+                dExpr.nodes.add(createDExpr(tokens));
+                dExpr.nodes.add(createDExpr(tokens));
             }
             else{
-                iExpr.Id=tokens.remove(0);
+                dExpr.Id=tokens.remove(0);
 
             }
         }
         else if(t1.getTokenType() == TokenType.NUMBER){
-            if(t1.getToken().contains(".")){
-                throw new RuntimeException("Integer expression can only contain integers errored on line"+ t1.getLineNum());
+            if(!t1.getToken().contains(".")){
+                throw new RuntimeException("double expression can only contain double errored on line"+ t1.getLineNum());
             }
             if(t2.getTokenType() == TokenType.MATH_OP){
                 if(tokens.get(2).getTokenType() == TokenType.NUMBER){
-                    if(tokens.get(2).getToken().contains(".")){
-                        throw new RuntimeException("Integer expression can only contain integers errored on line"+ tokens.get(2).getLineNum());
+                    if(!tokens.get(2).getToken().contains(".")){
+                        throw new RuntimeException("double expression can only contain double errored on line"+ tokens.get(2).getLineNum());
                     }
-                    iExpr.Number1=tokens.remove(0);
-                    iExpr.operator=tokens.remove(1);
-                    iExpr.Number2=tokens.remove(2);
+                    dExpr.Number1=tokens.remove(0);
+                    dExpr.operator=tokens.remove(1);
+                    dExpr.Number2=tokens.remove(2);
                 }
                 else{
-                    iExpr.Number1=tokens.remove(0);
-                    iExpr.operator=tokens.remove(1);
-                    iExpr.nodes.add(createIntExpr(tokens));
+                    dExpr.Number1=tokens.remove(0);
+                    dExpr.operator=tokens.remove(1);
+                    dExpr.nodes.add(createDExpr(tokens));
 
                 }
                 
             }
             else{
-                iExpr.Number1 = tokens.remove(1);
+                dExpr.Number1 = tokens.remove(1);
             }
 
         
         }
 
 
-        return iExpr;
+        return dExpr;
     }
 
     @Override
