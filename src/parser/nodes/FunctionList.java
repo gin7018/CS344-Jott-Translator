@@ -1,4 +1,4 @@
-package nodes;
+package parser.nodes;
 public class FunctionList implements JottTree {
     //FunctionDef lchild;
     FunctionList rchild;

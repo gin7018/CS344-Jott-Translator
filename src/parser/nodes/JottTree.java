@@ -1,4 +1,4 @@
-package nodes;
+package parser.nodes;
 
 /**
  * Interface for all Jott parse tree nodes
