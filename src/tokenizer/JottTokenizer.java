@@ -7,7 +7,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class is responsible for tokenizing Jott code.
@@ -18,24 +17,11 @@ import java.util.List;
 public class JottTokenizer {
 
   private static final String ROOT_PATH = "src/";
-  private static final List<String> MATH_OPS = List.of("/", "+", "*", "-");
-  private static final List<String> REL_OPS = List.of("<", ">");
-
-  private static boolean belongsInQuotes(List<Character> jottChars, int index) {
-    return Character.isAlphabetic(jottChars.get(index)) ||
-            Character.isDigit(jottChars.get(index)) ||
-            jottChars.get(index) == ' ';
-  }
-
-  private static boolean belongsInString(List<Character> jottChars, int index) {
-    return Character.isAlphabetic(jottChars.get(index)) ||
-            Character.isDigit(jottChars.get(index));
-  }
 
   /**
    * Takes in a filename and tokenizes that file into Tokens
    * based on the rules of the Jott Language
-   *
+   * 
    * @param filename the name of the file to tokenize; can be relative or absolute
    *                 path
    * @return an ArrayList of Jott Tokens
@@ -66,21 +52,15 @@ public class JottTokenizer {
         tokens.add(new Token(currentChar, filename, lineNum, TokenType.R_BRACE));
       } else if (currentChar.equals(",")) {
         tokens.add(new Token(currentChar, filename, lineNum, TokenType.COMMA));
-      } else if (currentChar.equals(":")) {
-        tokens.add(new Token(currentChar, filename, lineNum, TokenType.COLON));
-      } else if (currentChar.equals(";")) {
-        tokens.add(new Token(currentChar, filename, lineNum, TokenType.SEMICOLON));
-      } else if (MATH_OPS.contains(currentChar)) {
-        tokens.add(new Token(currentChar, filename, lineNum, TokenType.MATH_OP));
-      } else if (currentChar.equals("\n")) {
-        lineNum++;
       }
 
       else if (currentChar.equals("#")) {
-        while (i < jottChars.size() && jottChars.get(i) != '\n') {
+        if (jottChars.get(i - 1).equals('\n')) {
+          lineNum++; // do not increment if inline comment
+        }
+        while (!jottChars.get(i).equals('\n')) {
           i++;
         }
-        i--;
       }
 
       else if (currentChar.equals("=")) {
@@ -93,7 +73,7 @@ public class JottTokenizer {
         }
       }
 
-      else if (REL_OPS.contains(currentChar)) {
+      else if (currentChar.equals("<")) {
         if (jottChars.get(i + 1).toString().equals("=")) {
           tokens.add(
               new Token(currentChar + jottChars.get(i + 1).toString(), filename, lineNum, TokenType.REL_OP));
@@ -103,28 +83,36 @@ public class JottTokenizer {
         }
       }
 
+      else if (currentChar.equals("/") || currentChar.equals("+") || currentChar.equals("*") || currentChar.equals("-")) {
+        tokens.add(new Token(currentChar, filename, lineNum, TokenType.MATH_OP));
+      }
+      else if (currentChar.equals(";")) {
+        tokens.add(new Token(currentChar, filename, lineNum, TokenType.SEMICOLON));
+        lineNum++; // line numbers are determined by ;
+      }
+
       else if (currentChar.equals(".")) {
         i++;
-        if (i < jottChars.size() && Character.isDigit(jottChars.get(i))) {
+        if (Character.isDigit(jottChars.get(i))) {
           String number = ".";
-          while (i < jottChars.size() && Character.isDigit(jottChars.get(i))) {
+          while (Character.isDigit(jottChars.get(i))) {
             number += jottChars.get(i);
             i++;
           }
           i--;
           tokens.add(new Token(number, filename, lineNum, TokenType.NUMBER));
         } else {
-          return null; // report error
+          // report error
         }
       }
 
       else if (Character.isDigit(jottChars.get(i))) {
         String number = "";
-        while (i < jottChars.size() && Character.isDigit(jottChars.get(i))) {
+        while (Character.isDigit(jottChars.get(i))) {
           number += jottChars.get(i);
           i++;
         }
-        if (jottChars.get(i) == '.') { // potential errors: .489AA, .abc, .4.5
+        if (jottChars.get(i) == '.') {
           number += jottChars.get(i);
           i++;
           while (i < jottChars.size() && Character.isDigit(jottChars.get(i))) {
@@ -138,7 +126,7 @@ public class JottTokenizer {
 
       else if (Character.isAlphabetic(jottChars.get(i))) {
         String string = "";
-        while (i < jottChars.size() && belongsInString(jottChars, i)) {
+        while (Character.isAlphabetic(jottChars.get(i)) || Character.isDigit(jottChars.get(i))) {
           string += jottChars.get(i);
           i++;
         }
@@ -146,19 +134,23 @@ public class JottTokenizer {
         tokens.add(new Token(string, filename, lineNum, TokenType.ID_KEYWORD));
       }
 
+      else if (currentChar.equals(":")) {
+        tokens.add(new Token(currentChar, filename, lineNum, TokenType.COLON));
+      }
+
       else if (currentChar.equals("!")) {
-        if (i + 1 < jottChars.size() && jottChars.get(i + 1).toString().equals("=")) {
-          tokens.add(new Token(currentChar + jottChars.get(i + 1), filename, lineNum, TokenType.REL_OP));
-          i++;
+        if (jottChars.get(i + 1).toString().equals("=")) {
+          tokens.add(new Token(currentChar, filename, lineNum, TokenType.REL_OP));
+          // NOT EQUALS TO BE SPECIFIC (not supported by TokenType, might add later)
         } else {
-          return null; // report error
+          // report error
         }
       }
 
       else if (currentChar.equals("\"")) {
         String string = "\"";
         i++;
-        while (i < jottChars.size() && belongsInQuotes(jottChars, i)) {
+        while (!jottChars.get(i).toString().equals("\"")) {
           string += jottChars.get(i);
           i++;
         }
@@ -166,10 +158,11 @@ public class JottTokenizer {
           string += "\"";
           tokens.add(new Token(string, filename, lineNum, TokenType.STRING));
         } else {
-          return null; // report error
+          // report error
         }
       }
     }
+//    System.out.println(tokens);
     return tokens;
   }
 
@@ -178,7 +171,6 @@ public class JottTokenizer {
 //    tokenize("src/tokenizer/ZZ_PRINT_TEST.txt");
 //    tokenize("src/tokenizer/ZZ_ASSIGN_TEST.txt");
 //    tokenize("testing/tokenizerTestCases/strings.jott");
-    //tokenize("testing/tokenizerTestCases/errorTokens1.jott");
-    tokenize("testing/tokenizerTestCases/idKeywords.jott");
+    tokenize("testing/tokenizerTestCases/errorTokens1.jott");
   }
 }
