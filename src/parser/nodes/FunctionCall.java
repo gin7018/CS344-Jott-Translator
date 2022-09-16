@@ -31,13 +31,12 @@ public class FunctionCall implements JottTree {
                     // param.add createStrexp(tokens)
                     break;
                 case NUMBER:
-                    fCall.param.add(MathExpr.createMathExpr(tokens));
+                    fCall.param.add(Expr.createExpr(tokens));
                     break;
                 case ID_KEYWORD:
-                    if (tokens.get(1).getTokenType() == TokenType.MATH_OP) {
-                        fCall.param.add(MathExpr.createMathExpr(tokens));
-                    } else if (tokens.get(1).getTokenType() == TokenType.REL_OP) {
-                        // fCall.param.add(boolexpress(tokens));
+                    if (tokens.get(1).getTokenType() == TokenType.MATH_OP||
+                    tokens.get(1).getTokenType() == TokenType.REL_OP) {
+                        fCall.param.add(Expr.createExpr(tokens));
                     } else if (tokens.get(1).getTokenType() == TokenType.L_BRACE) {
                         fCall.param.add(FunctionCall.createFunctionCall(tokens));
                     } else {
