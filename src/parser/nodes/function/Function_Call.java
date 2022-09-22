@@ -4,21 +4,21 @@ import parser.nodes.JottTree;
 
 import java.util.ArrayList;
 
-import parser.nodes.MathExpr;
+import parser.nodes.expr.Expr;
 import parser.nodes.primitive.Id;
 import utils.Token;
 import utils.TokenType;
 
-public class FunctionCall implements JottTree {
+public class Function_Call implements JottTree {
     Id id;
     ArrayList<JottTree> param;
 
-    public FunctionCall() {
+    private Function_Call() {
 
     }
 
-    public static FunctionCall createFunctionCall(ArrayList<Token> tokens) {
-        FunctionCall fCall = new FunctionCall();
+    public static Function_Call createFunction_Call(ArrayList<Token> tokens) {
+        Function_Call fCall = new Function_Call();
         fCall.id = Id.CreateId(tokens);
         if (!(tokens.remove(0).getTokenType() == TokenType.L_BRACKET)) {
             throw new RuntimeException("how did this happen?????");
@@ -40,7 +40,7 @@ public class FunctionCall implements JottTree {
                     tokens.get(1).getTokenType() == TokenType.REL_OP) {
                         fCall.param.add(Expr.createExpr(tokens));
                     } else if (tokens.get(1).getTokenType() == TokenType.L_BRACE) {
-                        fCall.param.add(FunctionCall.createFunctionCall(tokens));
+                        fCall.param.add(Function_Call.createFunction_Call(tokens));
                     } else {
                         fCall.param.add(Id.CreateId(tokens));
                     }

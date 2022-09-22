@@ -1,7 +1,6 @@
 package parser.nodes.primitive;
 
 import parser.nodes.JottTree;
-import parser.nodes.expr.B_Expr;
 import utils.Token;
 
 import java.util.ArrayList;
