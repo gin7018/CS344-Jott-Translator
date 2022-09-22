@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/CS344-Jott-Translator.iml" filepath="$PROJECT_DIR$/CS344-Jott-Translator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/CS344-Jott-Translator.iml" filepath="$PROJECT_DIR$/.idea/CS344-Jott-Translator.iml" />
     </modules>
   </component>
 </project>

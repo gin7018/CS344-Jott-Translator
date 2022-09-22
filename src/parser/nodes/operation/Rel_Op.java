@@ -1,6 +1,9 @@
-package parser.nodes;
+package parser.nodes.operation;
 
-public class Program implements JottTree {
+import parser.nodes.JottTree;
+
+public enum Rel_Op implements JottTree{
+    ;
 
     @Override
     public String convertToJott() {

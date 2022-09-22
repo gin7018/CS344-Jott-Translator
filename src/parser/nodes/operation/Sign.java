@@ -1,7 +1,8 @@
-package parser.nodes;
+package parser.nodes.operation;
 
-public class Program implements JottTree {
+import parser.nodes.JottTree;
 
+public class Sign implements JottTree{
     @Override
     public String convertToJott() {
         return null;

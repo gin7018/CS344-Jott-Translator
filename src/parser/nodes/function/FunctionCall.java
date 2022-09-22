@@ -1,9 +1,11 @@
-package parser.nodes;
+package parser.nodes.function;
+
+import parser.nodes.JottTree;
 
 import java.util.ArrayList;
 
-import javax.management.RuntimeErrorException;
-
+import parser.nodes.MathExpr;
+import parser.nodes.primitive.Id;
 import utils.Token;
 import utils.TokenType;
 

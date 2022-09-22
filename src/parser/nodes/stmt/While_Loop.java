@@ -1,6 +1,19 @@
-package parser.nodes;
+package parser.nodes.stmt;
 
-public class Program implements JottTree {
+import parser.nodes.JottTree;
+import utils.Token;
+
+import java.util.ArrayList;
+
+public class While_Loop implements JottTree{
+
+    private While_Loop() {
+
+    }
+
+    public static While_Loop createWhile_Loop(ArrayList<Token> tokens) {
+        return null;
+    }
 
     @Override
     public String convertToJott() {

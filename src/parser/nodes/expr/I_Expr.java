@@ -1,6 +1,19 @@
-package parser.nodes;
+package parser.nodes.expr;
 
-public class Program implements JottTree {
+import parser.nodes.JottTree;
+import utils.Token;
+
+import java.util.ArrayList;
+
+public class I_Expr implements JottTree{
+
+    private I_Expr() {
+
+    }
+
+    public static I_Expr createI_Expr(ArrayList<Token> tokens) {
+        return null;
+    }
 
     @Override
     public String convertToJott() {

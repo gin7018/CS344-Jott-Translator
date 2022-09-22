@@ -2,6 +2,8 @@ package parser.nodes;
 
 import java.util.ArrayList;
 
+import parser.nodes.function.Func_Call;
+import parser.nodes.primitive.Id;
 import utils.Token;
 import utils.TokenType;
 
@@ -12,7 +14,7 @@ public class MathExpr implements JottTree {
     Boolean isTail;
     
 
-    public MathExpr(){
+    private MathExpr(){
         lnode = null;
         rnode = null;
         Operator = null;
@@ -23,7 +25,7 @@ public class MathExpr implements JottTree {
         MathExpr mExpr = new MathExpr();
         if(tokens.get(0).getTokenType() == TokenType.ID_KEYWORD){
            if(tokens.get(1).getTokenType()==TokenType.L_BRACKET){
-            mExpr.lnode = FunctionCall.createFunctionCall(tokens);
+            mExpr.lnode = Func_Call.createFunc_Call(tokens);
            }
            else{ 
             mExpr.lnode = Id.CreateId(tokens);

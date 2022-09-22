@@ -1,6 +1,20 @@
-package parser.nodes;
+package parser.nodes.stmt;
 
-public class Program implements JottTree {
+import parser.nodes.JottTree;
+import parser.nodes.expr.B_Expr;
+import utils.Token;
+
+import java.util.ArrayList;
+
+public class If_Stmt implements JottTree{
+
+    private If_Stmt() {
+
+    }
+
+    public static If_Stmt createIf_Stmt(ArrayList<Token> tokens) {
+        return null;
+    }
 
     @Override
     public String convertToJott() {

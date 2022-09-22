@@ -1,26 +1,27 @@
-package parser.nodes;
+package parser.nodes.function;
+
+import parser.nodes.JottTree;
+import parser.nodes.expr.B_Expr;
+import utils.Token;
 
 import java.util.ArrayList;
 
-import utils.Token;
+public class Function_List implements JottTree {
+    //FunctionDef lchild;
+    Function_List rchild;
 
-public class Id  implements JottTree {
-    Token id;
-
-    public Id(){
-
-    }
-
-    public static Id CreateId(ArrayList<Token> tokens){
-        Id id = new Id();
-        id.id= tokens.remove(0);
-        return id;
-
+    private Function_List() {
 
     }
+
+    public static Function_List createFunction_List(ArrayList<Token> tokens) {
+        return null;
+    }
+
     @Override
     public String convertToJott() {
         // TODO Auto-generated method stub
+        //return lchild.convertToJott+rchild.convertToJott();
         return null;
     }
 

@@ -1,6 +1,20 @@
-package parser.nodes;
+package parser.nodes.primitive;
 
-public class Program implements JottTree {
+import parser.nodes.JottTree;
+import parser.nodes.expr.B_Expr;
+import utils.Token;
+
+import java.util.ArrayList;
+
+public class Dbl implements JottTree{
+
+    private Dbl() {
+
+    }
+
+    public static Dbl createDbl(ArrayList<Token> tokens) {
+        return null;
+    }
 
     @Override
     public String convertToJott() {
