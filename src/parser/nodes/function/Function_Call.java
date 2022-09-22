@@ -30,7 +30,7 @@ public class Function_Call implements JottTree {
         while(true) {
             switch (tokens.get(0).getTokenType()) {
                 case STRING:
-                    // param.add createStrexp(tokens)
+                    // param.add const(tokens)
                     break;
                 case NUMBER:
                     fCall.param.add(Expr.createExpr(tokens));
