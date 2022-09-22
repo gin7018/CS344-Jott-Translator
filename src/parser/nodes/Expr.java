@@ -2,52 +2,60 @@ package parser.nodes;
 
 import java.util.ArrayList;
 
-import parser.nodes.function.Func_Call;
-import parser.nodes.primitive.Id;
 import utils.Token;
 import utils.TokenType;
 
-public class MathExpr implements JottTree {
+public class Expr implements JottTree {
     JottTree lnode;
     Token Operator;
     JottTree rnode;
     Boolean isTail;
     
 
-    private MathExpr(){
+    public Expr(){
         lnode = null;
         rnode = null;
         Operator = null;
         isTail=false;
     }
 
-    public static MathExpr createMathExpr(ArrayList<Token> tokens){
-        MathExpr mExpr = new MathExpr();
+    public static Expr createExpr(ArrayList<Token> tokens){
+        Expr expr = new Expr();
         if(tokens.get(0).getTokenType() == TokenType.ID_KEYWORD){
            if(tokens.get(1).getTokenType()==TokenType.L_BRACKET){
-            mExpr.lnode = Func_Call.createFunc_Call(tokens);
+            expr.lnode = FunctionCall.createFunctionCall(tokens);
            }
-           else{ 
-            mExpr.lnode = Id.CreateId(tokens);
+           else if(Character.isUpperCase(tokens.get(0).getToken().charAt(0))){ 
+            //expr.lone = const.newConst(tokens)
+           }
+           else{
+            expr.lnode = Id.CreateId(tokens);
            }
         }
         else if(tokens.get(0).getTokenType() == TokenType.NUMBER){
             //lnode = Constant.createconstant(token,number)
         }
-        if(tokens.get(0).getTokenType()==TokenType.MATH_OP){
-            if(!(tokens.get(1).getTokenType()==TokenType.ID_KEYWORD||
-            tokens.get(1).getTokenType()==TokenType.NUMBER)){
-                throw new RuntimeException("expected a ID or Key word to follow mathop but got"+tokens.get(1).toString());
-            }
-            mExpr.Operator=tokens.remove(0);
-            mExpr.rnode = MathExpr.createMathExpr(tokens);
+        else if(tokens.get(0).getTokenType()==TokenType.STRING){
+            //lnode = const.creatconst
         }
         else{
-            mExpr.isTail=true;
+            //throw error how did we get here 
+        }
+        if(tokens.get(0).getTokenType()==TokenType.MATH_OP||tokens.get(0).getTokenType()==TokenType.REL_OP){
+            if(!(tokens.get(1).getTokenType()==TokenType.ID_KEYWORD||
+            tokens.get(1).getTokenType()==TokenType.NUMBER||
+            tokens.get(1).getTokenType()==TokenType.STRING)){
+                throw new RuntimeException("expected a ID keyword string or number to follow mathop but got"+tokens.get(1).toString());
+            }
+            expr.Operator=tokens.remove(0);
+            expr.rnode =Expr.createExpr(tokens);
+        }
+        else{
+            expr.isTail=true;
         }
 
 
-        return mExpr;
+        return expr;
     }
 
     @Override
