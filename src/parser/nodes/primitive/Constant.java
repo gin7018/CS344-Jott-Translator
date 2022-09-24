@@ -14,16 +14,16 @@ public class Constant implements JottTree{
         this.type = type;
         this.token = token;
     }
-        
+
     public PType getType(){
         return this.type;
     }
     public Token getToken(){
         return this.token;
     }
-    public static Constant CreateConstant(ArrayList<Token> tokens) throws Exception{
+    public static Constant CreateConstant(ArrayList<Token> tokens) {
         if (tokens.isEmpty()){
-            throw new Exception("something aint right");
+            throw new RuntimeException("something aint right");
         }
         Token tok = tokens.remove(0);
         if(tok.getTokenType() == TokenType.NUMBER){
@@ -37,9 +37,14 @@ public class Constant implements JottTree{
         }else{
             return new Constant(PType.STRING, tok);
         }
-            
-        
+
+
     }
+
+    public String getContents() {
+        return token.getToken();
+    }
+
     @Override
     public String convertToJott() {
         // TODO Auto-generated method stub
@@ -69,5 +74,5 @@ public class Constant implements JottTree{
         // TODO Auto-generated method stub
         return false;
     }
-    
+
 }
