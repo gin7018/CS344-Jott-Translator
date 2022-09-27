@@ -1,18 +1,37 @@
 package parser.nodes.function;
 
 import parser.nodes.JottTree;
+import parser.nodes.primitive.Id;
+import parser.nodes.stmt.Body;
 import utils.Token;
+import utils.TokenType;
 
 import java.util.ArrayList;
 
-public class Function_Def implements JottTree{
+import static parser.nodes.NodeUtility.popAndExpect;
+
+public class  Function_Def implements JottTree{
+    private JottTree id;
+    private JottTree fdParams;
+    private JottTree functionReturn;
+    private JottTree body;
 
     private Function_Def() {
 
     }
 
     public static Function_Def createFunction_Def(ArrayList<Token> tokens) {
-        return null;
+        var fd = new Function_Def();
+        fd.id = Id.CreateId(tokens);
+        popAndExpect(tokens, TokenType.L_BRACKET);
+        fd.fdParams = Function_Def_Params.createFunction_Def_Params(tokens);
+        popAndExpect(tokens, TokenType.COLON);
+        fd.functionReturn = Function_Return.createFunction_Return(tokens);
+        popAndExpect(tokens, TokenType.L_BRACE);
+        fd.body = Body.createBody(tokens);
+        popAndExpect(tokens, TokenType.R_BRACE);
+
+        return fd;
     }
 
     @Override
