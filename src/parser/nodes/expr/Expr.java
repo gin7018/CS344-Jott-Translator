@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import parser.nodes.JottTree;
 import parser.nodes.function.Function_Call;
+import parser.nodes.primitive.Constant;
 import parser.nodes.primitive.Id;
 import utils.Token;
 import utils.TokenType;
@@ -29,20 +30,18 @@ public class Expr implements JottTree {
             expr.lnode = Function_Call.createFunction_Call(tokens);
            }
            else if(Character.isUpperCase(tokens.get(0).getToken().charAt(0))){ 
-            //expr.lone = const.newConst(tokens)
-           }
+            expr.lnode = Constant.CreateConstant(tokens);           }
            else{
             expr.lnode = Id.CreateId(tokens);
            }
         }
         else if(tokens.get(0).getTokenType() == TokenType.NUMBER){
-            //lnode = Constant.createconstant(token,number)
+            expr.lnode = Constant.CreateConstant(tokens);
         }
         else if(tokens.get(0).getTokenType()==TokenType.STRING){
-            //lnode = const.creatconst
-        }
+            expr.lnode = Constant.CreateConstant(tokens);        }
         else{
-            //throw error how did we get here 
+            throw new RuntimeException("what");
         }
         if(tokens.get(0).getTokenType()==TokenType.MATH_OP||tokens.get(0).getTokenType()==TokenType.REL_OP){
             if(!(tokens.get(1).getTokenType()==TokenType.ID_KEYWORD||
