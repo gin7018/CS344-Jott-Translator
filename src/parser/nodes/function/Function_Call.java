@@ -5,6 +5,7 @@ import parser.nodes.JottTree;
 import java.util.ArrayList;
 
 import parser.nodes.expr.Expr;
+import parser.nodes.primitive.Constant;
 import parser.nodes.primitive.Id;
 import utils.Token;
 import utils.TokenType;
@@ -30,7 +31,7 @@ public class Function_Call implements JottTree {
         while(true) {
             switch (tokens.get(0).getTokenType()) {
                 case STRING:
-                    // param.add const(tokens)
+                    fCall.param.add(Constant.CreateConstant(tokens));
                     break;
                 case NUMBER:
                     fCall.param.add(Expr.createExpr(tokens));
