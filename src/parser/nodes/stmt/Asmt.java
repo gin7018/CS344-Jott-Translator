@@ -46,7 +46,12 @@ public class Asmt implements JottTree {
 
     @Override
     public String convertToJott() {
-        return null;
+        String out = "";
+        if(keyword != null){
+            out+=keyword.toString();
+        }
+        out+=id.convertToJott()+"="+expr.convertToJott()+";";
+        return out;
     }
 
     @Override

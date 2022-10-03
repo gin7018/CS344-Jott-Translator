@@ -39,6 +39,7 @@ public class Return_Stmt implements JottTree{
                     rStmt.expr =Id.CreateId(tokens);
                 }
                 break;
+            
         }
         if(!(tokens.remove(0).getTokenType()==TokenType.SEMICOLON)){
             throw new RuntimeException("expected semicolon");
@@ -49,7 +50,13 @@ public class Return_Stmt implements JottTree{
 
     @Override
     public String convertToJott() {
-        return null;
+        String out ="return";
+        if(expr != null){
+            out+=expr.convertToJott();
+        }
+        out+=";";
+        return out;
+        
     }
 
     @Override

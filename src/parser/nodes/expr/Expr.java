@@ -11,7 +11,7 @@ import utils.TokenType;
 
 public class Expr implements JottTree {
     JottTree lnode;
-    Token Operator;
+    Token operator;
     JottTree rnode;
     Boolean isTail;
     
@@ -19,7 +19,7 @@ public class Expr implements JottTree {
     private Expr(){
         lnode = null;
         rnode = null;
-        Operator = null;
+        operator = null;
         isTail=false;
     }
 
@@ -49,7 +49,7 @@ public class Expr implements JottTree {
             tokens.get(1).getTokenType()==TokenType.STRING)){
                 throw new RuntimeException("expected a ID keyword string or number to follow mathop but got"+tokens.get(1).toString());
             }
-            expr.Operator=tokens.remove(0);
+            expr.operator=tokens.remove(0);
             expr.rnode =Expr.createExpr(tokens);
         }
         else{
@@ -62,8 +62,12 @@ public class Expr implements JottTree {
 
     @Override
     public String convertToJott() {
-        // TODO Auto-generated method stub
-        return null;
+        if (isTail){
+            return lnode.convertToJott();
+        }
+        else{
+            return lnode.convertToJott() + operator.getToken() + rnode.convertToJott();
+        }
     }
 
     @Override
