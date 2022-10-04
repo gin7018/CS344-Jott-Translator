@@ -16,5 +16,7 @@ public enum TokenType {
     NUMBER,
     ID_KEYWORD,
     COLON,
-    STRING;
+    STRING,
+    EOF;
+
 }
