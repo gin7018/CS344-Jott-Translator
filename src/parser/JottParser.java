@@ -1,9 +1,11 @@
 package parser;
 
-import java.util.ArrayList;
-
 import parser.nodes.JottTree;
+import parser.nodes.Program;
 import utils.Token;
+import utils.TokenType;
+
+import java.util.ArrayList;
 
 /**
  * This class is responsible for paring Jott Tokens
@@ -20,6 +22,12 @@ public class JottParser {
      *         or null upon an error in parsing.
      */
     public static JottTree parse(ArrayList<Token> tokens){
-		return null;
+      if (tokens.size()==0){
+        return null;
+      }
+      Token eof = new Token("EOF",tokens.get(tokens.size()-1).getFilename(), tokens.get(tokens.size()-1).getLineNum(), TokenType.EOF);
+      tokens.add(eof);
+      tokens.add(eof);
+		  return Program.createProgram(tokens);
     }
 }

@@ -1,13 +1,30 @@
-package parser.nodes;
+package parser.nodes.primitive;
 
-public class FunctionList implements JottTree {
-   // FunctionDef lchild;
-    FunctionList rchild;
+
+
+import java.util.ArrayList;
+
+import parser.nodes.JottTree;
+import utils.Token;
+
+public class Id  implements JottTree {
+    Token id;
+
+    public Id(){
+
+    }
+
+    public static Id CreateId(ArrayList<Token> tokens){
+        Id id = new Id();
+        id.id= tokens.remove(0);
+        return id;
+
+
+    }
     @Override
     public String convertToJott() {
         // TODO Auto-generated method stub
-       // return lchild.convertToJott+rchild.convertToJott();
-       return null;
+        return null;
     }
 
     @Override
