@@ -41,7 +41,7 @@ public class JottTokenizer {
    * @return an ArrayList of Jott Tokens
    */
   public static ArrayList<Token> tokenize(String filename) {
-    String validPath = ROOT_PATH + filename;
+    String validPath = /*ROOT_PATH */ filename;
     ArrayList<Character> jottChars = new ArrayList<>();
     try (BufferedReader bfr = new BufferedReader(new FileReader(validPath))) {
       int ch;
