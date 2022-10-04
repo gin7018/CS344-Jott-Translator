@@ -15,9 +15,9 @@ public class Var_Dec implements JottTree{
     private Var_Dec() {
     }
 
-    public static Var_Dec createVar_Dec(ArrayList<Token> tokens) throws Exception {
+    public static Var_Dec createVar_Dec(ArrayList<Token> tokens) {
         if(tokens.isEmpty()){
-            throw new Exception("wrong");
+            throw new RuntimeException("wrong");
         }
         var varDec = new Var_Dec();
         Token tok = tokens.remove(0);
