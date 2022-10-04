@@ -28,6 +28,7 @@ public class JottParser {
       Token eof = new Token("EOF",tokens.get(tokens.size()-1).getFilename(), tokens.get(tokens.size()-1).getLineNum(), TokenType.EOF);
       tokens.add(eof);
       tokens.add(eof);
+      tokens.add(eof);
 		  return Program.createProgram(tokens);
     }
 }

@@ -2,6 +2,7 @@ package parser.nodes;
 
 import parser.nodes.function.Function_List;
 import utils.Token;
+import utils.TokenType;
 
 import java.util.ArrayList;
 
@@ -14,7 +15,9 @@ public class Program implements JottTree {
     public static Program createProgram(ArrayList<Token> tokens) {
         var prg = new Program();
         prg.functionList = Function_List.createFunction_List(tokens);
-        if (tokens.isEmpty() || !tokens.remove(0).getToken().equals("$$")){
+        tokens.remove(0);
+        tokens.remove(0);
+        if (tokens.isEmpty() || !tokens.remove(0).getTokenType().equals(TokenType.EOF)){
             throw new RuntimeException("No end of program flag found: $$");
         }
         return prg;

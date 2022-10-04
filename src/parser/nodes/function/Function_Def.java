@@ -25,6 +25,7 @@ public class  Function_Def implements JottTree{
         fd.id = Id.CreateId(tokens);
         popAndExpect(tokens, TokenType.L_BRACKET);
         fd.fdParams = Function_Def_Params.createFunction_Def_Params(tokens);
+        popAndExpect(tokens, TokenType.R_BRACKET);
         popAndExpect(tokens, TokenType.COLON);
         fd.functionReturn = Function_Return.createFunction_Return(tokens);
         popAndExpect(tokens, TokenType.L_BRACE);

@@ -2,6 +2,7 @@ package parser.nodes.function;
 
 import parser.nodes.JottTree;
 import utils.Token;
+import utils.TokenType;
 
 import java.util.ArrayList;
 
@@ -16,7 +17,7 @@ public class Function_List implements JottTree {
     public static Function_List createFunction_List(ArrayList<Token> tokens) {
         var fl = new Function_List();
         fl.functionDefs = new ArrayList<>();
-        while (!tokens.isEmpty() && !tokens.get(0).getToken().equals("$$")) {
+        while (!tokens.isEmpty() && !tokens.get(0).getToken().equals("$$")&& !tokens.get(0).getTokenType().equals(TokenType.EOF)) {
             var fd = Function_Def.createFunction_Def(tokens);
             fl.functionDefs.add(fd);
         }
