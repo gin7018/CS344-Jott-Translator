@@ -37,7 +37,7 @@ public class  Function_Def implements JottTree{
 
     @Override
     public String convertToJott() {
-        return id.convertToJott() + ":" +
+        return id.convertToJott() +
                 "[" + fdParams.convertToJott() + "]:" +
                 functionReturn.convertToJott() + "{" +
                 body.convertToJott() + "}";

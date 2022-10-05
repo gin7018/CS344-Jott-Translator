@@ -5,7 +5,9 @@ import utils.TokenType;
 
 import java.util.List;
 
+
 public class NodeUtility {
+
 
     /**
      * Pops off the top token, throwing a {@link RuntimeException} if the expected {@link TokenType} doesn't match the
@@ -20,7 +22,8 @@ public class NodeUtility {
         var token = tokens.remove(0);
         if (token.getTokenType() != tokenType) {
             // TODO: This should move into its own dedicated exception when this branch is merged into master
-            throw new RuntimeException("Unexpected token " + token);
+            System.out.println("ERROR: Expected " + tokenType + " but got " + token);
+            return null;
         }
 
         return token;
