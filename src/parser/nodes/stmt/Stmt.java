@@ -48,10 +48,10 @@ public class Stmt implements JottTree{
     @Override
     public String convertToJott() {
         if(this.asmt !=null){
-            return this.asmt.convertToJott();
+            return this.asmt.convertToJott()+";";
         }else if(this.varDec != null){
-            return this.varDec.convertToJott();
-        }else return this.funtionCall.convertToJott();
+            return this.varDec.convertToJott()+"+";
+        }else return this.funtionCall.convertToJott()+";";
 
     }
 
