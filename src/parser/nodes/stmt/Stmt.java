@@ -43,9 +43,7 @@ public class Stmt implements JottTree{
             popAndExpect(tokens, TokenType.SEMICOLON);
         }
 
-        if(tokens.get(0).getTokenType() != TokenType.SEMICOLON){
-            throw new RuntimeException("missing ';' at: "+tokens.get(0).getLineNum());
-        }
+        
         return stmt;
     }
 
