@@ -29,7 +29,7 @@ public class Body_Stmt implements JottTree {
 
     public static Body_Stmt createBody_Stmt(ArrayList<Token> tokens) {
         var bodyStmt = new Body_Stmt();
-        Token tok = tokens.remove(0);
+        Token tok = tokens.get(0);
         switch (tok.getToken()) {
             case "if" -> bodyStmt.if_Stmt = If_Stmt.createIf_Stmt(tokens);
             case "while" -> bodyStmt.while_Loop = While_Loop.createWhile_Loop(tokens);
