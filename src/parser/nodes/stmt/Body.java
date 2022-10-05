@@ -31,7 +31,11 @@ public class Body implements JottTree {
 
     @Override
     public String convertToJott() {
-        return null;
+        if(this.body_Stmt!= null &&this.body != null){
+            return this.body_Stmt.convertToJott() + this.body.convertToJott();
+        }else if(this.body_Stmt != null){
+            return this.body_Stmt.convertToJott();
+        }else return "";
     }
 
     @Override

@@ -40,7 +40,12 @@ public class Body_Stmt implements JottTree {
 
     @Override
     public String convertToJott() {
-        return null;
+        if(this.if_Stmt !=null){
+            return this.if_Stmt.convertToJott();
+        }else if(this.while_Loop != null){
+            return this.while_Loop.convertToJott();
+        }
+        else return this.stmt.convertToJott();
     }
 
     @Override

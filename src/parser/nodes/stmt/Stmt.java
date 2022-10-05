@@ -47,7 +47,12 @@ public class Stmt implements JottTree{
 
     @Override
     public String convertToJott() {
-        return null;
+        if(this.asmt !=null){
+            return this.asmt.convertToJott();
+        }else if(this.varDec != null){
+            return this.varDec.convertToJott();
+        }else return this.funtionCall.convertToJott();
+
     }
 
     @Override
