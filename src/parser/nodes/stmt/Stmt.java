@@ -42,16 +42,20 @@ public class Stmt implements JottTree{
             stmt.funtionCall = Function_Call.createFunction_Call(tokens);
             popAndExpect(tokens, TokenType.SEMICOLON);
         }
+
+        if(tokens.get(0).getTokenType() != TokenType.SEMICOLON){
+            throw new RuntimeException("missing ';' at: "+tokens.get(0).getLineNum());
+        }
         return stmt;
     }
 
     @Override
     public String convertToJott() {
         if(this.asmt !=null){
-            return this.asmt.convertToJott();
+            return this.asmt.convertToJott()+";";
         }else if(this.varDec != null){
-            return this.varDec.convertToJott();
-        }else return this.funtionCall.convertToJott();
+            return this.varDec.convertToJott()+"+";
+        }else return this.funtionCall.convertToJott()+";";
 
     }
 
