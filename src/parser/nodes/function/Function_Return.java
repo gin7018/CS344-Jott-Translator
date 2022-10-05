@@ -29,7 +29,7 @@ public class Function_Return implements JottTree{
 
     @Override
     public String convertToJott() {
-        return null;
+        return type.toString();
     }
 
     @Override

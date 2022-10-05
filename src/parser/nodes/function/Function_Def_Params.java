@@ -39,7 +39,11 @@ public class Function_Def_Params implements JottTree{
 
     @Override
     public String convertToJott() {
-        return null;
+        StringBuilder result = new StringBuilder();
+        for (FunctionParameters param: parameters) {
+            result.append(param.toString());
+        }
+        return result.toString();
     }
 
     @Override

@@ -5,8 +5,8 @@ import parser.nodes.primitive.PType;
 
 public class FunctionParameters {
 
-    private JottTree id;
-    private PType type;
+    private final JottTree id;
+    private final PType type;
 
     public FunctionParameters(JottTree id, PType type) {
         this.id = id;
@@ -19,5 +19,10 @@ public class FunctionParameters {
 
     public PType getType() {
         return type;
+    }
+
+    @Override
+    public String toString() {
+        return id + ":" + type.toString();
     }
 }

@@ -26,8 +26,11 @@ public class Function_List implements JottTree {
 
     @Override
     public String convertToJott() {
-        // TODO Auto-generated method stub
-        return null;
+        StringBuilder result = new StringBuilder();
+        for (Function_Def fDef: functionDefs) {
+            result.append(fDef.convertToJott());
+        }
+        return result.toString();
     }
 
     @Override
