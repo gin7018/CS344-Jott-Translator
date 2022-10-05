@@ -20,6 +20,7 @@ public class Function_Call implements JottTree {
 
     public static Function_Call createFunction_Call(ArrayList<Token> tokens) {
         Function_Call fCall = new Function_Call();
+        fCall.param = new ArrayList<JottTree>();
         fCall.id = Id.CreateId(tokens);
         if (!(tokens.remove(0).getTokenType() == TokenType.L_BRACKET)) {
             throw new RuntimeException("how did this happen?????");
@@ -46,6 +47,8 @@ public class Function_Call implements JottTree {
                         fCall.param.add(Id.CreateId(tokens));
                     }
                     break;
+                    default:
+                    throw new RuntimeException("expected function call param");
             }
             Token tempToken = tokens.remove(0);
             if(tempToken.getTokenType()==TokenType.COMMA) continue;
