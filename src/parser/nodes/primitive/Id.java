@@ -2,10 +2,10 @@ package parser.nodes.primitive;
 
 
 
-import java.util.ArrayList;
-
 import parser.nodes.JottTree;
 import utils.Token;
+
+import java.util.ArrayList;
 
 public class Id  implements JottTree {
     Token id;
@@ -23,8 +23,7 @@ public class Id  implements JottTree {
     }
     @Override
     public String convertToJott() {
-        // TODO Auto-generated method stub
-        return null;
+        return id.getToken();
     }
 
     @Override

@@ -1,10 +1,9 @@
 package parser.nodes.primitive;
-import java.util.ArrayList;
-
 import parser.nodes.JottTree;
-import parser.nodes.stmt.Else;
 import utils.Token;
 import utils.TokenType;
+
+import java.util.ArrayList;
 public class Constant implements JottTree{
 
     private Token token;
@@ -47,8 +46,7 @@ public class Constant implements JottTree{
 
     @Override
     public String convertToJott() {
-        // TODO Auto-generated method stub
-        return null;
+        return getContents();
     }
 
     @Override
