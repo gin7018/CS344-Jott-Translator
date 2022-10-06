@@ -16,6 +16,10 @@ public enum PType {
         this.label = name;
     }
 
+    public String getLabel() {
+        return label;
+    }
+
     public static PType getPrimitiveType(Token token) {
         return switch (token.getToken()) {
             case "Integer" -> INT;

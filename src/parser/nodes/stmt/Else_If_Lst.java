@@ -42,7 +42,11 @@ public class Else_If_Lst implements JottTree {
 
     @Override
     public String convertToJott() {
-        return null;
+        if (isEpsilon) {
+            return "";
+        }
+
+        return String.format("elseif[%s] {%s} %s", expr.convertToJott(), body.convertToJott(), trailingElseIf.convertToJott());
     }
 
     @Override

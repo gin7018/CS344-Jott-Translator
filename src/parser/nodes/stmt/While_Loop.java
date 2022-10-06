@@ -1,5 +1,6 @@
 package parser.nodes.stmt;
 
+import parser.SyntaxException;
 import parser.nodes.JottTree;
 import parser.nodes.expr.Expr;
 import parser.nodes.primitive.Constant;
@@ -23,7 +24,7 @@ public class While_Loop implements JottTree{
     public static While_Loop createWhile_Loop(ArrayList<Token> tokens) {
         var constant = Constant.CreateConstant(tokens);
         if (constant.getType() != PType.STRING || !constant.getContents().equals("while")) {
-            throw new RuntimeException("Unexpected token " + constant);
+            throw new SyntaxException("Unexpected token " + constant, constant.getToken());
         }
 
         var whileLoop = new While_Loop();
@@ -39,7 +40,7 @@ public class While_Loop implements JottTree{
 
     @Override
     public String convertToJott() {
-        return null;
+        return String.format("while[%s] {%s}", expr.convertToJott(), body.convertToJott());
     }
 
     @Override

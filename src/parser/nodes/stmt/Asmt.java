@@ -1,5 +1,6 @@
 package parser.nodes.stmt;
 
+import parser.SyntaxException;
 import parser.nodes.JottTree;
 import parser.nodes.expr.Expr;
 import parser.nodes.primitive.Id;
@@ -18,7 +19,7 @@ public class Asmt implements JottTree {
 
     public static Asmt createAsmt(ArrayList<Token> tokens) {
         String tempKey = tokens.get(0).getToken();
-        Asmt asmt = new Asmt();       
+        Asmt asmt = new Asmt();
         if(tempKey.equals("Integer")){
             asmt.keyword = tokens.remove(0);
             asmt.id = Id.CreateId(tokens);
@@ -42,14 +43,14 @@ public class Asmt implements JottTree {
             asmt.id = Id.CreateId(tokens);
         }
         else{
-            throw new RuntimeException("Expected an Id or Keyowrkd but got"+tokens.get(0).getToken());
+            throw new SyntaxException("Expected an Id or Keyowrkd but got"+tokens.get(0).getToken(), tokens.get(0));
         }
         if(!(tokens.remove(0).getTokenType() == TokenType.ASSIGN)){
-            throw new RuntimeException("why am I in a assighnment");
+            throw new SyntaxException("why am I in a assighnment", tokens.get(0));
         }
         asmt.expr = Expr.createExpr(tokens);
         if(!(tokens.remove(0).getTokenType() == TokenType.SEMICOLON)){
-            throw new RuntimeException("expected a semicoln here"+tokens.get(0).getLineNum());
+            throw new SyntaxException("expected a semicoln here"+tokens.get(0).getLineNum(), tokens.get(0));
         }
         return asmt;
     }

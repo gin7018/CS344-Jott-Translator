@@ -1,5 +1,6 @@
 package parser.nodes.stmt;
 
+import parser.SyntaxException;
 import parser.nodes.JottTree;
 import parser.nodes.NodeUtility;
 import parser.nodes.expr.Expr;
@@ -27,7 +28,7 @@ public class If_Stmt implements JottTree{
     public static If_Stmt createIf_Stmt(ArrayList<Token> tokens) {
         var constant = Constant.CreateConstant(tokens);
         if (constant.getType() != PType.STRING || !constant.getContents().equals("if")) {
-            throw new RuntimeException("Unexpected token " + constant);
+            throw new SyntaxException("Unexpected token " + constant, constant.getToken());
         }
 
         var ifStatement = new If_Stmt();
@@ -46,7 +47,7 @@ public class If_Stmt implements JottTree{
 
     @Override
     public String convertToJott() {
-        return null;
+        return String.format("if[%s] {%s} %s %s", expr.convertToJott(), body.convertToJott(), elseIfLst.convertToJott(), singleElse.convertToJott());
     }
 
     @Override

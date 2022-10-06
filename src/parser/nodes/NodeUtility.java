@@ -1,5 +1,6 @@
 package parser.nodes;
 
+import parser.SyntaxException;
 import utils.Token;
 import utils.TokenType;
 
@@ -21,8 +22,7 @@ public class NodeUtility {
     public static Token popAndExpect(List<Token> tokens, TokenType tokenType) {
         var token = tokens.remove(0);
         if (token.getTokenType() != tokenType) {
-            throw new RuntimeException("ERROR: Expected " + tokenType + " but got " + token);
-            
+            throw new SyntaxException("Expected " + tokenType + " but got " + token, token);
         }
 
         return token;

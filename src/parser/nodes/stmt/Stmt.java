@@ -1,5 +1,6 @@
 package parser.nodes.stmt;
 
+import parser.SyntaxException;
 import parser.nodes.JottTree;
 import parser.nodes.function.Function_Call;
 import parser.nodes.primitive.PType;
@@ -37,15 +38,15 @@ public class Stmt implements JottTree{
             stmt.varDec = Var_Dec.createVar_Dec(tokens);
         }
         else if(t1.getTokenType()== TokenType.ASSIGN || t2.getTokenType() == TokenType.ASSIGN){
-            
+
             stmt.asmt= Asmt.createAsmt(tokens);
 
         }
         else {
-            throw new RuntimeException("Unexpected token or end of file in stmt");
+            throw new SyntaxException("Unexpected token or end of file in stmt", t0);
 
         }
-        
+
         return stmt;
     }
 

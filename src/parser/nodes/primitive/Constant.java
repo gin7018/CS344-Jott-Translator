@@ -1,4 +1,6 @@
 package parser.nodes.primitive;
+import parser.ContextUnawareSyntaxException;
+import parser.SyntaxException;
 import parser.nodes.JottTree;
 import utils.Token;
 import utils.TokenType;
@@ -22,7 +24,7 @@ public class Constant implements JottTree{
     }
     public static Constant CreateConstant(ArrayList<Token> tokens) {
         if (tokens.isEmpty()){
-            throw new RuntimeException("something aint right");
+            throw new ContextUnawareSyntaxException("Something aint right");
         }
         Token tok = tokens.remove(0);
         if(tok.getTokenType() == TokenType.NUMBER){

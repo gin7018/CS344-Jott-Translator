@@ -1,5 +1,6 @@
 package parser.nodes.stmt;
 
+import parser.SyntaxException;
 import parser.nodes.JottTree;
 import parser.nodes.expr.Expr;
 import parser.nodes.function.Function_Call;
@@ -18,8 +19,9 @@ public class Return_Stmt implements JottTree{
     }
 
     public static Return_Stmt createReturn_Stmt(ArrayList<Token> tokens) {
-        if(!tokens.remove(0).getToken().equals("return")){
-            throw new RuntimeException("expected return statment how though");
+        var firstToken = tokens.remove(0);
+        if(!firstToken.getToken().equals("return")){
+            throw new SyntaxException("Expected return statement how though", firstToken);
         }
         Return_Stmt rStmt = new Return_Stmt();
         switch (tokens.get(0).getTokenType()) {
@@ -39,10 +41,11 @@ public class Return_Stmt implements JottTree{
                     rStmt.expr =Id.CreateId(tokens);
                 }
                 break;
-            
+
         }
-        if(!(tokens.remove(0).getTokenType()==TokenType.SEMICOLON)){
-            throw new RuntimeException("expected semicolon");
+        var tempToken = tokens.remove(0);
+        if(!(tempToken.getTokenType()==TokenType.SEMICOLON)){
+            throw new SyntaxException("Expected semicolon", tempToken);
         }
         return rStmt;
 
@@ -56,7 +59,7 @@ public class Return_Stmt implements JottTree{
         }
         out+=";";
         return out;
-        
+
     }
 
     @Override

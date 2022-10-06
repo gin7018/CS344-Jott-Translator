@@ -1,5 +1,6 @@
 package parser.nodes.function;
 
+import parser.SyntaxException;
 import parser.nodes.JottTree;
 
 import java.util.ArrayList;
@@ -23,8 +24,9 @@ public class Function_Call implements JottTree {
         Function_Call fCall = new Function_Call();
         fCall.param = new ArrayList<JottTree>();
         fCall.id = Id.CreateId(tokens);
-        if (!(tokens.remove(0).getTokenType() == TokenType.L_BRACKET)) {
-            throw new RuntimeException("how did this happen?????");
+        var removed =tokens.remove(0);
+        if (removed.getTokenType() != TokenType.L_BRACKET) {
+            throw new SyntaxException("how did this happen?????", removed);
         }
         if (tokens.get(0).getTokenType() == TokenType.R_BRACKET) {
             tokens.remove(0);
@@ -44,7 +46,7 @@ public class Function_Call implements JottTree {
                         fCall.param.add(Expr.createExpr(tokens));
                     } else if (tokens.get(1).getTokenType() == TokenType.L_BRACE) {
                         fCall.param.add(Function_Call.createFunction_Call(tokens));
-                    } 
+                    }
                     else if(Character.isUpperCase(tokens.get(0).getToken().charAt(0))){
                         fCall.param.add(Constant.CreateConstant(tokens));
                     }
@@ -54,16 +56,16 @@ public class Function_Call implements JottTree {
 
                     break;
                     default:
-                    throw new RuntimeException("expected function call param");
+                    throw new SyntaxException("Expected function call param", tokens.get(0));
             }
             Token tempToken = tokens.remove(0);
             if(tempToken.getTokenType()==TokenType.COMMA) continue;
             else if(tempToken.getTokenType()==TokenType.R_BRACKET) break;
             else {
-                throw new RuntimeException("expected comma or right bracket got " +tempToken.getToken()
-                +" on line "+tempToken.getLineNum());
+                throw new SyntaxException("Expected comma or right bracket got " +tempToken.getToken()
+                +" on line "+tempToken.getLineNum(), tempToken);
         }
-        } 
+        }
         return fCall;
     }
 
