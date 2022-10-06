@@ -1,5 +1,7 @@
 package parser.nodes;
 
+import parser.ContextUnawareSyntaxException;
+import parser.SyntaxException;
 import parser.nodes.function.Function_List;
 import utils.Token;
 import utils.TokenType;
@@ -18,7 +20,7 @@ public class Program implements JottTree {
         tokens.remove(0);
         tokens.remove(0);
         if (tokens.isEmpty() || !tokens.remove(0).getTokenType().equals(TokenType.EOF)){
-            throw new RuntimeException("No end of program flag found: $$");
+            throw new ContextUnawareSyntaxException("No end of program flag found: $$");
         }
         return prg;
     }

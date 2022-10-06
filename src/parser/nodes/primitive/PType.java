@@ -16,12 +16,17 @@ public enum PType {
         this.label = name;
     }
 
+    public String getLabel() {
+        return label;
+    }
+
     public static PType getPrimitiveType(Token token) {
         return switch (token.getToken()) {
             case "Integer" -> INT;
             case "Boolean" -> BOOL;
             case "String" -> STRING;
             case "Void" -> VOID;
+            case "Double" ->  DBL;
             default -> null;
         };
     }

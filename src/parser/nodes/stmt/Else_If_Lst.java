@@ -23,11 +23,11 @@ public class Else_If_Lst implements JottTree {
     }
 
     public static Else_If_Lst createElse_If_Lst(ArrayList<Token> tokens) {
-        var constant = Constant.CreateConstant(tokens);
-        if (constant.getType() != PType.STRING || !constant.getContents().equals("elseif")) {
+        //var constant = Constant.CreateConstant(tokens);
+        if ( !tokens.get(0).getToken().equals("elseif")) {
             return new Else_If_Lst(true);
         }
-
+        var constant = Constant.CreateConstant(tokens);
         var elseIfLst = new Else_If_Lst(false);
         popAndExpect(tokens, TokenType.L_BRACKET);
         elseIfLst.expr = Expr.createExpr(tokens);
@@ -42,7 +42,11 @@ public class Else_If_Lst implements JottTree {
 
     @Override
     public String convertToJott() {
-        return null;
+        if (isEpsilon) {
+            return "";
+        }
+
+        return String.format("elseif[%s] {%s} %s", expr.convertToJott(), body.convertToJott(), trailingElseIf.convertToJott());
     }
 
     @Override

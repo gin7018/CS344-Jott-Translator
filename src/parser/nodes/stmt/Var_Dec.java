@@ -1,5 +1,7 @@
 package parser.nodes.stmt;
 
+import parser.ContextUnawareSyntaxException;
+import parser.SyntaxException;
 import parser.nodes.JottTree;
 import parser.nodes.primitive.Id;
 import parser.nodes.primitive.PType;
@@ -17,21 +19,20 @@ public class Var_Dec implements JottTree{
 
     public static Var_Dec createVar_Dec(ArrayList<Token> tokens) {
         if(tokens.isEmpty()){
-            throw new RuntimeException("wrong");
+            throw new ContextUnawareSyntaxException("wrong");
         }
         var varDec = new Var_Dec();
         Token tok = tokens.remove(0);
-        switch (tok.getToken()) {
-            case "Integer" -> varDec.type = PType.INT;
-            case "Double" -> varDec.type = PType.DBL;
-            case "Boolean" -> varDec.type = PType.BOOL;
-            case "String" -> varDec.type = PType.STRING;
-            default -> throw new RuntimeException("Syntax error at token: " + tok.getToken() + " at line " + tok.getLineNum() + " invalid variable type");
-        }
+        varDec.type = switch (tok.getToken()) {
+            case "Integer" -> PType.INT;
+            case "Double" -> PType.DBL;
+            case "Boolean" -> PType.BOOL;
+            case "String" -> PType.STRING;
+            default -> throw new SyntaxException("Syntax error at token: " + tok.getToken() + " at line " + tok.getLineNum() + " invalid variable type", tok);
+        };
         varDec.id = Id.CreateId(tokens);
         varDec.endStmt = End_Stmt.createEnd_Stmt(tokens);
         return varDec;
-        
     }
 
     @Override

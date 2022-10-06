@@ -2,6 +2,7 @@ package parser.nodes.primitive;
 
 
 
+import parser.SyntaxException;
 import parser.nodes.JottTree;
 import utils.Token;
 
@@ -16,11 +17,27 @@ public class Id  implements JottTree {
 
     public static Id CreateId(ArrayList<Token> tokens){
         Id id = new Id();
-        id.id= tokens.remove(0);
+        Token tok = tokens.remove(0);
+
+        if( Character.isUpperCase(tok.getToken().charAt(0))){
+            throw new SyntaxException("Id can not start with a Uppercase", tok);
+        }
+        if(tok.getToken().equals("elseif")){
+            throw new SyntaxException("elseif withought if", tok);
+        }
+        if(tok.getToken().equals("else")){
+            throw new SyntaxException("else withought if", tok);
+        }
+        id.id= tok;
         return id;
 
 
     }
+
+    public Token getToken() {
+        return id;
+    }
+
     @Override
     public String convertToJott() {
         return id.getToken();

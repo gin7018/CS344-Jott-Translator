@@ -40,7 +40,11 @@ public class Else implements JottTree {
 
     @Override
     public String convertToJott() {
-        return null;
+        if (isEpsilon) {
+            return "";
+        }
+
+        return String.format("else { %s }", body.convertToJott());
     }
 
     @Override

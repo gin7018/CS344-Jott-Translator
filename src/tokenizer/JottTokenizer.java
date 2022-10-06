@@ -1,5 +1,6 @@
 package tokenizer;
 
+import parser.ContextUnawareSyntaxException;
 import utils.Token;
 import utils.TokenType;
 
@@ -114,7 +115,7 @@ public class JottTokenizer {
             i--;
             tokens.add(new Token(number, filename, lineNum, TokenType.NUMBER));
           } else {
-            throw new SyntaxException("Unexpected character '.'");
+            throw new ContextUnawareSyntaxException("Unexpected character '.'");
           }
         }
 
@@ -151,7 +152,7 @@ public class JottTokenizer {
             tokens.add(new Token(currentChar + jottChars.get(i + 1), filename, lineNum, TokenType.REL_OP));
             i++;
           } else {
-            throw new SyntaxException("Unexpected character '!'");
+            throw new ContextUnawareSyntaxException("Unexpected character '!'");
           }
         }
 
@@ -166,31 +167,15 @@ public class JottTokenizer {
             string += "\"";
             tokens.add(new Token(string, filename, lineNum, TokenType.STRING));
           } else {
-            throw new SyntaxException("Unexpected character '\"'");
+            throw new ContextUnawareSyntaxException("Unexpected character '\"'");
           }
         }
       }
-    } catch (SyntaxException e) {
+    } catch (ContextUnawareSyntaxException e) {
       e.report(filename, lineNum);
       return null;
     }
     return tokens;
-  }
-
-  static class SyntaxException extends Exception {
-    public SyntaxException(String message) {
-      super(message);
-    }
-
-    /**
-     * Reports the exception as a syntax error with the given file name and line number.
-     *
-     * @param fileName   The name of the file the error was found on
-     * @param lineNumber The 1-indexed line number
-     */
-    public void report(String fileName, int lineNumber) {
-      System.err.printf("Syntax Error:\n%s\n%s:%d\n", getMessage(), fileName, lineNumber);
-    }
   }
 
 //  public static void main(String[] args) {

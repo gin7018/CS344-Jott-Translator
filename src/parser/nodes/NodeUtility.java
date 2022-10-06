@@ -1,5 +1,6 @@
 package parser.nodes;
 
+import parser.SyntaxException;
 import utils.Token;
 import utils.TokenType;
 
@@ -21,9 +22,7 @@ public class NodeUtility {
     public static Token popAndExpect(List<Token> tokens, TokenType tokenType) {
         var token = tokens.remove(0);
         if (token.getTokenType() != tokenType) {
-            // TODO: This should move into its own dedicated exception when this branch is merged into master
-            System.out.println("ERROR: Expected " + tokenType + " but got " + token);
-            return null;
+            throw new SyntaxException("Expected " + tokenType + " but got " + token, token);
         }
 
         return token;

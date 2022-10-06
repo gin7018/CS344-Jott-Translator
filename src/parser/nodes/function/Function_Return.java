@@ -1,5 +1,6 @@
 package parser.nodes.function;
 
+import parser.SyntaxException;
 import parser.nodes.JottTree;
 import parser.nodes.primitive.PType;
 import utils.Token;
@@ -22,7 +23,7 @@ public class Function_Return implements JottTree{
             fr.type = potentialType;
         }
         else {
-            throw new RuntimeException("Unsupported return type: " + tk);
+            throw new SyntaxException("Unsupported return type: " + tk, tk);
         }
         return fr;
     }
