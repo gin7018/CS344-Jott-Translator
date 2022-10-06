@@ -23,17 +23,18 @@ public class Function_Def_Params implements JottTree{
         fdParams.parameters = new ArrayList<>();
 
         while (!tokens.isEmpty() && !tokens.get(0).getTokenType().equals(TokenType.R_BRACKET)) {
-            if (tokens.get(0).getTokenType().equals(TokenType.COMMA)) {
-                tokens.remove(0);
-                continue;
-            }
             var id = Id.CreateId(tokens);
             popAndExpect(tokens, TokenType.COLON);
             var type = PType.getPrimitiveType(tokens.remove(0));
             var param = new FunctionParameters(id, type);
             fdParams.parameters.add(param);
+            if (tokens.get(0).getTokenType().equals(TokenType.R_BRACKET)) {
+                break; // we reached the end of parameter def
+            }
+            else {
+                popAndExpect(tokens, TokenType.COMMA); // we expect a comma if param is not tail
+            }
         }
-
         return fdParams;
     }
 
