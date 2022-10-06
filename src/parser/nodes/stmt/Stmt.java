@@ -8,6 +8,8 @@ import utils.TokenType;
 
 import java.util.ArrayList;
 
+import javax.management.RuntimeErrorException;
+
 import static parser.nodes.NodeUtility.popAndExpect;
 
 public class Stmt implements JottTree{
@@ -22,27 +24,27 @@ public class Stmt implements JottTree{
 
     public static Stmt createStmt(ArrayList<Token> tokens) {
         var stmt = new Stmt();
-        var tok = tokens.get(0);
-        if (PType.getPrimitiveType(tok) != null) { // it can either be varDec or Asmt
-            int lookAheadIndex = 2; // look 2 indexes ahead to see which node to create
-            if (lookAheadIndex < tokens.size() &&
-                    tokens.get(lookAheadIndex).getTokenType().equals(TokenType.ASSIGN)) {
-                stmt.asmt = Asmt.createAsmt(tokens);
-            }
-            else if (lookAheadIndex < tokens.size() &&
-                    tokens.get(lookAheadIndex).getTokenType().equals(TokenType.SEMICOLON)) {
-                stmt.varDec = Var_Dec.createVar_Dec(tokens);
-            }
-            else {
-                throw new RuntimeException("Unexpected token or end of file");
-            }
+        Token t0 = tokens.get(0);
+        Token t1 = tokens.get(1);
+        Token t2 = tokens.get(2);
 
-        }
-        else { // this means it can only be a function call now
+        if(t1.getTokenType()==TokenType.L_BRACKET){
             stmt.funtionCall = Function_Call.createFunction_Call(tokens);
             popAndExpect(tokens, TokenType.SEMICOLON);
         }
+        else if((PType.getPrimitiveType(t0) != null) &&
+        t1.getTokenType()==TokenType.ID_KEYWORD && t2.getTokenType() == TokenType.SEMICOLON){
+            stmt.varDec = Var_Dec.createVar_Dec(tokens);
+        }
+        else if(t1.getTokenType()== TokenType.ASSIGN || t2.getTokenType() == TokenType.ASSIGN){
+            
+            stmt.asmt= Asmt.createAsmt(tokens);
 
+        }
+        else {
+            throw new RuntimeException("Unexpected token or end of file in stmt");
+
+        }
         
         return stmt;
     }
@@ -50,7 +52,7 @@ public class Stmt implements JottTree{
     @Override
     public String convertToJott() {
         if(this.asmt !=null){
-            return this.asmt.convertToJott()+";";
+            return this.asmt.convertToJott();
         }else if(this.varDec != null){
             return this.varDec.convertToJott()+"+";
         }else return this.funtionCall.convertToJott()+";";

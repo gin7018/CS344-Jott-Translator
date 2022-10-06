@@ -21,24 +21,34 @@ public class Asmt implements JottTree {
         Asmt asmt = new Asmt();       
         if(tempKey.equals("Integer")){
             asmt.keyword = tokens.remove(0);
+            asmt.id = Id.CreateId(tokens);
         }
         else if(tempKey.equals("String")){
             asmt.keyword = tokens.remove(0);
+            asmt.id = Id.CreateId(tokens);
+
         }
         else if(tempKey.equals("Boolean")){
             asmt.keyword = tokens.remove(0);
+            asmt.id = Id.CreateId(tokens);
+
+        }
+        else if(tempKey.equals("Double")){
+            asmt.keyword = tokens.remove(0);
+            asmt.id = Id.CreateId(tokens);
+
         }
         else if(tokens.get(0).getTokenType() == TokenType.ID_KEYWORD){
             asmt.id = Id.CreateId(tokens);
         }
         else{
-            throw new RuntimeException("fella what happened");
+            throw new RuntimeException("Expected an Id or Keyowrkd but got"+tokens.get(0).getToken());
         }
         if(!(tokens.remove(0).getTokenType() == TokenType.ASSIGN)){
-            throw new RuntimeException("fella what happened");
+            throw new RuntimeException("why am I in a assighnment");
         }
         asmt.expr = Expr.createExpr(tokens);
-        if(!(tokens.get(0).getTokenType() == TokenType.SEMICOLON)){
+        if(!(tokens.remove(0).getTokenType() == TokenType.SEMICOLON)){
             throw new RuntimeException("expected a semicoln here"+tokens.get(0).getLineNum());
         }
         return asmt;
@@ -48,7 +58,7 @@ public class Asmt implements JottTree {
     public String convertToJott() {
         String out = "";
         if(keyword != null){
-            out+=keyword.toString();
+            out+=keyword.getToken()+" ";
         }
         out+=id.convertToJott()+"="+expr.convertToJott()+";";
         return out;

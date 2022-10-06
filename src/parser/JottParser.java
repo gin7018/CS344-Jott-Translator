@@ -25,10 +25,17 @@ public class JottParser {
       if (tokens.size()==0){
         return null;
       }
+      try{
       Token eof = new Token("EOF",tokens.get(tokens.size()-1).getFilename(), tokens.get(tokens.size()-1).getLineNum(), TokenType.EOF);
       tokens.add(eof);
       tokens.add(eof);
       tokens.add(eof);
 		  return Program.createProgram(tokens);
+      }
+      catch(RuntimeException e){
+        System.out.println(e.getMessage());
+        return null;
+
+      }
     }
 }

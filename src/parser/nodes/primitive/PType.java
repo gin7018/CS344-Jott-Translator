@@ -22,6 +22,7 @@ public enum PType {
             case "Boolean" -> BOOL;
             case "String" -> STRING;
             case "Void" -> VOID;
+            case "Double" ->  DBL;
             default -> null;
         };
     }

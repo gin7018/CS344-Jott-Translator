@@ -31,7 +31,7 @@ public class Constant implements JottTree{
             }else{
                 return new Constant(PType.INT, tok);
             }
-        }else if(tok.getToken().contains("true") || tok.getToken().contains("false")){
+        }else if(tok.getToken().contains("True") || tok.getToken().contains("False")){
             return new Constant(PType.BOOL, tok);
         }else{
             return new Constant(PType.STRING, tok);

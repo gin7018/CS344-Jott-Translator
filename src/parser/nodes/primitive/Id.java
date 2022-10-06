@@ -16,7 +16,18 @@ public class Id  implements JottTree {
 
     public static Id CreateId(ArrayList<Token> tokens){
         Id id = new Id();
-        id.id= tokens.remove(0);
+        Token tok = tokens.remove(0);
+        
+        if( Character.isUpperCase(tok.getToken().charAt(0))){
+            throw new RuntimeException("Id can not start with a Uppercase");
+        }
+        if(tok.getToken().equals("elseif")){
+            throw new RuntimeException("elseif withought if");
+        }
+        if(tok.getToken().equals("else")){
+            throw new RuntimeException("else withought if");
+        }
+        id.id= tok;
         return id;
 
 

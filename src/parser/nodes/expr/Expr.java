@@ -41,13 +41,13 @@ public class Expr implements JottTree {
         else if(tokens.get(0).getTokenType()==TokenType.STRING){
             expr.lnode = Constant.CreateConstant(tokens);        }
         else{
-            throw new RuntimeException("what");
+            throw new RuntimeException("expecated a Number string or Id For expr but got"+tokens.get(0).getToken());
         }
         if(tokens.get(0).getTokenType()==TokenType.MATH_OP||tokens.get(0).getTokenType()==TokenType.REL_OP){
             if(!(tokens.get(1).getTokenType()==TokenType.ID_KEYWORD||
             tokens.get(1).getTokenType()==TokenType.NUMBER||
             tokens.get(1).getTokenType()==TokenType.STRING)){
-                throw new RuntimeException("expected a ID keyword string or number to follow mathop but got"+tokens.get(1).toString());
+                throw new RuntimeException("expected a ID keyword string or number to follow op but got"+tokens.get(1).toString());
             }
             expr.operator=tokens.remove(0);
             expr.rnode =Expr.createExpr(tokens);

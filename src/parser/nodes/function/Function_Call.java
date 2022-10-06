@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import parser.nodes.expr.Expr;
 import parser.nodes.primitive.Constant;
 import parser.nodes.primitive.Id;
+import parser.nodes.stmt.Else;
 import utils.Token;
 import utils.TokenType;
 
@@ -43,9 +44,14 @@ public class Function_Call implements JottTree {
                         fCall.param.add(Expr.createExpr(tokens));
                     } else if (tokens.get(1).getTokenType() == TokenType.L_BRACE) {
                         fCall.param.add(Function_Call.createFunction_Call(tokens));
-                    } else {
+                    } 
+                    else if(Character.isUpperCase(tokens.get(0).getToken().charAt(0))){
+                        fCall.param.add(Constant.CreateConstant(tokens));
+                    }
+                    else{
                         fCall.param.add(Id.CreateId(tokens));
                     }
+
                     break;
                     default:
                     throw new RuntimeException("expected function call param");

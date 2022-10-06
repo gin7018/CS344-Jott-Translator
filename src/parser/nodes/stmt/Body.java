@@ -35,7 +35,11 @@ public class Body implements JottTree {
             return this.body_Stmt.convertToJott() + this.body.convertToJott();
         }else if(this.body_Stmt != null){
             return this.body_Stmt.convertToJott();
-        }else return "";
+        }
+        else if(this.return_Stmt != null){
+            return this.return_Stmt.convertToJott();
+        }
+        else return "";
     }
 
     @Override
