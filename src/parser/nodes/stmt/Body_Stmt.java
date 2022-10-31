@@ -32,8 +32,8 @@ public class Body_Stmt implements JottTree {
         var bodyStmt = new Body_Stmt();
         Token tok = tokens.get(0);
         switch (tok.getToken()) {
-            case "if" -> bodyStmt.if_Stmt = If_Stmt.createIf_Stmt(tokens);
-            case "while" -> bodyStmt.while_Loop = While_Loop.createWhile_Loop(tokens);
+            case "if" -> bodyStmt.if_Stmt = If_Stmt.createIf_Stmt(tokens, table);
+            case "while" -> bodyStmt.while_Loop = While_Loop.createWhile_Loop(tokens, table);
             default -> bodyStmt.stmt = Stmt.createStmt(tokens, table);
         }
         return bodyStmt;
