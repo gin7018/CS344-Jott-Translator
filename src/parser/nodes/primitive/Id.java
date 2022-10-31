@@ -2,6 +2,7 @@ package parser.nodes.primitive;
 
 
 
+import parser.SymbolTable;
 import parser.SyntaxException;
 import parser.nodes.JottTree;
 import utils.Token;
@@ -62,7 +63,7 @@ public class Id  implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree(SymbolTable table) {
         // TODO Auto-generated method stub
         return false;
     }

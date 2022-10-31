@@ -33,4 +33,8 @@ public class Symbol {
     public String getAttribute() {
         return attribute;
     }
+
+    public List<FunctionParameters> getAttributeLst() {
+        return attributeLst;
+    }
 }

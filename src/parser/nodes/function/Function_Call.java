@@ -1,5 +1,7 @@
 package parser.nodes.function;
 
+import parser.Symbol;
+import parser.SymbolTable;
 import parser.SyntaxException;
 import parser.nodes.JottTree;
 import parser.nodes.expr.Expr;
@@ -9,6 +11,7 @@ import utils.Token;
 import utils.TokenType;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Function_Call implements JottTree {
     Id id;
@@ -97,9 +100,39 @@ public class Function_Call implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree(SymbolTable table) {
         // TODO Auto-generated method stub
-        return false;
+        if (table.lookup(id.toString()) != null) {
+            Symbol function = table.lookup(id.toString());
+            if (function.getAttributeLst().size() != param.size()) {
+                return false;
+            }
+            List<FunctionParameters> attributeLst = function.getAttributeLst();
+            for (int i = 0; i < attributeLst.size(); i++) {
+                FunctionParameters expected = attributeLst.get(i);
+                JottTree actual = param.get(i);
+                if (actual instanceof Constant) {
+                    if (!((Constant) actual).getType().equals(expected.getType())) {
+                        return false;
+                    }
+                }
+                else if (actual instanceof Expr) {
+
+                }
+                else if (actual instanceof Function_Call) {
+                    if (!actual.validateTree(table)) {
+                        return false;
+                    }
+                }
+                else if (actual instanceof Id && table.lookup(((Id) actual).getToken().getToken()) != null) {
+                    Symbol variable = table.lookup(((Id) actual).getToken().getToken());
+                    if (!variable.getType().equals(expected.getType().label)) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 
 }

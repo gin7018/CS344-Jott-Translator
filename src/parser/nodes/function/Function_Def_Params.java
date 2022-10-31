@@ -1,5 +1,6 @@
 package parser.nodes.function;
 
+import parser.SymbolTable;
 import parser.nodes.JottTree;
 import parser.nodes.primitive.Id;
 import parser.nodes.primitive.PType;
@@ -38,6 +39,10 @@ public class Function_Def_Params implements JottTree{
         return fdParams;
     }
 
+    public ArrayList<FunctionParameters> getParameters() {
+        return parameters;
+    }
+
     @Override
     public String convertToJott() {
         StringBuilder result = new StringBuilder();
@@ -63,7 +68,7 @@ public class Function_Def_Params implements JottTree{
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree(SymbolTable table) {
         return false;
     }
 }
