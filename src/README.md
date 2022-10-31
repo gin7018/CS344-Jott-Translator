@@ -10,6 +10,7 @@
    - /stmt: has all the nodes related to statements, variables declaration, etc.
 2. Tokenizer:
    The tokenizer directory has the jott tokenizer implementation and a few temporary test files.
+   IMPORTANT: We added our own enum to TokenType The enum EOF to help with error handling if we unexpecditly reach the end of tokens
 3. Utils:
    This directory has the Token and TokenType classes used by the Jott tokenizer.
 4. Testing:
