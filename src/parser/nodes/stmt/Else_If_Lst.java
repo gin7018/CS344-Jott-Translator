@@ -1,9 +1,9 @@
 package parser.nodes.stmt;
 
+import parser.SymbolTable;
 import parser.nodes.JottTree;
 import parser.nodes.expr.Expr;
 import parser.nodes.primitive.Constant;
-import parser.nodes.primitive.PType;
 import utils.Token;
 import utils.TokenType;
 
@@ -22,7 +22,7 @@ public class Else_If_Lst implements JottTree {
         this.isEpsilon = isEpsilon;
     }
 
-    public static Else_If_Lst createElse_If_Lst(ArrayList<Token> tokens) {
+    public static Else_If_Lst createElse_If_Lst(ArrayList<Token> tokens, SymbolTable table) {
         //var constant = Constant.CreateConstant(tokens);
         if ( !tokens.get(0).getToken().equals("elseif")) {
             return new Else_If_Lst(true);
@@ -33,9 +33,9 @@ public class Else_If_Lst implements JottTree {
         elseIfLst.expr = Expr.createExpr(tokens);
         popAndExpect(tokens, TokenType.R_BRACKET);
         popAndExpect(tokens, TokenType.L_BRACE);
-        elseIfLst.body = Body.createBody(tokens);
+        elseIfLst.body = Body.createBody(tokens, table);
         popAndExpect(tokens, TokenType.R_BRACE);
-        elseIfLst.trailingElseIf = Else_If_Lst.createElse_If_Lst(tokens);
+        elseIfLst.trailingElseIf = Else_If_Lst.createElse_If_Lst(tokens, table);
 
         return elseIfLst;
     }
@@ -65,7 +65,7 @@ public class Else_If_Lst implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree(SymbolTable table) {
         return false;
     }
 }

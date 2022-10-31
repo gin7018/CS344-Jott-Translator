@@ -1,5 +1,6 @@
 package parser.nodes.stmt;
 
+import parser.SymbolTable;
 import parser.nodes.JottTree;
 import utils.Token;
 import utils.TokenType;
@@ -43,7 +44,7 @@ public class End_Stmt implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree(SymbolTable table) {
         return false;
     }
 }

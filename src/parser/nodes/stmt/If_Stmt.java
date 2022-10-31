@@ -1,8 +1,8 @@
 package parser.nodes.stmt;
 
+import parser.SymbolTable;
 import parser.SyntaxException;
 import parser.nodes.JottTree;
-import parser.nodes.NodeUtility;
 import parser.nodes.expr.Expr;
 import parser.nodes.primitive.Constant;
 import parser.nodes.primitive.PType;
@@ -10,7 +10,6 @@ import utils.Token;
 import utils.TokenType;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static parser.nodes.NodeUtility.popAndExpect;
 
@@ -25,7 +24,7 @@ public class If_Stmt implements JottTree{
 
     }
 
-    public static If_Stmt createIf_Stmt(ArrayList<Token> tokens) {
+    public static If_Stmt createIf_Stmt(ArrayList<Token> tokens, SymbolTable table) {
         var constant = Constant.CreateConstant(tokens);
         if (constant.getType() != PType.STRING || !constant.getContents().equals("if")) {
             throw new SyntaxException("Unexpected token " + constant, constant.getToken());
@@ -37,10 +36,10 @@ public class If_Stmt implements JottTree{
         ifStatement.expr = Expr.createExpr(tokens);
         popAndExpect(tokens, TokenType.R_BRACKET);
         popAndExpect(tokens, TokenType.L_BRACE);
-        ifStatement.body = Body.createBody(tokens);
+        ifStatement.body = Body.createBody(tokens, table);
         popAndExpect(tokens, TokenType.R_BRACE);
-        ifStatement.elseIfLst = Else_If_Lst.createElse_If_Lst(tokens);
-        ifStatement.singleElse = Else.createElse(tokens);
+        ifStatement.elseIfLst = Else_If_Lst.createElse_If_Lst(tokens, table);
+        ifStatement.singleElse = Else.createElse(tokens, table);
 
         return ifStatement;
     }
@@ -66,7 +65,7 @@ public class If_Stmt implements JottTree{
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree(SymbolTable table) {
         return false;
     }
 }

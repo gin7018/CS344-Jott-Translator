@@ -1,5 +1,6 @@
 package parser.nodes.stmt;
 
+import parser.SymbolTable;
 import parser.nodes.JottTree;
 import parser.nodes.primitive.Constant;
 import parser.nodes.primitive.PType;
@@ -25,14 +26,14 @@ public class Else implements JottTree {
         this.body = body;
     }
 
-    public static Else createElse(ArrayList<Token> tokens) {
+    public static Else createElse(ArrayList<Token> tokens, SymbolTable table) {
         var constant = Constant.CreateConstant(tokens);
         if (constant.getType() != PType.STRING || !constant.getContents().equals("else")) {
             return new Else();
         }
 
         popAndExpect(tokens, TokenType.L_BRACE);
-        var body = Body.createBody(tokens);
+        var body = Body.createBody(tokens, table);
         popAndExpect(tokens, TokenType.R_BRACE);
 
         return new Else(body);
@@ -63,7 +64,7 @@ public class Else implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree(SymbolTable table) {
         return false;
     }
 }

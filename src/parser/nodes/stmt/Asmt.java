@@ -1,5 +1,6 @@
 package parser.nodes.stmt;
 
+import parser.SymbolTable;
 import parser.SyntaxException;
 import parser.nodes.JottTree;
 import parser.nodes.expr.Expr;
@@ -81,7 +82,7 @@ public class Asmt implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree(SymbolTable table) {
         return false;
     }
 }

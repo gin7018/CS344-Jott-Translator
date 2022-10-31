@@ -1,5 +1,6 @@
 package parser.nodes.stmt;
 
+import parser.SymbolTable;
 import parser.SyntaxException;
 import parser.nodes.JottTree;
 import parser.nodes.expr.Expr;
@@ -21,7 +22,7 @@ public class While_Loop implements JottTree{
 
     }
 
-    public static While_Loop createWhile_Loop(ArrayList<Token> tokens) {
+    public static While_Loop createWhile_Loop(ArrayList<Token> tokens, SymbolTable table) {
         var constant = Constant.CreateConstant(tokens);
         if (constant.getType() != PType.STRING || !constant.getContents().equals("while")) {
             throw new SyntaxException("Unexpected token " + constant, constant.getToken());
@@ -32,7 +33,7 @@ public class While_Loop implements JottTree{
         whileLoop.expr = Expr.createExpr(tokens);
         popAndExpect(tokens, TokenType.R_BRACKET);
         popAndExpect(tokens, TokenType.L_BRACE);
-        whileLoop.body = Body.createBody(tokens);
+        whileLoop.body = Body.createBody(tokens, table);
         popAndExpect(tokens, TokenType.R_BRACE);
 
         return whileLoop;
@@ -59,7 +60,7 @@ public class While_Loop implements JottTree{
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree(SymbolTable table) {
         return false;
     }
 }
