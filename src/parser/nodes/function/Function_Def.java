@@ -17,7 +17,7 @@ public class  Function_Def implements JottTree{
     private Function_Def_Params fdParams;
     private JottTree functionReturn;
     private JottTree body;
-    private SymbolTable table;
+    private static SymbolTable table;
 
     private Function_Def() {
         table = SymbolTable.allocate();
@@ -32,7 +32,7 @@ public class  Function_Def implements JottTree{
         popAndExpect(tokens, TokenType.COLON);
         fd.functionReturn = Function_Return.createFunction_Return(tokens);
         popAndExpect(tokens, TokenType.L_BRACE);
-        fd.body = Body.createBody(tokens);
+        fd.body = Body.createBody(tokens, table);
         popAndExpect(tokens, TokenType.R_BRACE);
 
         return fd;

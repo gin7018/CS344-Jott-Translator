@@ -1,5 +1,6 @@
 package parser.nodes.stmt;
 
+import parser.SymbolTable;
 import parser.nodes.JottTree;
 import utils.Token;
 
@@ -27,13 +28,13 @@ public class Body_Stmt implements JottTree {
 //        this.if_Stmt= null;
 //    }
 
-    public static Body_Stmt createBody_Stmt(ArrayList<Token> tokens) {
+    public static Body_Stmt createBody_Stmt(ArrayList<Token> tokens, SymbolTable table) {
         var bodyStmt = new Body_Stmt();
         Token tok = tokens.get(0);
         switch (tok.getToken()) {
             case "if" -> bodyStmt.if_Stmt = If_Stmt.createIf_Stmt(tokens);
             case "while" -> bodyStmt.while_Loop = While_Loop.createWhile_Loop(tokens);
-            default -> bodyStmt.stmt = Stmt.createStmt(tokens);
+            default -> bodyStmt.stmt = Stmt.createStmt(tokens, table);
         }
         return bodyStmt;
     }
@@ -64,7 +65,7 @@ public class Body_Stmt implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree(SymbolTable table) {
         return false;
     }
 }

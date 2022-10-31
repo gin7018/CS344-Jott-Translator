@@ -22,12 +22,11 @@ public class Function_List implements JottTree {
         fl.functionDefs = new ArrayList<>();
         while (!tokens.isEmpty() && !tokens.get(0).getToken().equals("$$")&& !tokens.get(0).getTokenType().equals(TokenType.EOF)) {
             var fd = Function_Def.createFunction_Def(tokens);
-            if (fd.validateTree(tableOfFunctions)) {
-                ArrayList<FunctionParameters> params = fd.getFdParams().getParameters();
-                Symbol function = new Symbol(fd.getId().toString(), fd.getFunctionReturn().toString(), params);
-                tableOfFunctions.insert(function);
-            }
             fl.functionDefs.add(fd);
+
+            ArrayList<FunctionParameters> params = fd.getFdParams().getParameters();
+            Symbol function = new Symbol(fd.getId().toString(), fd.getFunctionReturn().toString(), params);
+            tableOfFunctions.insert(function);
         }
         return fl;
     }
@@ -61,8 +60,12 @@ public class Function_List implements JottTree {
 
     @Override
     public boolean validateTree(SymbolTable table) {
-        // TODO Auto-generated method stub
-        return false;
+        for (JottTree functionDef: functionDefs) {
+            if (!functionDef.validateTree(table)) {
+                return false;
+            }
+        }
+        return true;
     }
     
 }

@@ -1,6 +1,7 @@
 package parser.nodes.stmt;
 
 import parser.ContextUnawareSyntaxException;
+import parser.SymbolTable;
 import parser.SyntaxException;
 import parser.nodes.JottTree;
 import parser.nodes.primitive.Id;
@@ -35,6 +36,14 @@ public class Var_Dec implements JottTree{
         return varDec;
     }
 
+    public Id getId() {
+        return id;
+    }
+
+    public PType getType() {
+        return type;
+    }
+
     @Override
     public String convertToJott() {
         return null;
@@ -56,7 +65,7 @@ public class Var_Dec implements JottTree{
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree(SymbolTable table) {
         return false;
     }
 }

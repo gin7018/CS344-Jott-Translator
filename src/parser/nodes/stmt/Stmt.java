@@ -1,5 +1,7 @@
 package parser.nodes.stmt;
 
+import parser.Symbol;
+import parser.SymbolTable;
 import parser.SyntaxException;
 import parser.nodes.JottTree;
 import parser.nodes.function.Function_Call;
@@ -8,8 +10,6 @@ import utils.Token;
 import utils.TokenType;
 
 import java.util.ArrayList;
-
-import javax.management.RuntimeErrorException;
 
 import static parser.nodes.NodeUtility.popAndExpect;
 
@@ -23,7 +23,7 @@ public class Stmt implements JottTree{
 
     }
 
-    public static Stmt createStmt(ArrayList<Token> tokens) {
+    public static Stmt createStmt(ArrayList<Token> tokens, SymbolTable table) {
         var stmt = new Stmt();
         Token t0 = tokens.get(0);
         Token t1 = tokens.get(1);
@@ -36,6 +36,11 @@ public class Stmt implements JottTree{
         else if((PType.getPrimitiveType(t0) != null) &&
         t1.getTokenType()==TokenType.ID_KEYWORD && t2.getTokenType() == TokenType.SEMICOLON){
             stmt.varDec = Var_Dec.createVar_Dec(tokens);
+
+            // add declaration to sym table
+            Var_Dec vd = (Var_Dec) stmt.varDec;
+            Symbol sym = new Symbol(vd.getId().getToken().getToken(), vd.getType().label, "");
+            table.insert(sym);
         }
         else if(t1.getTokenType()== TokenType.ASSIGN || t2.getTokenType() == TokenType.ASSIGN){
 
@@ -76,7 +81,7 @@ public class Stmt implements JottTree{
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree(SymbolTable table) {
         return false;
     }
 }
