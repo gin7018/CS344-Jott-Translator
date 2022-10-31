@@ -80,6 +80,24 @@ public class  Function_Def implements JottTree{
             return false;
         }
 
+        // check if the body has a return statement that matches the expected return
+        if (functionReturn == null && ((Body) body).getReturn_Stmt() != null) {
+            // returning from a void function is invalid
+            return false;
+        }
+        else if (functionReturn != null && ((Body) body).getReturn_Stmt() == null) {
+            // missing a return statement
+            return false;
+        }
+        else if (functionReturn != null && ((Body) body).getReturn_Stmt() != null) {
+            // if this is a returning function check if the types are matching
+            boolean typesMatch = ((Function_Return) functionReturn).getType().equals(((Body) body)
+                    .getReturn_Stmt().getType());
+            if (!typesMatch) {
+                return false;
+            }
+        }
+
         // check if the body is valid
         table.insert(new Symbol(functionReturn.toString(), "", ""));
         return body.validateTree(table);

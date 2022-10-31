@@ -1,11 +1,13 @@
 package parser.nodes.stmt;
 
+import parser.SymbolTable;
 import parser.SyntaxException;
 import parser.nodes.JottTree;
 import parser.nodes.expr.Expr;
 import parser.nodes.function.Function_Call;
 import parser.nodes.primitive.Constant;
 import parser.nodes.primitive.Id;
+import parser.nodes.primitive.PType;
 import utils.Token;
 import utils.TokenType;
 
@@ -51,6 +53,10 @@ public class Return_Stmt implements JottTree{
 
     }
 
+    public PType getType() {
+        return ((Expr) expr).getExprType();
+    }
+
     @Override
     public String convertToJott() {
         String out ="return ";
@@ -78,7 +84,7 @@ public class Return_Stmt implements JottTree{
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree(SymbolTable table) {
         return false;
     }
 }

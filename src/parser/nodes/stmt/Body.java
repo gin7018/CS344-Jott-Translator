@@ -30,6 +30,10 @@ public class Body implements JottTree {
         
     }
 
+    public Return_Stmt getReturn_Stmt() {
+        return return_Stmt;
+    }
+
     @Override
     public String convertToJott() {
         if(this.body_Stmt!= null &&this.body != null){

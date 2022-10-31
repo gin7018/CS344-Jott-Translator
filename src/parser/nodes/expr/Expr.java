@@ -1,14 +1,16 @@
 package parser.nodes.expr;
 
-import java.util.ArrayList;
-
+import parser.SymbolTable;
 import parser.SyntaxException;
 import parser.nodes.JottTree;
 import parser.nodes.function.Function_Call;
 import parser.nodes.primitive.Constant;
 import parser.nodes.primitive.Id;
+import parser.nodes.primitive.PType;
 import utils.Token;
 import utils.TokenType;
+
+import java.util.ArrayList;
 
 public class Expr implements JottTree {
     JottTree lnode;
@@ -61,6 +63,10 @@ public class Expr implements JottTree {
         return expr;
     }
 
+    public PType getExprType() {
+        return null;
+    }
+
     @Override
     public String convertToJott() {
         if (isTail){
@@ -90,7 +96,7 @@ public class Expr implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree(SymbolTable table) {
         // TODO Auto-generated method stub
         return false;
     }
