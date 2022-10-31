@@ -101,7 +101,6 @@ public class Function_Call implements JottTree {
 
     @Override
     public boolean validateTree(SymbolTable table) {
-        // TODO Auto-generated method stub
         if (table.lookup(id.toString()) != null) {
             Symbol function = table.lookup(id.toString());
             if (function.getAttributeLst().size() != param.size()) {
@@ -117,7 +116,9 @@ public class Function_Call implements JottTree {
                     }
                 }
                 else if (actual instanceof Expr) {
-
+                    if (!((Expr) actual).getExprType().equals(expected.getType())) {
+                        return false;
+                    }
                 }
                 else if (actual instanceof Function_Call) {
                     if (!actual.validateTree(table)) {
