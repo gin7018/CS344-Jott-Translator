@@ -21,6 +21,7 @@ public class Jott {
             String language = args[3];
 
             ArrayList<Token> tokens = JottTokenizer.tokenize(inputFilename);
+            assert tokens != null;
             JottTree parseTree = JottParser.parse(tokens);
             assert parseTree != null;
             parseTree.validateTree(null);
