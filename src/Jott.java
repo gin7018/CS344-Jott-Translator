@@ -12,7 +12,7 @@ public class Jott {
 
     public static void main(String[] args) {
 
-        if (args.length != 3) {
+        if (args.length != 4) {
             System.out.println("usage: java Jott <input> <output> <language>");
         }
         else {
@@ -22,6 +22,7 @@ public class Jott {
 
             ArrayList<Token> tokens = JottTokenizer.tokenize(inputFilename);
             JottTree parseTree = JottParser.parse(tokens);
+            assert parseTree != null;
             parseTree.validateTree(null);
 
             try {
