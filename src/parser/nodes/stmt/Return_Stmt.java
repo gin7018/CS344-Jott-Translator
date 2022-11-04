@@ -53,8 +53,8 @@ public class Return_Stmt implements JottTree{
 
     }
 
-    public PType getType() {
-        return ((Expr) expr).getExprType();
+    public PType getType() {// whatever calls this must call validate first
+        return expr.getPrimitiveType();
     }
 
     @Override

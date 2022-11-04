@@ -79,4 +79,10 @@ public class Constant implements JottTree {
         return true;
     }
 
+    @Override
+    public PType getPrimitiveType() {
+        // TODO Auto-generated method stub
+        return this.type;
+    }
+
 }

@@ -7,6 +7,7 @@ import parser.nodes.JottTree;
 import parser.nodes.expr.Expr;
 import parser.nodes.primitive.Constant;
 import parser.nodes.primitive.Id;
+import parser.nodes.primitive.PType;
 import utils.Token;
 import utils.TokenType;
 
@@ -16,6 +17,7 @@ import java.util.List;
 public class Function_Call implements JottTree {
     Id id;
     ArrayList<JottTree> param;
+    PType pType;
 
     private Function_Call() {
 
@@ -25,6 +27,7 @@ public class Function_Call implements JottTree {
         Function_Call fCall = new Function_Call();
         fCall.param = new ArrayList<JottTree>();
         fCall.id = Id.CreateId(tokens);
+        fCall.pType = null;
         var removed =tokens.remove(0);
         if (removed.getTokenType() != TokenType.L_BRACKET) {
             throw new SyntaxException("how did this happen?????", removed);
@@ -103,6 +106,9 @@ public class Function_Call implements JottTree {
     public boolean validateTree(SymbolTable table) {
         if (table.lookup(id.toString()) != null) {
             Symbol function = table.lookup(id.toString());
+
+            this.pType = PType.valueOf(function.getType());
+
             if (function.getAttributeLst().size() != param.size()) {
                 return false;
             }
@@ -116,7 +122,7 @@ public class Function_Call implements JottTree {
                     }
                 }
                 else if (actual instanceof Expr) {
-                    if (!((Expr) actual).getExprType().equals(expected.getType())) {
+                    if (!((Expr) actual).getPrimitiveType().equals(expected.getType())) {
                         return false;
                     }
                 }
@@ -134,6 +140,11 @@ public class Function_Call implements JottTree {
             }
         }
         return true;
+    }
+
+    @Override
+    public PType getPrimitiveType() {
+        return this.pType;
     }
 
 }

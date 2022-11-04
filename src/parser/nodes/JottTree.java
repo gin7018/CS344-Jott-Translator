@@ -1,6 +1,7 @@
 package parser.nodes;
 
 import parser.SymbolTable;
+import parser.nodes.primitive.PType;
 
 /**
  * Interface for all Jott parse tree nodes
@@ -39,4 +40,6 @@ public interface JottTree {
      * @return true if valid Jott code; false otherwise
      */
     public boolean validateTree(SymbolTable table);
+
+    public PType getPrimitiveType();
 }

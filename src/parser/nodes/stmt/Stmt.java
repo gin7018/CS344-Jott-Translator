@@ -44,7 +44,7 @@ public class Stmt implements JottTree{
         }
         else if(t1.getTokenType()== TokenType.ASSIGN || t2.getTokenType() == TokenType.ASSIGN){
 
-            stmt.asmt= Asmt.createAsmt(tokens);
+            stmt.asmt= Asmt.createAsmt(tokens, table);
 
         }
         else {

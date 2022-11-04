@@ -15,8 +15,9 @@ import java.util.ArrayList;
 public class Expr implements JottTree {
     JottTree lnode;
     Token operator;
-    JottTree rnode;
+    Expr rnode;
     Boolean isTail;
+    PType ptype;
 
 
     private Expr(){
@@ -24,6 +25,7 @@ public class Expr implements JottTree {
         rnode = null;
         operator = null;
         isTail=false;
+        ptype = null;
     }
 
     public static Expr createExpr(ArrayList<Token> tokens){
@@ -63,10 +65,7 @@ public class Expr implements JottTree {
         return expr;
     }
 
-    public PType getExprType() {
-        return null;
-    }
-
+     
     @Override
     public String convertToJott() {
         if (isTail){
@@ -97,8 +96,189 @@ public class Expr implements JottTree {
 
     @Override
     public boolean validateTree(SymbolTable table) {
-        // TODO Auto-generated method stub
-        return false;
+        if(this.isTail){
+            this.ptype = lnode.getPrimitiveType();
+            return this.lnode.validateTree(table);
+        }
+        else if (!lnode.validateTree(table) ){
+            return false;
+        }
+        else{
+
+            PType left = lnode.getPrimitiveType();
+            ExprType right = rnode.gExprType(table);
+            Boolean mathop;
+            String tokenop = this.operator.getToken();
+            if(tokenop.equals("+")||tokenop.equals("*")||
+            tokenop.equals("/")||tokenop.equals("-")){
+                mathop=true;
+            }
+            else{
+                mathop = false;
+            }
+            switch(right){
+                case Iexpr:
+                if(mathop){
+                    this.ptype=PType.INT;
+                }
+                else{
+                    this.ptype=PType.BOOL;
+                }
+                if(left!= PType.INT){
+                    return false;
+                }
+                break;
+
+
+                case Dexpr:
+                if(mathop){
+                    this.ptype=PType.DBL;
+                }
+                else{
+                    this.ptype=PType.BOOL;
+                }
+                if(left!= PType.DBL){
+                    return false;
+                }
+                break;
+
+
+                case Irel:
+                if(!mathop){
+                    return false;
+                }
+                if(left!= PType.INT){
+                    return false;
+                }
+                this.ptype = PType.BOOL;
+                break;
+
+
+                case Drel:
+                if(!mathop){
+                    return false;
+                }
+                if(left!= PType.DBL){
+                    return false;
+                }
+                this.ptype = PType.BOOL;
+                
+                break;
+
+
+                case Srel:
+                if(mathop){
+                    return false;
+                }
+                if(left!= PType.STRING){
+                    return false;
+                }
+                this.ptype = PType.BOOL;
+                break;
+                case Fail:
+                return false;
+            }
+            return true;
+        }
     }
 
+    private ExprType gExprType(SymbolTable table){
+        if (!lnode.validateTree(table)){
+            return null;
+        }
+        if (this.isTail){
+            switch(lnode.getPrimitiveType()){
+                case INT:
+                return ExprType.Iexpr;
+                case DBL:
+                return ExprType.Dexpr;
+                case STRING:
+                return ExprType.Srel;
+                default:
+                return null;
+            }
+        }
+        else{
+            Boolean mathop;
+            String tokenop = this.operator.getToken();
+            if(tokenop.equals("+")||tokenop.equals("*")||
+            tokenop.equals("/")||tokenop.equals("-")){
+                mathop=true;
+            }
+            else{
+                mathop = false;
+            }
+            PType lType = lnode.getPrimitiveType();
+            ExprType eType = rnode.gExprType(table);
+            switch (eType){
+                case Srel:
+                return ExprType.Fail;// can only have srelation
+                case Iexpr:
+                if(lType!=PType.INT){
+                    return ExprType.Fail;
+                }
+                if(mathop){
+                    return ExprType.Iexpr;
+                }
+                else{
+                    return ExprType.Irel;
+                }
+
+                case Dexpr:
+                if(lType!=PType.DBL){
+                    return ExprType.Fail;
+                }
+                if(mathop){
+                    return ExprType.Iexpr;
+                }
+                else{
+                    return ExprType.Irel;
+                }
+
+                case Irel:
+                if(lType!=PType.INT){
+                    return ExprType.Fail;
+                }
+                if(mathop){
+                    return ExprType.Irel;
+                }
+                else{
+                    return ExprType.Fail;
+                }
+                case Drel:
+                if(lType!=PType.DBL){
+                    return ExprType.Fail;
+                }
+                if(mathop){
+                    return ExprType.Drel;
+                }
+                else{
+                    return ExprType.Fail;
+                }
+                case Fail:
+                    return ExprType.Fail;
+                default:
+                    return ExprType.Fail;
+            }
+        }
+    }
+
+    @Override
+    public PType getPrimitiveType() {
+        // TODO Auto-generated method stub
+        return ptype;
+    }
+
+
+    
+
+
+}
+enum ExprType{
+    Iexpr,
+    Dexpr,
+    Irel,
+    Drel,
+    Fail,
+    Srel;
 }
