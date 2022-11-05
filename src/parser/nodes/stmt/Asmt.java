@@ -49,6 +49,9 @@ public class Asmt implements JottTree {
         }
         else if(tokens.get(0).getTokenType() == TokenType.ID_KEYWORD){
             asmt.id = Id.CreateId(tokens);
+            if(table.lookup(asmt.id.getToken().getToken())== null){
+                throw new SyntaxException("this id has not be created", asmt.id.getToken());
+            }
         }
         else{
             throw new SyntaxException("Expected an Id or Keyowrkd but got"+tokens.get(0).getToken(), tokens.get(0));
