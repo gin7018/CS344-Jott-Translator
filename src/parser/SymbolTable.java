@@ -1,16 +1,16 @@
 package parser;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SymbolTable {
 
-    private static List<Symbol> table;
+    private static Map<String, Symbol> table;
 
     private SymbolTable() {}
 
     public static SymbolTable allocate() {
-        table = new ArrayList<>();
+        table = new HashMap<>();
         return new SymbolTable();
     }
 
@@ -19,17 +19,11 @@ public class SymbolTable {
     }
 
     public Symbol lookup(String name) {
-        Symbol sym = null;
-        for (Symbol symbol : table) {
-            if (symbol.getName().equals(name)) {
-                sym = symbol;
-            }
-        }
-        return sym;
+        return table.get(name);
     }
 
     public void insert(Symbol sym) {
-        table.add(sym);
+        table.put(sym.getName(), sym);
     }
 
 

@@ -1,6 +1,5 @@
 package parser.nodes.function;
 
-import parser.Symbol;
 import parser.SymbolTable;
 import parser.nodes.JottTree;
 import parser.nodes.primitive.Id;
@@ -99,7 +98,7 @@ public class  Function_Def implements JottTree{
         }
 
         // check if the body is valid
-        table.insert(new Symbol(functionReturn.toString(), "", ""));
+        //table.insert(new Symbol(functionReturn.toString(), "", ""));
         return body.validateTree(table);
     }
 }
