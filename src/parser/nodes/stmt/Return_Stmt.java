@@ -57,6 +57,12 @@ public class Return_Stmt implements JottTree{
         return expr.getPrimitiveType();
     }
 
+    
+    @Override
+    public PType getPrimitiveType() {
+        return expr.getPrimitiveType();
+    }
+
     @Override
     public String convertToJott() {
         String out ="return ";
@@ -87,4 +93,6 @@ public class Return_Stmt implements JottTree{
     public boolean validateTree(SymbolTable table) {
         return false;
     }
+
+    
 }

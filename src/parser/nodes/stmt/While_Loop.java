@@ -63,4 +63,10 @@ public class While_Loop implements JottTree{
     public boolean validateTree(SymbolTable table) {
         return false;
     }
+
+    @Override
+    public PType getPrimitiveType() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

@@ -1,4 +1,5 @@
 package parser.nodes.stmt;
+import parser.Symbol;
 
 import parser.SymbolTable;
 import parser.SyntaxException;
@@ -24,26 +25,26 @@ public class Asmt implements JottTree {
         if(tempKey.equals("Integer")){
             asmt.keyword = tokens.remove(0);
             asmt.id = Id.CreateId(tokens);
-            Symbol  tempSymbol = new Symbol(asmt.id.getToken().getToken(),PType.INT.label,null);
+            Symbol  tempSymbol = new Symbol(asmt.id.getToken().getToken(),PType.INT.label,"");
             table.insert(tempSymbol);
         }
         else if(tempKey.equals("String")){
             asmt.keyword = tokens.remove(0);
             asmt.id = Id.CreateId(tokens);
-            Symbol  tempSymbol = new Symbol(asmt.id.getToken().getToken(),PType.STRING.label,null);
+            Symbol  tempSymbol = new Symbol(asmt.id.getToken().getToken(),PType.STRING.label,"");
             table.insert(tempSymbol);
         }
         else if(tempKey.equals("Boolean")){
             asmt.keyword = tokens.remove(0);
             asmt.id = Id.CreateId(tokens);
-            Symbol  tempSymbol = new Symbol(asmt.id.getToken().getToken(),PType.BOOL.label,null);
+            Symbol  tempSymbol = new Symbol(asmt.id.getToken().getToken(),PType.BOOL.label,"");
             table.insert(tempSymbol);
 
         }
         else if(tempKey.equals("Double")){
             asmt.keyword = tokens.remove(0);
             asmt.id = Id.CreateId(tokens);
-            Symbol  tempSymbol = new Symbol(asmt.id.getToken().getToken(),PType.DBL.label,null);
+            Symbol  tempSymbol = new Symbol(asmt.id.getToken().getToken(),PType.DBL.label,"");
             table.insert(tempSymbol);
 
         }

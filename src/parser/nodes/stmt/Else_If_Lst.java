@@ -4,6 +4,7 @@ import parser.SymbolTable;
 import parser.nodes.JottTree;
 import parser.nodes.expr.Expr;
 import parser.nodes.primitive.Constant;
+import parser.nodes.primitive.PType;
 import utils.Token;
 import utils.TokenType;
 
@@ -67,5 +68,11 @@ public class Else_If_Lst implements JottTree {
     @Override
     public boolean validateTree(SymbolTable table) {
         return false;
+    }
+
+    @Override
+    public PType getPrimitiveType() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }
