@@ -1,13 +1,14 @@
 package parser.nodes.stmt;
+import parser.Symbol;
 
 import parser.SymbolTable;
 import parser.SyntaxException;
 import parser.nodes.JottTree;
 import parser.nodes.expr.Expr;
 import parser.nodes.primitive.Id;
+import parser.nodes.primitive.PType;
 import utils.Token;
 import utils.TokenType;
-
 import java.util.ArrayList;
 
 public class Asmt implements JottTree {
@@ -18,30 +19,40 @@ public class Asmt implements JottTree {
         keyword = null;
     }
 
-    public static Asmt createAsmt(ArrayList<Token> tokens) {
+    public static Asmt createAsmt(ArrayList<Token> tokens, SymbolTable table) {
         String tempKey = tokens.get(0).getToken();
         Asmt asmt = new Asmt();
         if(tempKey.equals("Integer")){
             asmt.keyword = tokens.remove(0);
             asmt.id = Id.CreateId(tokens);
+            Symbol  tempSymbol = new Symbol(asmt.id.getToken().getToken(),PType.INT.label,"");
+            table.insert(tempSymbol);
         }
         else if(tempKey.equals("String")){
             asmt.keyword = tokens.remove(0);
             asmt.id = Id.CreateId(tokens);
-
+            Symbol  tempSymbol = new Symbol(asmt.id.getToken().getToken(),PType.STRING.label,"");
+            table.insert(tempSymbol);
         }
         else if(tempKey.equals("Boolean")){
             asmt.keyword = tokens.remove(0);
             asmt.id = Id.CreateId(tokens);
+            Symbol  tempSymbol = new Symbol(asmt.id.getToken().getToken(),PType.BOOL.label,"");
+            table.insert(tempSymbol);
 
         }
         else if(tempKey.equals("Double")){
             asmt.keyword = tokens.remove(0);
             asmt.id = Id.CreateId(tokens);
+            Symbol  tempSymbol = new Symbol(asmt.id.getToken().getToken(),PType.DBL.label,"");
+            table.insert(tempSymbol);
 
         }
         else if(tokens.get(0).getTokenType() == TokenType.ID_KEYWORD){
             asmt.id = Id.CreateId(tokens);
+            if(table.lookup(asmt.id.getToken().getToken())== null){
+                throw new SyntaxException("this id has not be created", asmt.id.getToken());
+            }
         }
         else{
             throw new SyntaxException("Expected an Id or Keyowrkd but got"+tokens.get(0).getToken(), tokens.get(0));
@@ -83,6 +94,17 @@ public class Asmt implements JottTree {
 
     @Override
     public boolean validateTree(SymbolTable table) {
+        if(this.id.validateTree(table) && this.expr.validateTree(table)){
+            if(this.id.getPrimitiveType()==this.expr.getPrimitiveType()){
+                return true;
+            }
+        }
         return false;
+    }
+
+    @Override
+    public PType getPrimitiveType() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

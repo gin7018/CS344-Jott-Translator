@@ -2,6 +2,7 @@ package parser.nodes.stmt;
 
 import parser.SymbolTable;
 import parser.nodes.JottTree;
+import parser.nodes.primitive.PType;
 import utils.Token;
 import utils.TokenType;
 
@@ -65,5 +66,11 @@ public class Body implements JottTree {
     @Override
     public boolean validateTree(SymbolTable table) {
         return false;
+    }
+
+    @Override
+    public PType getPrimitiveType() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

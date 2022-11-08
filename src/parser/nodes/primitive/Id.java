@@ -2,6 +2,7 @@ package parser.nodes.primitive;
 
 
 
+import parser.Symbol;
 import parser.SymbolTable;
 import parser.SyntaxException;
 import parser.nodes.JottTree;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 
 public class Id  implements JottTree {
     Token id;
+    PType type;
 
     public Id(){
 
@@ -64,8 +66,18 @@ public class Id  implements JottTree {
 
     @Override
     public boolean validateTree(SymbolTable table) {
+        Symbol temp =  table.lookup(this.id.getToken());
+        if (id == null){
+            return false;
+        }
+        this.type = PType.valueOf(temp.getType());
+        return true;
+    }
+
+    @Override
+    public PType getPrimitiveType() {
         // TODO Auto-generated method stub
-        return false;
+        return this.type;
     }
 
 }
