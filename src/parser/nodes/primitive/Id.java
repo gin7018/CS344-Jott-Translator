@@ -37,6 +37,10 @@ public class Id  implements JottTree {
 
     }
 
+    public String getName() {
+        return id.getToken();
+    }
+
     public Token getToken() {
         return id;
     }
@@ -70,7 +74,7 @@ public class Id  implements JottTree {
         if (id == null){
             return false;
         }
-        this.type = PType.valueOf(temp.getType());
+        this.type = temp.getType();
         return true;
     }
 

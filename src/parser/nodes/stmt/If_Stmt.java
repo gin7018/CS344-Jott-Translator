@@ -66,7 +66,13 @@ public class If_Stmt implements JottTree{
 
     @Override
     public boolean validateTree(SymbolTable table) {
-        return false;
+        /*
+        if, while, elseif, else nodes
+         */
+        return expr.validateTree(table)
+                && body.validateTree(table)
+                && elseIfLst.validateTree(table)
+                && singleElse.validateTree(table);
     }
 
     @Override

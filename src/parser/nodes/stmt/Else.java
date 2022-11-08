@@ -65,7 +65,7 @@ public class Else implements JottTree {
 
     @Override
     public boolean validateTree(SymbolTable table) {
-        return false;
+        return isEpsilon || body.validateTree(table);
     }
 
     @Override

@@ -104,10 +104,10 @@ public class Function_Call implements JottTree {
 
     @Override
     public boolean validateTree(SymbolTable table) {
-        if (table.lookup(id.toString()) != null) {
-            Symbol function = table.lookup(id.toString());
+        if (table.lookup(id.getName()) != null) {
+            Symbol function = table.lookup(id.getName());
 
-            this.pType = PType.valueOf(function.getType());
+            this.pType = function.getType();
 
             if (function.getAttributeLst().size() != param.size()) {
                 return false;
@@ -133,7 +133,7 @@ public class Function_Call implements JottTree {
                 }
                 else if (actual instanceof Id && table.lookup(((Id) actual).getToken().getToken()) != null) {
                     Symbol variable = table.lookup(((Id) actual).getToken().getToken());
-                    if (!variable.getType().equals(expected.getType().label)) {
+                    if (variable.getType() != expected.getType()) {
                         return false;
                     }
                 }

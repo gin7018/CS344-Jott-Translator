@@ -13,18 +13,18 @@ import java.util.ArrayList;
 import static parser.nodes.NodeUtility.popAndExpect;
 
 public class  Function_Def implements JottTree{
-    private JottTree id;
+    private Id id;
     private Function_Def_Params fdParams;
-    private JottTree functionReturn;
+    private Function_Return functionReturn;
     private JottTree body;
     private static SymbolTable table;
 
-    private Function_Def() {
-        table = SymbolTable.allocate();
+    private Function_Def(SymbolTable globalSymbolTable) {
+        table = new SymbolTable(globalSymbolTable);
     }
 
-    public static Function_Def createFunction_Def(ArrayList<Token> tokens) {
-        var fd = new Function_Def();
+    public static Function_Def createFunction_Def(ArrayList<Token> tokens, SymbolTable globalSymbolTable) {
+        var fd = new Function_Def(globalSymbolTable);
         fd.id = Id.CreateId(tokens);
         popAndExpect(tokens, TokenType.L_BRACKET);
         fd.fdParams = Function_Def_Params.createFunction_Def_Params(tokens);
@@ -38,7 +38,7 @@ public class  Function_Def implements JottTree{
         return fd;
     }
 
-    public JottTree getId() {
+    public Id getId() {
         return id;
     }
 
@@ -46,7 +46,7 @@ public class  Function_Def implements JottTree{
         return fdParams;
     }
 
-    public JottTree getFunctionReturn() {
+    public Function_Return getFunctionReturn() {
         return functionReturn;
     }
 
@@ -76,7 +76,7 @@ public class  Function_Def implements JottTree{
     @Override
     public boolean validateTree(SymbolTable table) {
         // check if there is a function with a similar name
-        if (table.lookup(id.toString()) != null) {
+        if (table.lookup(id.getName()) != null) {
             return false;
         }
 

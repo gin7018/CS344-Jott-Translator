@@ -15,18 +15,18 @@ public class Function_List implements JottTree {
     private static SymbolTable tableOfFunctions;
 
     private Function_List() {
-        tableOfFunctions = SymbolTable.allocate();
+        tableOfFunctions = new SymbolTable();
     }
 
     public static Function_List createFunction_List(ArrayList<Token> tokens) {
         var fl = new Function_List();
         fl.functionDefs = new ArrayList<>();
         while (!tokens.isEmpty() && !tokens.get(0).getToken().equals("$$")&& !tokens.get(0).getTokenType().equals(TokenType.EOF)) {
-            var fd = Function_Def.createFunction_Def(tokens);
+            var fd = Function_Def.createFunction_Def(tokens, tableOfFunctions);
             fl.functionDefs.add(fd);
 
             ArrayList<FunctionParameters> params = fd.getFdParams().getParameters();
-            Symbol function = new Symbol(fd.getId().toString(), fd.getFunctionReturn().toString(), params);
+            Symbol function = new Symbol(fd.getId().getName(), fd.getFunctionReturn().getType(), params);
             tableOfFunctions.insert(function);
         }
         return fl;

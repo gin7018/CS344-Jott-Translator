@@ -61,7 +61,7 @@ public class While_Loop implements JottTree{
 
     @Override
     public boolean validateTree(SymbolTable table) {
-        return false;
+        return expr.validateTree(table) && body.validateTree(table);
     }
 
     @Override

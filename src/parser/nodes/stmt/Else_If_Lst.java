@@ -25,7 +25,7 @@ public class Else_If_Lst implements JottTree {
 
     public static Else_If_Lst createElse_If_Lst(ArrayList<Token> tokens, SymbolTable table) {
         //var constant = Constant.CreateConstant(tokens);
-        if ( !tokens.get(0).getToken().equals("elseif")) {
+        if (!tokens.get(0).getToken().equals("elseif")) {
             return new Else_If_Lst(true);
         }
         var constant = Constant.CreateConstant(tokens);
@@ -67,7 +67,11 @@ public class Else_If_Lst implements JottTree {
 
     @Override
     public boolean validateTree(SymbolTable table) {
-        return false;
+        return isEpsilon || (
+                expr.validateTree(table)
+                        && body.validateTree(table)
+                        && trailingElseIf.validateTree(table)
+        );
     }
 
     @Override
