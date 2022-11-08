@@ -71,4 +71,9 @@ public class Function_Def_Params implements JottTree{
     public boolean validateTree(SymbolTable table) {
         return false;
     }
+
+    @Override
+    public PType getPrimitiveType() {
+        return null;
+    }
 }

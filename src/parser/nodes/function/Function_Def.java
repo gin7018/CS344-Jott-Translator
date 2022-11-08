@@ -3,6 +3,7 @@ package parser.nodes.function;
 import parser.SymbolTable;
 import parser.nodes.JottTree;
 import parser.nodes.primitive.Id;
+import parser.nodes.primitive.PType;
 import parser.nodes.stmt.Body;
 import utils.Token;
 import utils.TokenType;
@@ -91,7 +92,7 @@ public class  Function_Def implements JottTree{
         else if (functionReturn != null && ((Body) body).getReturn_Stmt() != null) {
             // if this is a returning function check if the types are matching
             boolean typesMatch = ((Function_Return) functionReturn).getType().equals(((Body) body)
-                    .getReturn_Stmt().getType());
+                    .getReturn_Stmt().getType(table));
             if (!typesMatch) {
                 return false;
             }
@@ -100,5 +101,10 @@ public class  Function_Def implements JottTree{
         // check if the body is valid
         //table.insert(new Symbol(functionReturn.toString(), "", ""));
         return body.validateTree(table);
+    }
+
+    @Override
+    public PType getPrimitiveType() {
+        return null;
     }
 }

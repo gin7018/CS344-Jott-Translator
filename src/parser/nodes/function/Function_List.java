@@ -3,6 +3,7 @@ package parser.nodes.function;
 import parser.Symbol;
 import parser.SymbolTable;
 import parser.nodes.JottTree;
+import parser.nodes.primitive.PType;
 import utils.Token;
 import utils.TokenType;
 
@@ -67,5 +68,10 @@ public class Function_List implements JottTree {
         }
         return true;
     }
-    
+
+    @Override
+    public PType getPrimitiveType() {
+        return null;
+    }
+
 }

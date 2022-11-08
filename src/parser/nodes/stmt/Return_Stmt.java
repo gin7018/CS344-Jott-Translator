@@ -53,8 +53,13 @@ public class Return_Stmt implements JottTree{
 
     }
 
-    public PType getType() {// whatever calls this must call validate first
-        return expr.getPrimitiveType();
+    public PType getType(SymbolTable table) {
+        // whatever calls this must call validate first
+        if (expr != null) {
+            expr.validateTree(table);
+            return expr.getPrimitiveType();
+        }
+        return null;
     }
 
     

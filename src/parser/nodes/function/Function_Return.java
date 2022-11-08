@@ -57,4 +57,9 @@ public class Function_Return implements JottTree{
     public boolean validateTree(SymbolTable table) {
         return false;
     }
+
+    @Override
+    public PType getPrimitiveType() {
+        return null;
+    }
 }

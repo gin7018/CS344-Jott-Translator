@@ -39,7 +39,7 @@ public class Stmt implements JottTree{
 
             // add declaration to sym table
             Var_Dec vd = (Var_Dec) stmt.varDec;
-            Symbol sym = new Symbol(vd.getId().getToken().getToken(), vd.getType().label, "");
+            Symbol sym = new Symbol(vd.getId().getToken().getToken(), vd.getType().label, null);
             table.insert(sym);
         }
         else if(t1.getTokenType()== TokenType.ASSIGN || t2.getTokenType() == TokenType.ASSIGN){

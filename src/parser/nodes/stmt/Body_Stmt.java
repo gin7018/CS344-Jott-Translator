@@ -12,22 +12,6 @@ public class Body_Stmt implements JottTree {
     private If_Stmt if_Stmt;
     private While_Loop while_Loop;
     private Stmt stmt;
-    
-//    private Body_Stmt(If_Stmt if_Stmt) {
-//        this.stmt = null;
-//        this.while_Loop =null;
-//        this.if_Stmt= if_Stmt;
-//    }
-//    private Body_Stmt(While_Loop while_Loop) {
-//        this.stmt = null;
-//        this.while_Loop = while_Loop;
-//        this.if_Stmt= null;
-//    }
-//    private Body_Stmt(Stmt stmt) {
-//        this.stmt = stmt;
-//        this.while_Loop =null;
-//        this.if_Stmt= null;
-//    }
 
     public static Body_Stmt createBody_Stmt(ArrayList<Token> tokens, SymbolTable table) {
         var bodyStmt = new Body_Stmt();
