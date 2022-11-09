@@ -95,9 +95,8 @@ public class Asmt implements JottTree {
     @Override
     public boolean validateTree(SymbolTable table) {
         if(this.id.validateTree(table) && this.expr.validateTree(table)){
-            if(this.id.getPrimitiveType()==this.expr.getPrimitiveType()){
-                return true;
-            }
+            this.expr.validateTree(table);
+            return this.id.getPrimitiveType() == this.expr.getPrimitiveType();
         }
         return false;
     }

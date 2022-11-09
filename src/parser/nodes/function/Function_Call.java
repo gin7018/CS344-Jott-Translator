@@ -122,7 +122,8 @@ public class Function_Call implements JottTree {
                     }
                 }
                 else if (actual instanceof Expr) {
-                    if (!((Expr) actual).getPrimitiveType().equals(expected.getType())) {
+
+                    if (((Expr) actual).validateTree(table) && !((Expr) actual).getPrimitiveType().equals(expected.getType())) {
                         return false;
                     }
                 }
