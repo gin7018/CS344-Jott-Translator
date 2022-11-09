@@ -48,4 +48,7 @@ public class SymbolTable {
         table.put(sym.getName(), sym);
     }
 
+    public Map<String, Symbol> getTable() {
+        return table;
+    }
 }
