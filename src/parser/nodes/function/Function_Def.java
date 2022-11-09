@@ -75,8 +75,11 @@ public class  Function_Def implements JottTree{
 
     @Override
     public boolean validateTree(SymbolTable table) {
+        Function_Def.table.getTable().forEach((k,v) -> {
+            table.insert(v);
+        });
         // check if there is a function with a similar name
-        if (table.lookup(id.getName()) != null) {
+        if (table.lookup(id.getName()) == null) {
             return false;
         }
 
@@ -85,8 +88,8 @@ public class  Function_Def implements JottTree{
             // returning from a void function is invalid
             return false;
         }
-        else if (functionReturn != null && ((Body) body).getReturn_Stmt() == null) {
-            // missing a return statement
+        else if (functionReturn.getType() != PType.VOID && ((Body) body).getReturn_Stmt() == null) {
+            // missing a return statement or return is VOID
             return false;
         }
         else if (functionReturn != null && ((Body) body).getReturn_Stmt() != null) {

@@ -82,7 +82,14 @@ public class Stmt implements JottTree{
 
     @Override
     public boolean validateTree(SymbolTable table) {
-        return false;
+        if (asmt != null) {
+            return asmt.validateTree(table);
+        }
+        else if (varDec != null) {
+            return varDec.validateTree(table);
+        }
+        return funtionCall.validateTree(table);
+
     }
 
     @Override

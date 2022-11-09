@@ -1,8 +1,9 @@
 package parser.nodes;
 
 import parser.ContextUnawareSyntaxException;
-import parser.SyntaxException;
+import parser.SymbolTable;
 import parser.nodes.function.Function_List;
+import parser.nodes.primitive.PType;
 import utils.Token;
 import utils.TokenType;
 
@@ -46,7 +47,12 @@ public class Program implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
-        return false;
+    public boolean validateTree(SymbolTable table) {
+        return functionList.validateTree(null);
+    }
+
+    @Override
+    public PType getPrimitiveType() {
+        return null;
     }
 }

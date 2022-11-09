@@ -62,7 +62,7 @@ public class Function_List implements JottTree {
     @Override
     public boolean validateTree(SymbolTable table) {
         for (JottTree functionDef: functionDefs) {
-            if (!functionDef.validateTree(table)) {
+            if (!functionDef.validateTree(tableOfFunctions)) {
                 return false;
             }
         }

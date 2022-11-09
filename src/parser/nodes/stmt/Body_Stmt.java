@@ -51,7 +51,13 @@ public class Body_Stmt implements JottTree {
 
     @Override
     public boolean validateTree(SymbolTable table) {
-        return false;
+        if (if_Stmt != null) {
+            return if_Stmt.validateTree(table);
+        }
+        else if (while_Loop != null) {
+            return while_Loop.validateTree(table);
+        }
+        return stmt.validateTree(table);
     }
 
     @Override

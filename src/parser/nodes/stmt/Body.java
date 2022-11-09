@@ -32,7 +32,13 @@ public class Body implements JottTree {
     }
 
     public Return_Stmt getReturn_Stmt() {
-        return return_Stmt;
+        if (return_Stmt != null) {
+            return return_Stmt;
+        }
+        else if (body != null) {
+            return body.getReturn_Stmt();
+        }
+        return null;
     }
 
     @Override
@@ -65,7 +71,16 @@ public class Body implements JottTree {
 
     @Override
     public boolean validateTree(SymbolTable table) {
-        return false;
+        if (body_Stmt != null) {
+            if (body != null) {
+                return body_Stmt.validateTree(table) && body.validateTree(table);
+            }
+            return body_Stmt.validateTree(table);
+        }
+        if (body == null) {
+            return true;
+        }
+        return body.validateTree(table);
     }
 
     @Override
