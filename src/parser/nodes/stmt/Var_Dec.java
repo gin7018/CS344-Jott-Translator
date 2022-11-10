@@ -4,6 +4,7 @@ import parser.ContextUnawareSyntaxException;
 import parser.SymbolTable;
 import parser.SyntaxException;
 import parser.nodes.JottTree;
+import parser.nodes.function.Function_Def;
 import parser.nodes.primitive.Id;
 import parser.nodes.primitive.PType;
 import utils.Token;
@@ -65,7 +66,7 @@ public class Var_Dec implements JottTree{
     }
 
     @Override
-    public boolean validateTree(SymbolTable table) {
+    public boolean validateTree(SymbolTable table, Function_Def function) {
         return false;
     }
 

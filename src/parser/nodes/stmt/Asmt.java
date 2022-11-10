@@ -5,6 +5,7 @@ import parser.SymbolTable;
 import parser.SyntaxException;
 import parser.nodes.JottTree;
 import parser.nodes.expr.Expr;
+import parser.nodes.function.Function_Def;
 import parser.nodes.primitive.Id;
 import parser.nodes.primitive.PType;
 import utils.Token;
@@ -93,9 +94,9 @@ public class Asmt implements JottTree {
     }
 
     @Override
-    public boolean validateTree(SymbolTable table) {
-        if(this.id.validateTree(table) && this.expr.validateTree(table)){
-            this.expr.validateTree(table);
+    public boolean validateTree(SymbolTable table, Function_Def function) {
+        if(this.id.validateTree(table, function) && this.expr.validateTree(table, function)){
+            this.expr.validateTree(table, function);
             return this.id.getPrimitiveType() == this.expr.getPrimitiveType();
         }
         return false;

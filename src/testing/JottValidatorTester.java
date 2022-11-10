@@ -25,10 +25,10 @@ public class JottValidatorTester {
 
     private static void createTestCases() {
         testCases = new ArrayList<>();
-        testCases.add(new TestCase("invalid parameter function call", "funcCallParamInvalid.jott", false));
-        testCases.add(new TestCase("function not defined (error)", "funcNotDefined.jott", true));
+//        testCases.add(new TestCase("invalid parameter function call", "funcCallParamInvalid.jott", false));
+//        testCases.add(new TestCase("function not defined (error)", "funcNotDefined.jott", true));
         testCases.add(new TestCase("function return in an expression (error)", "funcReturnInExpr.jott", true));
-        testCases.add(new TestCase("provided writeup example4 (error)", "providedExample4.jott", true));
+//        testCases.add(new TestCase("provided writeup example4 (error)", "providedExample4.jott", true));
 //        testCases.add(new TestCase("provided writeup example5 (error)", "providedExample5.jott", true));
 //        testCases.add(new TestCase("hello world", "helloWorld.jott", false));
 //        testCases.add(new TestCase("1foo error (error)", "1foo.jott", true));
@@ -61,8 +61,12 @@ public class JottValidatorTester {
         ArrayList<Token> tokens = JottTokenizer.tokenize("phase3TestCases/" + tc.fileName);
         assert tokens != null;
         JottTree parseTree = JottParser.parse(tokens);
-        assert parseTree != null;
-        return parseTree.validateTree(null);
+        if (parseTree != null) {
+            return parseTree.validateTree(null, null);
+        } else {
+            System.err.println("false!!");
+            return false;
+        }
     }
 
     public static void main(String[] args) {

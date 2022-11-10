@@ -4,6 +4,7 @@ import parser.SymbolTable;
 import parser.SyntaxException;
 import parser.nodes.JottTree;
 import parser.nodes.function.Function_Call;
+import parser.nodes.function.Function_Def;
 import parser.nodes.primitive.Constant;
 import parser.nodes.primitive.Id;
 import parser.nodes.primitive.PType;
@@ -65,7 +66,7 @@ public class Expr implements JottTree {
         return expr;
     }
 
-     
+
     @Override
     public String convertToJott() {
         if (isTail){
@@ -95,18 +96,18 @@ public class Expr implements JottTree {
     }
 
     @Override
-    public boolean validateTree(SymbolTable table) {
+    public boolean validateTree(SymbolTable table, Function_Def function) {
         if(this.isTail){
             this.ptype = lnode.getPrimitiveType();
-            return this.lnode.validateTree(table);
+            return this.lnode.validateTree(table, function);
         }
-        else if (!lnode.validateTree(table) ){
+        else if (!lnode.validateTree(table, function) ){
             return false;
         }
         else{
 
             PType left = lnode.getPrimitiveType();
-            ExprType right = rnode.gExprType(table);
+            ExprType right = rnode.gExprType(table, function);
             Boolean mathop;
             String tokenop = this.operator.getToken();
             if(tokenop.equals("+")||tokenop.equals("*")||
@@ -162,7 +163,7 @@ public class Expr implements JottTree {
                     return false;
                 }
                 this.ptype = PType.BOOL;
-                
+
                 break;
 
 
@@ -182,8 +183,8 @@ public class Expr implements JottTree {
         }
     }
 
-    private ExprType gExprType(SymbolTable table){
-        if (!lnode.validateTree(table)){
+    private ExprType gExprType(SymbolTable table, Function_Def function){
+        if (!lnode.validateTree(table, function)){
             return null;
         }
         if (this.isTail){
@@ -209,7 +210,7 @@ public class Expr implements JottTree {
                 mathop = false;
             }
             PType lType = lnode.getPrimitiveType();
-            ExprType eType = rnode.gExprType(table);
+            ExprType eType = rnode.gExprType(table, function);
             switch (eType){
                 case Srel:
                 return ExprType.Fail;// can only have srelation
@@ -270,7 +271,7 @@ public class Expr implements JottTree {
     }
 
 
-    
+
 
 
 }

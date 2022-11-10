@@ -5,6 +5,7 @@ import parser.SyntaxException;
 import parser.nodes.JottTree;
 import parser.nodes.expr.Expr;
 import parser.nodes.function.Function_Call;
+import parser.nodes.function.Function_Def;
 import parser.nodes.primitive.Constant;
 import parser.nodes.primitive.Id;
 import parser.nodes.primitive.PType;
@@ -53,16 +54,7 @@ public class Return_Stmt implements JottTree{
 
     }
 
-    public PType getType(SymbolTable table) {
-        // whatever calls this must call validate first
-        if (expr != null) {
-            expr.validateTree(table);
-            return expr.getPrimitiveType();
-        }
-        return null;
-    }
 
-    
     @Override
     public PType getPrimitiveType() {
         return expr.getPrimitiveType();
@@ -95,9 +87,23 @@ public class Return_Stmt implements JottTree{
     }
 
     @Override
-    public boolean validateTree(SymbolTable table) {
-        return false;
+    public boolean validateTree(SymbolTable table, Function_Def function) {
+        // TODO: Shouldn't this be in the create method? When would this be null?
+        if (expr == null) {
+            return false;
+        }
+
+        if (!expr.validateTree(table, function)) {
+            return false;
+        }
+
+        if (expr.getPrimitiveType() != function.getReturnType()) {
+            // Mismatched return types
+            return false;
+        }
+
+        return true;
     }
 
-    
+
 }

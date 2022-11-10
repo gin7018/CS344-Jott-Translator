@@ -3,6 +3,7 @@ package parser.nodes.primitive;
 import parser.ContextUnawareSyntaxException;
 import parser.SymbolTable;
 import parser.nodes.JottTree;
+import parser.nodes.function.Function_Def;
 import utils.Token;
 import utils.TokenType;
 
@@ -74,7 +75,7 @@ public class Constant implements JottTree {
     }
 
     @Override
-    public boolean validateTree(SymbolTable table) {
+    public boolean validateTree(SymbolTable table, Function_Def function) {
         // TODO Auto-generated method stub
         return true;
     }

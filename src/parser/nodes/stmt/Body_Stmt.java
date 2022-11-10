@@ -2,13 +2,14 @@ package parser.nodes.stmt;
 
 import parser.SymbolTable;
 import parser.nodes.JottTree;
+import parser.nodes.function.Function_Def;
 import parser.nodes.primitive.PType;
 import utils.Token;
 
 import java.util.ArrayList;
 
 public class Body_Stmt implements JottTree {
-    
+
     private If_Stmt if_Stmt;
     private While_Loop while_Loop;
     private Stmt stmt;
@@ -50,14 +51,14 @@ public class Body_Stmt implements JottTree {
     }
 
     @Override
-    public boolean validateTree(SymbolTable table) {
+    public boolean validateTree(SymbolTable table, Function_Def function) {
         if (if_Stmt != null) {
-            return if_Stmt.validateTree(table);
+            return if_Stmt.validateTree(table, function);
         }
         else if (while_Loop != null) {
-            return while_Loop.validateTree(table);
+            return while_Loop.validateTree(table, function);
         }
-        return stmt.validateTree(table);
+        return stmt.validateTree(table, function);
     }
 
     @Override
@@ -65,4 +66,8 @@ public class Body_Stmt implements JottTree {
         // TODO Auto-generated method stub
         return null;
     }
+
+//    public PType getReturnType(SymbolTable symbolTable) {
+//        return if_Stmt == null ? null : if_Stmt.getReturnType(symbolTable);
+//    }
 }

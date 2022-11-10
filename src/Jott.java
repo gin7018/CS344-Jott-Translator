@@ -15,7 +15,7 @@ public class Jott {
         assert tokens != null;
         JottTree parseTree = JottParser.parse(tokens);
         assert parseTree != null;
-        parseTree.validateTree(null);
+        parseTree.validateTree(null, null);
 
         try {
             Path path = Path.of(output);

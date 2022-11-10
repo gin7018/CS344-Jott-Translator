@@ -68,7 +68,7 @@ public class Function_Def_Params implements JottTree{
     }
 
     @Override
-    public boolean validateTree(SymbolTable table) {
+    public boolean validateTree(SymbolTable table, Function_Def function) {
         return false;
     }
 

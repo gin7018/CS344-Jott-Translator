@@ -54,8 +54,8 @@ public class Function_Return implements JottTree{
     }
 
     @Override
-    public boolean validateTree(SymbolTable table) {
-        return false;
+    public boolean validateTree(SymbolTable table, Function_Def function) {
+        return true;
     }
 
     @Override
