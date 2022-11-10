@@ -4,6 +4,7 @@ import parser.SymbolTable;
 import parser.SyntaxException;
 import parser.nodes.JottTree;
 import parser.nodes.expr.Expr;
+import parser.nodes.function.Function_Def;
 import parser.nodes.primitive.Constant;
 import parser.nodes.primitive.PType;
 import utils.Token;
@@ -60,8 +61,8 @@ public class While_Loop implements JottTree{
     }
 
     @Override
-    public boolean validateTree(SymbolTable table) {
-        return expr.validateTree(table) && body.validateTree(table);
+    public boolean validateTree(SymbolTable table, Function_Def function) {
+        return expr.validateTree(table, function) && body.validateTree(table, function);
     }
 
     @Override

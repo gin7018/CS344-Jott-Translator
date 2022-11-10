@@ -26,7 +26,7 @@ public class Function_List implements JottTree {
             fl.functionDefs.add(fd);
 
             ArrayList<FunctionParameters> params = fd.getFdParams().getParameters();
-            Symbol function = new Symbol(fd.getId().getName(), fd.getFunctionReturn().getType(), params);
+            Symbol function = new Symbol(fd.getId().getName(), fd.getReturnType(), params);
             tableOfFunctions.insert(function);
         }
         return fl;
@@ -60,9 +60,9 @@ public class Function_List implements JottTree {
     }
 
     @Override
-    public boolean validateTree(SymbolTable table) {
-        for (JottTree functionDef: functionDefs) {
-            if (!functionDef.validateTree(tableOfFunctions)) {
+    public boolean validateTree(SymbolTable table, Function_Def unused) {
+        for (var functionDef: functionDefs) {
+            if (!functionDef.validateTree(tableOfFunctions, functionDef)) {
                 return false;
             }
         }

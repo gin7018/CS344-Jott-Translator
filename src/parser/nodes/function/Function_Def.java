@@ -16,7 +16,7 @@ public class  Function_Def implements JottTree{
     private Id id;
     private Function_Def_Params fdParams;
     private Function_Return functionReturn;
-    private JottTree body;
+    private Body body;
     private static SymbolTable table;
 
     private Function_Def(SymbolTable globalSymbolTable) {
@@ -46,8 +46,8 @@ public class  Function_Def implements JottTree{
         return fdParams;
     }
 
-    public Function_Return getFunctionReturn() {
-        return functionReturn;
+    public PType getReturnType() {
+        return functionReturn.getType();
     }
 
     @Override
@@ -74,7 +74,7 @@ public class  Function_Def implements JottTree{
     }
 
     @Override
-    public boolean validateTree(SymbolTable table) {
+    public boolean validateTree(SymbolTable table, Function_Def function) {
         Function_Def.table.getTable().forEach((k,v) -> {
             table.insert(v);
         });
@@ -83,26 +83,33 @@ public class  Function_Def implements JottTree{
             return false;
         }
 
-        // check if the body has a return statement that matches the expected return
-        if (functionReturn == null && ((Body) body).getReturn_Stmt() != null) {
-            // returning from a void function is invalid
-            return false;
-        }
-        else if (functionReturn.getType() != PType.VOID && ((Body) body).getReturn_Stmt() == null) {
-            // missing a return statement or return is VOID
-            return false;
-        }
-        else if (functionReturn != null && ((Body) body).getReturn_Stmt() != null) {
-            // if this is a returning function check if the types are matching
-            boolean typesMatch = ((Function_Return) functionReturn).getType().equals(((Body) body)
-                    .getReturn_Stmt().getType(table));
-            if (!typesMatch) {
-                return false;
+        if (getReturnType() != PType.VOID) {
+            if (body.hasReturn()) {
+
             }
         }
 
+        // check if the body has a return statement that matches the expected return
+//        if (functionReturn == null && body.getReturnType() != null) {
+//            // returning from a void function is invalid
+//            return false;
+//        }
+//        else if (functionReturn.getType() != PType.VOID && body.getReturnType() == null) {
+//            // missing a return statement or return is VOID
+//            return false;
+//        }
+//        else if (functionReturn != null && body.getReturnType() != null) {
+//            // if this is a returning function check if the types are matching
+//            boolean typesMatch = functionReturn.getType().equals(body
+//                    .getReturnType().getType(table));
+//            if (!typesMatch) {
+//                return false;
+//            }
+//        }
+
         // check if the body is valid
-        return body.validateTree(table);
+        //table.insert(new Symbol(functionReturn.toString(), "", ""));
+        return body.validateTree(table, this);
     }
 
     @Override

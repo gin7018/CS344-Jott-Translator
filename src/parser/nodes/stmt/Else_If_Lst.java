@@ -3,6 +3,7 @@ package parser.nodes.stmt;
 import parser.SymbolTable;
 import parser.nodes.JottTree;
 import parser.nodes.expr.Expr;
+import parser.nodes.function.Function_Def;
 import parser.nodes.primitive.Constant;
 import parser.nodes.primitive.PType;
 import utils.Token;
@@ -41,6 +42,10 @@ public class Else_If_Lst implements JottTree {
         return elseIfLst;
     }
 
+    public boolean isEpsilon() {
+        return isEpsilon;
+    }
+
     @Override
     public String convertToJott() {
         if (isEpsilon) {
@@ -66,11 +71,11 @@ public class Else_If_Lst implements JottTree {
     }
 
     @Override
-    public boolean validateTree(SymbolTable table) {
+    public boolean validateTree(SymbolTable table, Function_Def function) {
         return isEpsilon || (
-                expr.validateTree(table)
-                        && body.validateTree(table)
-                        && trailingElseIf.validateTree(table)
+                expr.validateTree(table, function)
+                        && body.validateTree(table, function)
+                        && trailingElseIf.validateTree(table, function)
         );
     }
 
@@ -78,5 +83,22 @@ public class Else_If_Lst implements JottTree {
     public PType getPrimitiveType() {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    @Override
+    public boolean hasReturn() {
+        if (isEpsilon) {
+            return false;
+        }
+
+        if (!body.hasReturn()) {
+            return false;
+        }
+
+        if (!trailingElseIf.isEpsilon()) {
+            return trailingElseIf.hasReturn();
+        }
+
+        return true;
     }
 }

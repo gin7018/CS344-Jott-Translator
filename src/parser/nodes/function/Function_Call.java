@@ -103,7 +103,7 @@ public class Function_Call implements JottTree {
     }
 
     @Override
-    public boolean validateTree(SymbolTable table) {
+    public boolean validateTree(SymbolTable table, Function_Def functionContext) {
         if (table.lookup(id.getName()) != null) {
             Symbol function = table.lookup(id.getName());
 
@@ -123,12 +123,12 @@ public class Function_Call implements JottTree {
                 }
                 else if (actual instanceof Expr) {
 
-                    if (((Expr) actual).validateTree(table) && !((Expr) actual).getPrimitiveType().equals(expected.getType())) {
+                    if (actual.validateTree(table, functionContext) && actual.getPrimitiveType() != expected.getType()) {
                         return false;
                     }
                 }
                 else if (actual instanceof Function_Call) {
-                    if (!actual.validateTree(table)) {
+                    if (!actual.validateTree(table, functionContext)) {
                         return false;
                     }
                 }
