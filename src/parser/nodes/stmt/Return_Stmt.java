@@ -1,7 +1,8 @@
 package parser.nodes.stmt;
 
 import parser.SymbolTable;
-import parser.SyntaxException;
+import parser.exceptions.SemanticException;
+import parser.exceptions.SyntaxException;
 import parser.nodes.JottTree;
 import parser.nodes.expr.Expr;
 import parser.nodes.function.Function_Call;
@@ -86,22 +87,18 @@ public class Return_Stmt implements JottTree{
     }
 
     @Override
-    public boolean validateTree(SymbolTable table, Function_Def function) {
+    public void validateTree(SymbolTable table, Function_Def function) {
         // TODO: Shouldn't this be in the create method? When would this be null?
         if (expr == null) {
-            return false;
+            throw new SemanticException("Expression is null", null);
         }
 
-        if (!expr.validateTree(table, function)) {
-            return false;
-        }
+        expr.validateTree(table, function);
 
         if (expr.getPrimitiveType() != function.getReturnType()) {
             // Mismatched return types
-            return false;
+            throw new SemanticException("Mismatched return types", null);
         }
-
-        return true;
     }
 
 

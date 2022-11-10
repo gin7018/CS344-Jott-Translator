@@ -4,7 +4,8 @@ package parser.nodes.primitive;
 
 import parser.Symbol;
 import parser.SymbolTable;
-import parser.SyntaxException;
+import parser.exceptions.SemanticException;
+import parser.exceptions.SyntaxException;
 import parser.nodes.JottTree;
 import parser.nodes.function.Function_Def;
 import utils.Token;
@@ -70,13 +71,13 @@ public class Id  implements JottTree {
     }
 
     @Override
-    public boolean validateTree(SymbolTable table, Function_Def function) {
-        Symbol temp =  table.lookup(this.id.getToken());
-        if (id == null){
-            return false;
+    public void validateTree(SymbolTable table, Function_Def function) {
+        Symbol temp = table.lookup(this.id.getToken());
+        if (temp == null){
+            throw new SemanticException("Invalid ID '" + id.getToken() + "'", null);
         }
+
         this.type = temp.getType();
-        return true;
     }
 
     @Override

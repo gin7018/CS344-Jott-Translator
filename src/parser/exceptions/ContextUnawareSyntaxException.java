@@ -1,4 +1,4 @@
-package parser;
+package parser.exceptions;
 
 /**
  * A syntax exception that, when thrown, has no knowledge of the file or line number until reported.

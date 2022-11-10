@@ -2,7 +2,7 @@ package parser.nodes.stmt;
 
 import parser.Symbol;
 import parser.SymbolTable;
-import parser.SyntaxException;
+import parser.exceptions.SyntaxException;
 import parser.nodes.JottTree;
 import parser.nodes.function.Function_Call;
 import parser.nodes.function.Function_Def;
@@ -82,15 +82,18 @@ public class Stmt implements JottTree{
     }
 
     @Override
-    public boolean validateTree(SymbolTable table, Function_Def function) {
+    public void validateTree(SymbolTable table, Function_Def function) {
         if (asmt != null) {
-            return asmt.validateTree(table, function);
+            asmt.validateTree(table, function);
         }
-        else if (varDec != null) {
-            return varDec.validateTree(table, function);
-        }
-        return funtionCall.validateTree(table, function);
 
+        if (varDec != null) {
+            varDec.validateTree(table, function);
+        }
+
+        if (funtionCall != null) {
+            funtionCall.validateTree(table, function);
+        }
     }
 
     @Override

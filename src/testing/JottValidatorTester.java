@@ -2,6 +2,7 @@ package testing;
 
 import parser.JottParser;
 import parser.nodes.JottTree;
+import parser.nodes.Program;
 import tokenizer.JottTokenizer;
 import utils.Token;
 
@@ -34,13 +35,13 @@ public class JottValidatorTester {
         testCases.add(new TestCase("larger valid", "largerValid.jott", false));
         testCases.add(new TestCase("main returning a double (error)", "mainReturnNotInt.jott", true));
         testCases.add(new TestCase("mismatched return (error)", "mismatchedReturn.jott", true));
-        testCases.add(new TestCase("missing function parameters (error)", "missingFunParams.jott", true));
+        testCases.add(new TestCase("missing function parameters (error)", "missingFuncParams.jott", true));
         testCases.add(new TestCase("missing main (error)", "missingMain.jott", true));
         testCases.add(new TestCase("missing return (error)", "missingReturn.jott", true));
-        testCases.add(new TestCase("no return if stmt", "noReturnIf.jott", false));
-        testCases.add(new TestCase("no return in while loop", "noReturnWhile.jott", false));
+        testCases.add(new TestCase("no return if stmt", "noReturnIf.jott", true));
+        testCases.add(new TestCase("no return in while loop", "noReturnWhile.jott", true));
         testCases.add(new TestCase("provided example 1", "providedExample1.jott", false));
-        testCases.add(new TestCase("main returns an id", "returnId.jott", false));
+        testCases.add(new TestCase("main returns an id", "returnId.jott", true));
         testCases.add(new TestCase("valid loop", "validLoop.jott", false));
         testCases.add(new TestCase("void return (error)", "voidReturn.jott", true));
         testCases.add(new TestCase("using while keyword as an id (error)", "whileKeyword.jott", true));
@@ -49,9 +50,12 @@ public class JottValidatorTester {
     private static boolean testValidator(TestCase tc) {
         ArrayList<Token> tokens = JottTokenizer.tokenize("phase3TestCases/" + tc.fileName);
         assert tokens != null;
-        JottTree parseTree = JottParser.parse(tokens);
-        assert parseTree != null;
-        return parseTree.validateTree(null, null);
+        Program parseTree = JottParser.parse(tokens);
+        if (parseTree == null) {
+            return false;
+        }
+
+        return parseTree.validateTree();
     }
 
     public static void main(String[] args) {
@@ -59,16 +63,17 @@ public class JottValidatorTester {
 
         for (TestCase tc: testCases) {
             System.out.println(tc.testName);
-            if (!tc.error && testValidator(tc)) {
+            var test = testValidator(tc);
+            if (!tc.error && test) {
                 System.out.println("PASSED");
             }
-            else if (!tc.error && !testValidator(tc)) {
+            else if (!tc.error && !test) {
                 System.out.println("FAILED (test failed but was expected a pass)");
             }
-            else if (tc.error && !testValidator(tc)) {
+            else if (tc.error && !test) {
                 System.out.println("PASSED");
             }
-            else if (tc.error && testValidator(tc)) {
+            else if (tc.error && test) {
                 System.out.println("FAILED (test passed but was expected to fail)");
             }
             System.out.println();

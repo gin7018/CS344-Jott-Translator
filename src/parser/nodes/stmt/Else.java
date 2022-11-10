@@ -28,11 +28,11 @@ public class Else implements JottTree {
     }
 
     public static Else createElse(ArrayList<Token> tokens, SymbolTable table) {
-        var constant = Constant.CreateConstant(tokens);
-        if (constant.getType() != PType.STRING || !constant.getContents().equals("else")) {
+        if (!tokens.get(0).getToken().equals("else")) {
             return new Else();
         }
 
+        Constant.CreateConstant(tokens);
         popAndExpect(tokens, TokenType.L_BRACE);
         var body = Body.createBody(tokens, table);
         popAndExpect(tokens, TokenType.R_BRACE);
@@ -65,8 +65,10 @@ public class Else implements JottTree {
     }
 
     @Override
-    public boolean validateTree(SymbolTable table, Function_Def function) {
-        return isEpsilon || body.validateTree(table, function);
+    public void validateTree(SymbolTable table, Function_Def function) {
+        if (body != null) {
+            body.validateTree(table, function);
+        }
     }
 
     @Override

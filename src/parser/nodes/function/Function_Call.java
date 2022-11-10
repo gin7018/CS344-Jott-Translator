@@ -2,7 +2,8 @@ package parser.nodes.function;
 
 import parser.Symbol;
 import parser.SymbolTable;
-import parser.SyntaxException;
+import parser.exceptions.SemanticException;
+import parser.exceptions.SyntaxException;
 import parser.nodes.JottTree;
 import parser.nodes.expr.Expr;
 import parser.nodes.primitive.Constant;
@@ -37,31 +38,33 @@ public class Function_Call implements JottTree {
             return fCall;
         }
         while(true) {
-            switch (tokens.get(0).getTokenType()) {
-                case STRING:
-                    fCall.param.add(Constant.CreateConstant(tokens));
-                    break;
-                case NUMBER:
-                    fCall.param.add(Expr.createExpr(tokens));
-                    break;
-                case ID_KEYWORD:
-                    if (tokens.get(1).getTokenType() == TokenType.MATH_OP||
-                    tokens.get(1).getTokenType() == TokenType.REL_OP) {
-                        fCall.param.add(Expr.createExpr(tokens));
-                    } else if (tokens.get(1).getTokenType() == TokenType.L_BRACE) {
-                        fCall.param.add(Function_Call.createFunction_Call(tokens));
-                    }
-                    else if(Character.isUpperCase(tokens.get(0).getToken().charAt(0))){
-                        fCall.param.add(Constant.CreateConstant(tokens));
-                    }
-                    else{
-                        fCall.param.add(Id.CreateId(tokens));
-                    }
+//            switch (tokens.get(0).getTokenType()) {
+//                case STRING:
+//                    fCall.param.add(Constant.CreateConstant(tokens));
+//                    break;
+//                case NUMBER:
+//                    fCall.param.add(Expr.createExpr(tokens));
+//                    break;
+//                case ID_KEYWORD:
+//                    if (tokens.get(1).getTokenType() == TokenType.MATH_OP||
+//                    tokens.get(1).getTokenType() == TokenType.REL_OP) {
+//                        fCall.param.add(Expr.createExpr(tokens));
+//                    } else if (tokens.get(1).getTokenType() == TokenType.L_BRACE) {
+//                        fCall.param.add(Function_Call.createFunction_Call(tokens));
+//                    }
+//                    else if(Character.isUpperCase(tokens.get(0).getToken().charAt(0))){
+//                        fCall.param.add(Constant.CreateConstant(tokens));
+//                    }
+//                    else{
+//                        fCall.param.add(Id.CreateId(tokens));
+//                    }
+//
+//                    break;
+//                    default:
+//                    throw new SyntaxException("Expected function call param", tokens.get(0));
+//            }
+            fCall.param.add(Expr.createExpr(tokens));
 
-                    break;
-                    default:
-                    throw new SyntaxException("Expected function call param", tokens.get(0));
-            }
             Token tempToken = tokens.remove(0);
             if(tempToken.getTokenType()==TokenType.COMMA) continue;
             else if(tempToken.getTokenType()==TokenType.R_BRACKET) break;
@@ -103,44 +106,42 @@ public class Function_Call implements JottTree {
     }
 
     @Override
-    public boolean validateTree(SymbolTable table, Function_Def functionContext) {
+    public void validateTree(SymbolTable table, Function_Def functionContext) {
         if (table.lookup(id.getName()) != null) {
             Symbol function = table.lookup(id.getName());
 
             this.pType = function.getType();
 
             if (function.getAttributeLst().size() != param.size()) {
-                return false;
+                throw new SemanticException("Parameter count does not match", null);
             }
             List<FunctionParameters> attributeLst = function.getAttributeLst();
             for (int i = 0; i < attributeLst.size(); i++) {
                 FunctionParameters expected = attributeLst.get(i);
                 JottTree actual = param.get(i);
                 if (actual instanceof Constant) {
-                    if (!((Constant) actual).getType().equals(expected.getType())) {
-                        return false;
+                    if (((Constant) actual).getType() != expected.getType()) {
+                        throw new SemanticException("Invalid parameter", null);
                     }
                 }
                 else if (actual instanceof Expr) {
+                    actual.validateTree(table, functionContext);
 
-                    if (actual.validateTree(table, functionContext) && actual.getPrimitiveType() != expected.getType()) {
-                        return false;
+                    if (actual.getPrimitiveType() != expected.getType()) {
+                        throw new SemanticException("Expression types do not match", null);
                     }
                 }
                 else if (actual instanceof Function_Call) {
-                    if (!actual.validateTree(table, functionContext)) {
-                        return false;
-                    }
+                    actual.validateTree(table, functionContext);
                 }
                 else if (actual instanceof Id && table.lookup(((Id) actual).getToken().getToken()) != null) {
                     Symbol variable = table.lookup(((Id) actual).getToken().getToken());
                     if (variable.getType() != expected.getType()) {
-                        return false;
+                        throw new SemanticException("Types do not match", null);
                     }
                 }
             }
         }
-        return true;
     }
 
     @Override

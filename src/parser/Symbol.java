@@ -37,4 +37,14 @@ public class Symbol {
     public List<FunctionParameters> getAttributeLst() {
         return attributeLst;
     }
+
+    @Override
+    public String toString() {
+        var builder = new StringBuilder("Symbol{name='").append(name).append("', type=").append(type.name());
+        if (attributeLst != null) {
+            builder.append(", attributeLst=").append(attributeLst);
+        }
+
+        return builder + "}";
+    }
 }

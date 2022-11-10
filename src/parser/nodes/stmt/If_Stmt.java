@@ -1,7 +1,7 @@
 package parser.nodes.stmt;
 
 import parser.SymbolTable;
-import parser.SyntaxException;
+import parser.exceptions.SyntaxException;
 import parser.nodes.JottTree;
 import parser.nodes.expr.Expr;
 import parser.nodes.function.Function_Def;
@@ -66,14 +66,11 @@ public class If_Stmt implements JottTree{
     }
 
     @Override
-    public boolean validateTree(SymbolTable table, Function_Def function) {
-        /*
-        if, while, elseif, else nodes
-         */
-        return expr.validateTree(table, function)
-                && body.validateTree(table, function)
-                && elseIfLst.validateTree(table, function)
-                && singleElse.validateTree(table, function);
+    public void validateTree(SymbolTable table, Function_Def function) {
+        expr.validateTree(table, function);
+        body.validateTree(table, function);
+        elseIfLst.validateTree(table, function);
+        singleElse.validateTree(table, function);
     }
 
     @Override

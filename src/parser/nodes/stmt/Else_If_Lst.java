@@ -71,12 +71,14 @@ public class Else_If_Lst implements JottTree {
     }
 
     @Override
-    public boolean validateTree(SymbolTable table, Function_Def function) {
-        return isEpsilon || (
-                expr.validateTree(table, function)
-                        && body.validateTree(table, function)
-                        && trailingElseIf.validateTree(table, function)
-        );
+    public void validateTree(SymbolTable table, Function_Def function) {
+        if (isEpsilon) {
+            return;
+        }
+
+        expr.validateTree(table, function);
+        body.validateTree(table, function);
+        trailingElseIf.validateTree(table, function);
     }
 
     @Override

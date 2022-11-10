@@ -1,9 +1,6 @@
 package parser.nodes.function;
 
-import javax.management.RuntimeErrorException;
-
-import parser.SyntaxException;
-import parser.nodes.JottTree;
+import parser.exceptions.SyntaxException;
 import parser.nodes.primitive.Id;
 import parser.nodes.primitive.PType;
 

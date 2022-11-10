@@ -1,6 +1,7 @@
 package parser.nodes;
 
-import parser.ContextUnawareSyntaxException;
+import parser.exceptions.ContextUnawareSyntaxException;
+import parser.exceptions.SemanticException;
 import parser.SymbolTable;
 import parser.nodes.function.Function_Def;
 import parser.nodes.function.Function_List;
@@ -48,8 +49,25 @@ public class Program implements JottTree {
     }
 
     @Override
-    public boolean validateTree(SymbolTable table, Function_Def unused) {
-        return functionList.validateTree(null, null);
+    public void validateTree(SymbolTable table, Function_Def unused) {
+        functionList.validateTree(null, null);
+    }
+
+    /**
+     * Validates the tree, returning if the validation is successful. All semantic exceptions are caught and logged.
+     *
+     * @return If the tree is valid
+     */
+    public boolean validateTree() {
+        try {
+            validateTree(null, null);
+        } catch (SemanticException e) {
+//            e.printStackTrace();
+            e.report();
+            return false;
+        }
+
+        return true;
     }
 
     @Override

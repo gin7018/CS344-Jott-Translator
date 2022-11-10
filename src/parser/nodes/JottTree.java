@@ -45,9 +45,8 @@ public interface JottTree {
      *
      * @param table    The symbol table, with the scope of the function
      * @param function The function the scope is in
-     * @return true if valid Jott code; false otherwise
      */
-    public boolean validateTree(SymbolTable table, Function_Def function);
+    public void validateTree(SymbolTable table, Function_Def function);
 
     public PType getPrimitiveType();
 

@@ -51,14 +51,14 @@ public class Body_Stmt implements JottTree {
     }
 
     @Override
-    public boolean validateTree(SymbolTable table, Function_Def function) {
+    public void validateTree(SymbolTable table, Function_Def function) {
         if (if_Stmt != null) {
-            return if_Stmt.validateTree(table, function);
+            if_Stmt.validateTree(table, function);
+        } else if (while_Loop != null) {
+            while_Loop.validateTree(table, function);
+        } else {
+            stmt.validateTree(table, function);
         }
-        else if (while_Loop != null) {
-            return while_Loop.validateTree(table, function);
-        }
-        return stmt.validateTree(table, function);
     }
 
     @Override
@@ -67,7 +67,14 @@ public class Body_Stmt implements JottTree {
         return null;
     }
 
-//    public PType getReturnType(SymbolTable symbolTable) {
-//        return if_Stmt == null ? null : if_Stmt.getReturnType(symbolTable);
-//    }
+    @Override
+    public boolean hasReturn() {
+        if (if_Stmt != null) {
+            return if_Stmt.hasReturn();
+        } else if (while_Loop != null) {
+            return while_Loop.hasReturn();
+        } else {
+            return stmt.hasReturn();
+        }
+    }
 }

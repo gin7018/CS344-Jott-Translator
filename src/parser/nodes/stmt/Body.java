@@ -76,24 +76,23 @@ public class Body implements JottTree {
     }
 
     @Override
-    public boolean validateTree(SymbolTable table, Function_Def function) {
+    public void validateTree(SymbolTable table, Function_Def function) {
         if (return_Stmt != null) {
-            return return_Stmt.validateTree(table, function);
+            return_Stmt.validateTree(table, function);
         }
 
         if (body_Stmt != null) {
             if (body != null) {
-                return body_Stmt.validateTree(table, function) && body.validateTree(table, function);
+                body_Stmt.validateTree(table, function);
+                body.validateTree(table, function);
             }
 
-            return body_Stmt.validateTree(table, function);
+            body_Stmt.validateTree(table, function);
         }
 
-        if (body == null) {
-            return true;
+        if (body != null) {
+            body.validateTree(table, function);
         }
-
-        return body.validateTree(table, function);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package parser.nodes;
 
-import parser.SyntaxException;
+import parser.exceptions.SyntaxException;
 import utils.Token;
 import utils.TokenType;
 

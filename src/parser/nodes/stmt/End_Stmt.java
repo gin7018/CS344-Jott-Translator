@@ -46,9 +46,7 @@ public class End_Stmt implements JottTree {
     }
 
     @Override
-    public boolean validateTree(SymbolTable table, Function_Def function) {
-        return false;
-    }
+    public void validateTree(SymbolTable table, Function_Def function) {}
 
     @Override
     public PType getPrimitiveType() {

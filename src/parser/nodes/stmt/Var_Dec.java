@@ -1,8 +1,8 @@
 package parser.nodes.stmt;
 
-import parser.ContextUnawareSyntaxException;
+import parser.exceptions.ContextUnawareSyntaxException;
 import parser.SymbolTable;
-import parser.SyntaxException;
+import parser.exceptions.SyntaxException;
 import parser.nodes.JottTree;
 import parser.nodes.function.Function_Def;
 import parser.nodes.primitive.Id;
@@ -66,9 +66,7 @@ public class Var_Dec implements JottTree{
     }
 
     @Override
-    public boolean validateTree(SymbolTable table, Function_Def function) {
-        return false;
-    }
+    public void validateTree(SymbolTable table, Function_Def function) {}
 
     @Override
     public PType getPrimitiveType() {
