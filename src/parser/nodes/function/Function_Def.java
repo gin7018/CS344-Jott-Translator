@@ -102,7 +102,6 @@ public class  Function_Def implements JottTree{
         }
 
         // check if the body is valid
-        //table.insert(new Symbol(functionReturn.toString(), "", ""));
         return body.validateTree(table);
     }
 

@@ -25,36 +25,25 @@ public class JottValidatorTester {
 
     private static void createTestCases() {
         testCases = new ArrayList<>();
-        testCases.add(new TestCase("invalid parameter function call", "funcCallParamInvalid.jott", false));
+        testCases.add(new TestCase("invalid parameter function call (error)", "funcCallParamInvalid.jott", true));
         testCases.add(new TestCase("function not defined (error)", "funcNotDefined.jott", true));
         testCases.add(new TestCase("function return in an expression (error)", "funcReturnInExpr.jott", true));
-        testCases.add(new TestCase("provided writeup example4 (error)", "providedExample4.jott", true));
-//        testCases.add(new TestCase("provided writeup example5 (error)", "providedExample5.jott", true));
-//        testCases.add(new TestCase("hello world", "helloWorld.jott", false));
-//        testCases.add(new TestCase("1foo error (error)", "1foo.jott", true));
-//        testCases.add(new TestCase("return <id> type mismatch", "returnId.jott", false));
-//        testCases.add(new TestCase("type:var error (error)", "paramOrderSwapped.jott", true));
-//        testCases.add(new TestCase("missing expr (error)", "missingExp.jott", true));
-//        testCases.add(new TestCase("missingBrace (error)", "missingBrace.jott", true));
-//        testCases.add(new TestCase("elseif without if (error)", "elseIfNoIf.jott", true));
-//        testCases.add(new TestCase("missing return", "missingReturn.jott", false));
-//        testCases.add(new TestCase("Void not valid param type (error)", "voidParam.jott", true));
-//        testCases.add(new TestCase("function not defined", "funcNotDefined.jott", false));
-//        testCases.add(new TestCase("mismatch return type", "mismatchedReturn.jott", false));
-//        testCases.add(new TestCase("function call param type not matching", "funcCallParamInvalid.jott", false));
-//        testCases.add(new TestCase("single expression program (error)", "singleExpr.jott", true));
-//        testCases.add(new TestCase("valid while loop", "validLoop.jott", false));
-//        testCases.add(new TestCase("missing main", "missingMain.jott", false));
-//        testCases.add(new TestCase("main must be integer", "mainReturnNotInt.jott", false));
-//        testCases.add(new TestCase("i_expr relop d_expr function return", "funcReturnInExpr.jott", false));
-//        testCases.add(new TestCase("invalid asmt stmt (error)", "invalidAsmtStmt.jott", true));
-//        testCases.add(new TestCase("missing comma in func_def_params (error)", "missingCommaParams.jott", true));
-//        testCases.add(new TestCase("while is keyword, cannot be used as id", "whileKeyword.jott", false));
-//        testCases.add(new TestCase("expr by itself (error)", "loneExpr.jott", true));
-//        testCases.add(new TestCase("code after return (error)", "codeAfterReturn.jott", true));
-//        testCases.add(new TestCase("lone minus (error)", "loneMinus.jott", true));
-//        testCases.add(new TestCase("else without if (error)", "elseNoIf.jott", true));
-//        testCases.add(new TestCase("missing closing } (error)", "missingClosing.jott", true));
+        testCases.add(new TestCase("function wrong parameter type (error)", "funcWrongParamType.jott", true));
+        testCases.add(new TestCase("hello world", "helloWorld.jott", false));
+        testCases.add(new TestCase("if stmt returns ", "ifStmtReturns.jott", false));
+        testCases.add(new TestCase("larger valid", "largerValid.jott", false));
+        testCases.add(new TestCase("main returning a double (error)", "mainReturnNotInt.jott", true));
+        testCases.add(new TestCase("mismatched return (error)", "mismatchedReturn.jott", true));
+        testCases.add(new TestCase("missing function parameters (error)", "missingFunParams.jott", true));
+        testCases.add(new TestCase("missing main (error)", "missingMain.jott", true));
+        testCases.add(new TestCase("missing return (error)", "missingReturn.jott", true));
+        testCases.add(new TestCase("no return if stmt", "noReturnIf.jott", false));
+        testCases.add(new TestCase("no return in while loop", "noReturnWhile.jott", false));
+        testCases.add(new TestCase("provided example 1", "providedExample1.jott", false));
+        testCases.add(new TestCase("main returns an id", "returnId.jott", false));
+        testCases.add(new TestCase("valid loop", "validLoop.jott", false));
+        testCases.add(new TestCase("void return (error)", "voidReturn.jott", true));
+        testCases.add(new TestCase("using while keyword as an id (error)", "whileKeyword.jott", true));
     }
 
     private static boolean testValidator(TestCase tc) {
