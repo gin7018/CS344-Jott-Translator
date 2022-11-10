@@ -51,7 +51,7 @@ public class JottValidatorTester {
         assert tokens != null;
         JottTree parseTree = JottParser.parse(tokens);
         assert parseTree != null;
-        return parseTree.validateTree(null);
+        return parseTree.validateTree(null, null);
     }
 
     public static void main(String[] args) {
