@@ -1,5 +1,7 @@
 package parser;
 
+import parser.exceptions.ContextUnawareSyntaxException;
+import parser.exceptions.SyntaxException;
 import parser.nodes.JottTree;
 import parser.nodes.Program;
 import utils.Token;
@@ -22,7 +24,7 @@ public class JottParser {
      * @return the root of the Jott Parse Tree represented by the tokens.
      * or null upon an error in parsing.
      */
-    public static JottTree parse(ArrayList<Token> tokens) {
+    public static Program parse(ArrayList<Token> tokens) {
         if (tokens.size() == 0) {
             return null;
         }
@@ -37,6 +39,7 @@ public class JottParser {
         } catch (ContextUnawareSyntaxException e) {
             e.report(lastToken.getFilename(), lastToken.getLineNum());
         } catch (SyntaxException e) {
+            e.printStackTrace();
             e.report();
         }
 

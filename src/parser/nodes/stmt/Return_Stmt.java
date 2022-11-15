@@ -1,10 +1,12 @@
 package parser.nodes.stmt;
 
 import parser.SymbolTable;
-import parser.SyntaxException;
+import parser.exceptions.SemanticException;
+import parser.exceptions.SyntaxException;
 import parser.nodes.JottTree;
 import parser.nodes.expr.Expr;
 import parser.nodes.function.Function_Call;
+import parser.nodes.function.Function_Def;
 import parser.nodes.primitive.Constant;
 import parser.nodes.primitive.Id;
 import parser.nodes.primitive.PType;
@@ -43,7 +45,6 @@ public class Return_Stmt implements JottTree{
                     rStmt.expr =Id.CreateId(tokens);
                 }
                 break;
-
         }
         var tempToken = tokens.remove(0);
         if(!(tempToken.getTokenType()==TokenType.SEMICOLON)){
@@ -53,16 +54,7 @@ public class Return_Stmt implements JottTree{
 
     }
 
-    public PType getType(SymbolTable table) {
-        // whatever calls this must call validate first
-        if (expr != null) {
-            expr.validateTree(table);
-            return expr.getPrimitiveType();
-        }
-        return null;
-    }
 
-    
     @Override
     public PType getPrimitiveType() {
         return expr.getPrimitiveType();
@@ -95,9 +87,19 @@ public class Return_Stmt implements JottTree{
     }
 
     @Override
-    public boolean validateTree(SymbolTable table) {
-        return false;
+    public void validateTree(SymbolTable table, Function_Def function) {
+        // TODO: Shouldn't this be in the create method? When would this be null?
+        if (expr == null) {
+            throw new SemanticException("Expression is null", null);
+        }
+
+        expr.validateTree(table, function);
+
+        if (expr.getPrimitiveType() != function.getReturnType()) {
+            // Mismatched return types
+            throw new SemanticException("Mismatched return types", null);
+        }
     }
 
-    
+
 }

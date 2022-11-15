@@ -1,9 +1,10 @@
 package parser.nodes.stmt;
 
 import parser.SymbolTable;
-import parser.SyntaxException;
+import parser.exceptions.SyntaxException;
 import parser.nodes.JottTree;
 import parser.nodes.expr.Expr;
+import parser.nodes.function.Function_Def;
 import parser.nodes.primitive.Constant;
 import parser.nodes.primitive.PType;
 import utils.Token;
@@ -65,19 +66,33 @@ public class If_Stmt implements JottTree{
     }
 
     @Override
-    public boolean validateTree(SymbolTable table) {
-        /*
-        if, while, elseif, else nodes
-         */
-        return expr.validateTree(table)
-                && body.validateTree(table)
-                && elseIfLst.validateTree(table)
-                && singleElse.validateTree(table);
+    public void validateTree(SymbolTable table, Function_Def function) {
+        expr.validateTree(table, function);
+        body.validateTree(table, function);
+        elseIfLst.validateTree(table, function);
+        singleElse.validateTree(table, function);
     }
 
     @Override
     public PType getPrimitiveType() {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    @Override
+    public boolean hasReturn() {
+        if (!body.hasReturn()) {
+            return false;
+        }
+
+        if (singleElse != null) {
+            return singleElse.hasReturn();
+        }
+
+        if (elseIfLst != null) {
+            return elseIfLst.hasReturn();
+        }
+
+        return true;
     }
 }

@@ -2,9 +2,10 @@ package parser.nodes.stmt;
 
 import parser.Symbol;
 import parser.SymbolTable;
-import parser.SyntaxException;
+import parser.exceptions.SyntaxException;
 import parser.nodes.JottTree;
 import parser.nodes.function.Function_Call;
+import parser.nodes.function.Function_Def;
 import parser.nodes.primitive.PType;
 import utils.Token;
 import utils.TokenType;
@@ -16,7 +17,7 @@ import static parser.nodes.NodeUtility.popAndExpect;
 public class Stmt implements JottTree{
 
     private JottTree asmt;
-    private JottTree varDec;
+    private Var_Dec varDec;
     private JottTree funtionCall;
 
     private Stmt() {
@@ -38,7 +39,7 @@ public class Stmt implements JottTree{
             stmt.varDec = Var_Dec.createVar_Dec(tokens);
 
             // add declaration to sym table
-            Var_Dec vd = (Var_Dec) stmt.varDec;
+            Var_Dec vd = stmt.varDec;
             Symbol sym = new Symbol(vd.getId().getName(), vd.getType());
             table.insert(sym);
         }
@@ -81,15 +82,18 @@ public class Stmt implements JottTree{
     }
 
     @Override
-    public boolean validateTree(SymbolTable table) {
+    public void validateTree(SymbolTable table, Function_Def function) {
         if (asmt != null) {
-            return asmt.validateTree(table);
+            asmt.validateTree(table, function);
         }
-        else if (varDec != null) {
-            return varDec.validateTree(table);
-        }
-        return funtionCall.validateTree(table);
 
+        if (varDec != null) {
+            varDec.validateTree(table, function);
+        }
+
+        if (funtionCall != null) {
+            funtionCall.validateTree(table, function);
+        }
     }
 
     @Override

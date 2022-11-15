@@ -1,7 +1,7 @@
 package parser.nodes.function;
 
 import parser.SymbolTable;
-import parser.SyntaxException;
+import parser.exceptions.SyntaxException;
 import parser.nodes.JottTree;
 import parser.nodes.primitive.PType;
 import utils.Token;
@@ -54,8 +54,8 @@ public class Function_Return implements JottTree{
     }
 
     @Override
-    public boolean validateTree(SymbolTable table) {
-        return false;
+    public void validateTree(SymbolTable table, Function_Def function) {
+        // TODO: Should a type check go in here?
     }
 
     @Override

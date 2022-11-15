@@ -1,6 +1,6 @@
 package tokenizer;
 
-import parser.ContextUnawareSyntaxException;
+import parser.exceptions.ContextUnawareSyntaxException;
 import utils.Token;
 import utils.TokenType;
 

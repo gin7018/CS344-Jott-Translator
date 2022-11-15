@@ -51,4 +51,16 @@ public class SymbolTable {
     public Map<String, Symbol> getTable() {
         return table;
     }
+
+    @Override
+    public String toString() {
+        var builder = new StringBuilder("SymbolTable{");
+        table.forEach((key, value) -> builder.append(key).append("=").append(value).append(", "));
+
+        if (inheritedTable != null) {
+            return builder.append("inherited=").append(inheritedTable) + "}";
+        } else {
+            return builder.substring(0, builder.length() - 2) + "}";
+        }
+    }
 }

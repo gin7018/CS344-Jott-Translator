@@ -1,8 +1,9 @@
 package parser.nodes.primitive;
 
-import parser.ContextUnawareSyntaxException;
+import parser.exceptions.ContextUnawareSyntaxException;
 import parser.SymbolTable;
 import parser.nodes.JottTree;
+import parser.nodes.function.Function_Def;
 import utils.Token;
 import utils.TokenType;
 
@@ -74,10 +75,7 @@ public class Constant implements JottTree {
     }
 
     @Override
-    public boolean validateTree(SymbolTable table) {
-        // TODO Auto-generated method stub
-        return true;
-    }
+    public void validateTree(SymbolTable table, Function_Def function) {}
 
     @Override
     public PType getPrimitiveType() {

@@ -2,6 +2,7 @@ package parser.nodes.stmt;
 
 import parser.SymbolTable;
 import parser.nodes.JottTree;
+import parser.nodes.function.Function_Def;
 import parser.nodes.primitive.Constant;
 import parser.nodes.primitive.PType;
 import utils.Token;
@@ -27,11 +28,11 @@ public class Else implements JottTree {
     }
 
     public static Else createElse(ArrayList<Token> tokens, SymbolTable table) {
-        var constant = Constant.CreateConstant(tokens);
-        if (constant.getType() != PType.STRING || !constant.getContents().equals("else")) {
+        if (!tokens.get(0).getToken().equals("else")) {
             return new Else();
         }
 
+        Constant.CreateConstant(tokens);
         popAndExpect(tokens, TokenType.L_BRACE);
         var body = Body.createBody(tokens, table);
         popAndExpect(tokens, TokenType.R_BRACE);
@@ -64,13 +65,24 @@ public class Else implements JottTree {
     }
 
     @Override
-    public boolean validateTree(SymbolTable table) {
-        return isEpsilon || body.validateTree(table);
+    public void validateTree(SymbolTable table, Function_Def function) {
+        if (body != null) {
+            body.validateTree(table, function);
+        }
     }
 
     @Override
     public PType getPrimitiveType() {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    @Override
+    public boolean hasReturn() {
+        if (isEpsilon) {
+            return false;
+        }
+
+        return body.hasReturn();
     }
 }

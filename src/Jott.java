@@ -1,5 +1,6 @@
 import parser.JottParser;
 import parser.nodes.JottTree;
+import parser.nodes.Program;
 import tokenizer.JottTokenizer;
 import utils.Token;
 
@@ -13,9 +14,9 @@ public class Jott {
     public Jott(String input, String output, String language) {
         ArrayList<Token> tokens = JottTokenizer.tokenize(input);
         assert tokens != null;
-        JottTree parseTree = JottParser.parse(tokens);
+        Program parseTree = JottParser.parse(tokens);
         assert parseTree != null;
-        parseTree.validateTree(null);
+        parseTree.validateTree();
 
         try {
             Path path = Path.of(output);

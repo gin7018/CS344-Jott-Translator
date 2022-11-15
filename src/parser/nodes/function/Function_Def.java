@@ -1,6 +1,8 @@
 package parser.nodes.function;
 
+import parser.Symbol;
 import parser.SymbolTable;
+import parser.exceptions.SemanticException;
 import parser.nodes.JottTree;
 import parser.nodes.primitive.Id;
 import parser.nodes.primitive.PType;
@@ -16,8 +18,8 @@ public class  Function_Def implements JottTree{
     private Id id;
     private Function_Def_Params fdParams;
     private Function_Return functionReturn;
-    private JottTree body;
-    private static SymbolTable table;
+    private Body body;
+    private final SymbolTable table;
 
     private Function_Def(SymbolTable globalSymbolTable) {
         table = new SymbolTable(globalSymbolTable);
@@ -32,8 +34,12 @@ public class  Function_Def implements JottTree{
         popAndExpect(tokens, TokenType.COLON);
         fd.functionReturn = Function_Return.createFunction_Return(tokens);
         popAndExpect(tokens, TokenType.L_BRACE);
-        fd.body = Body.createBody(tokens, table);
+        fd.body = Body.createBody(tokens, fd.table);
         popAndExpect(tokens, TokenType.R_BRACE);
+
+        for (FunctionParameters parameter : fd.fdParams.getParameters()) {
+            fd.table.insert(new Symbol(parameter.getId().getName(), parameter.getType()));
+        }
 
         return fd;
     }
@@ -46,8 +52,8 @@ public class  Function_Def implements JottTree{
         return fdParams;
     }
 
-    public Function_Return getFunctionReturn() {
-        return functionReturn;
+    public PType getReturnType() {
+        return functionReturn.getType();
     }
 
     @Override
@@ -74,36 +80,21 @@ public class  Function_Def implements JottTree{
     }
 
     @Override
-    public boolean validateTree(SymbolTable table) {
-        Function_Def.table.getTable().forEach((k,v) -> {
-            table.insert(v);
-        });
+    public void validateTree(SymbolTable globalTable, Function_Def function) {
         // check if there is a function with a similar name
-        if (table.lookup(id.getName()) == null) {
-            return false;
+        if (globalTable.lookup(id.getName()) == null) {
+            throw new SemanticException("Function not defined", null);
         }
 
-        // check if the body has a return statement that matches the expected return
-        if (functionReturn == null && ((Body) body).getReturn_Stmt() != null) {
-            // returning from a void function is invalid
-            return false;
-        }
-        else if (functionReturn.getType() != PType.VOID && ((Body) body).getReturn_Stmt() == null) {
-            // missing a return statement or return is VOID
-            return false;
-        }
-        else if (functionReturn != null && ((Body) body).getReturn_Stmt() != null) {
-            // if this is a returning function check if the types are matching
-            boolean typesMatch = ((Function_Return) functionReturn).getType().equals(((Body) body)
-                    .getReturn_Stmt().getType(table));
-            if (!typesMatch) {
-                return false;
+        if (getReturnType() != PType.VOID) {
+            if (!body.hasReturn()) {
+                throw new SemanticException("Function has no return", null);
             }
         }
 
         // check if the body is valid
         //table.insert(new Symbol(functionReturn.toString(), "", ""));
-        return body.validateTree(table);
+        body.validateTree(table, this);
     }
 
     @Override
