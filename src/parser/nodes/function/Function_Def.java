@@ -66,17 +66,22 @@ public class  Function_Def implements JottTree{
 
     @Override
     public String convertToJava() {
-        return null;
+        return "public " + functionReturn.convertToJava() + " " +
+                id.convertToJava() + "(" + fdParams.convertToJava() + ") {\n" +
+                body.convertToJava() + "}\n";
     }
 
     @Override
     public String convertToC() {
-        return null;
+        return functionReturn.convertToC() + " " +
+                id.convertToC() + "(" + fdParams.convertToC() + ") {\n" +
+                body.convertToC() + "}\n";
     }
 
     @Override
     public String convertToPython() {
-        return null;
+        return id.convertToPython() + "(" + fdParams.convertToPython() + "):\n" +
+                body.convertToC() + "\n";
     }
 
     @Override
