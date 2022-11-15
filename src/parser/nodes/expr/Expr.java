@@ -101,6 +101,8 @@ public class Expr implements JottTree {
             return this.lnode.validateTree(table);
         }
         else if (!lnode.validateTree(table) ){
+            // the left node of the expr is not valade but this error should be 
+            //taken care in that nodes validate
             return false;
         }
         else{
@@ -125,6 +127,7 @@ public class Expr implements JottTree {
                     this.ptype=PType.BOOL;
                 }
                 if(left!= PType.INT){
+                    // non matching types in exspersion exspected INT got left
                     return false;
                 }
                 break;
@@ -138,6 +141,7 @@ public class Expr implements JottTree {
                     this.ptype=PType.BOOL;
                 }
                 if(left!= PType.DBL){
+                    // non matching types in exspersion exspected DBL got left
                     return false;
                 }
                 break;
@@ -145,9 +149,11 @@ public class Expr implements JottTree {
 
                 case Irel:
                 if(!mathop){
+                    // can't have multiple relations in one expression
                     return false;
                 }
                 if(left!= PType.INT){
+                    // non matching types in exspersion exspected INT got left
                     return false;
                 }
                 this.ptype = PType.BOOL;
@@ -156,9 +162,11 @@ public class Expr implements JottTree {
 
                 case Drel:
                 if(!mathop){
+                    // can't have multiple relations in one expression
                     return false;
                 }
                 if(left!= PType.DBL){
+                    // non matching types in exspersion exspected DBL got left
                     return false;
                 }
                 this.ptype = PType.BOOL;
@@ -168,9 +176,11 @@ public class Expr implements JottTree {
 
                 case Srel:
                 if(mathop){
+                    //Cant have a mathop in a string exsperssion
                     return false;
                 }
                 if(left!= PType.STRING){
+                    //non matching types in exsresion expected string
                     return false;
                 }
                 this.ptype = PType.BOOL;
@@ -212,7 +222,7 @@ public class Expr implements JottTree {
             ExprType eType = rnode.gExprType(table);
             switch (eType){
                 case Srel:
-                return ExprType.Fail;// can only have srelation
+                return ExprType.Fail;// can only have srelation 
                 case Iexpr:
                 if(lType!=PType.INT){
                     return ExprType.Fail;
