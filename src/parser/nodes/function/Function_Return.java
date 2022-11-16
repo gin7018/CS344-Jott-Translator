@@ -40,12 +40,20 @@ public class Function_Return implements JottTree{
 
     @Override
     public String convertToJava() {
-        return null;
+        if (type.equals(PType.VOID)) return type.label.toLowerCase();
+        return type.label;
     }
 
     @Override
     public String convertToC() {
-        return null;
+        return switch (type) {
+            case DBL -> "float";
+            case INT -> "int";
+            case BOOL -> "boolean";
+            case STRING -> "char*";
+            case VOID -> "void";
+            default -> null;
+        };
     }
 
     @Override

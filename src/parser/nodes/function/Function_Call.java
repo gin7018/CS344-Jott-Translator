@@ -89,9 +89,9 @@ public class Function_Call implements JottTree {
 
     @Override
     public String convertToJava() {
-        String out = id.convertToJott()+"(";
+        String out = id.convertToJava()+"(";
         for(JottTree node: param){
-            out = out + node.convertToJott()+",";
+            out = out + node.convertToJava()+",";
         }
         char[] temp = out.toCharArray();
         temp[temp.length-1] = ')';
@@ -100,9 +100,9 @@ public class Function_Call implements JottTree {
 
     @Override
     public String convertToC() {
-        String out = id.convertToJott()+"(";
+        String out = id.convertToC()+"(";
         for(JottTree node: param){
-            out = out + node.convertToJott()+",";
+            out = out + node.convertToC()+",";
         }
         char[] temp = out.toCharArray();
         temp[temp.length-1] = ')';
@@ -111,9 +111,9 @@ public class Function_Call implements JottTree {
 
     @Override
     public String convertToPython() {
-        String out = id.convertToJott()+"(";
+        String out = id.convertToPython()+"(";
         for(JottTree node: param){
-            out = out + node.convertToJott()+",";
+            out = out + node.convertToPython()+",";
         }
         char[] temp = out.toCharArray();
         temp[temp.length-1] = ')';
