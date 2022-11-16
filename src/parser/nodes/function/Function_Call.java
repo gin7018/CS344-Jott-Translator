@@ -89,20 +89,35 @@ public class Function_Call implements JottTree {
 
     @Override
     public String convertToJava() {
-        // TODO Auto-generated method stub
-        return null;
+        String out = id.convertToJott()+"(";
+        for(JottTree node: param){
+            out = out + node.convertToJott()+",";
+        }
+        char[] temp = out.toCharArray();
+        temp[temp.length-1] = ')';
+        return String.valueOf(temp);
     }
 
     @Override
     public String convertToC() {
-        // TODO Auto-generated method stub
-        return null;
+        String out = id.convertToJott()+"(";
+        for(JottTree node: param){
+            out = out + node.convertToJott()+",";
+        }
+        char[] temp = out.toCharArray();
+        temp[temp.length-1] = ')';
+        return String.valueOf(temp);
     }
 
     @Override
     public String convertToPython() {
-        // TODO Auto-generated method stub
-        return null;
+        String out = id.convertToJott()+"(";
+        for(JottTree node: param){
+            out = out + node.convertToJott()+",";
+        }
+        char[] temp = out.toCharArray();
+        temp[temp.length-1] = ')';
+        return String.valueOf(temp);
     }
 
     @Override

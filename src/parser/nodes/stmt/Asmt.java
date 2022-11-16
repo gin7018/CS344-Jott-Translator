@@ -80,17 +80,32 @@ public class Asmt implements JottTree {
 
     @Override
     public String convertToJava() {
-        return null;
+        String out = "";
+        if (keyword != null) {
+            out += keyword.getToken() + " ";
+        }
+        out += id.convertToJott() + "=" + expr.convertToJott() + ";";
+        return out;
     }
 
     @Override
     public String convertToC() {
-        return null;
+        String out = "";
+        if (keyword != null) {
+            out += keyword.getToken() + " ";
+        }
+        out += id.convertToJott() + "=" + expr.convertToJott() + ";";
+        return out;
     }
 
     @Override
     public String convertToPython() {
-        return null;
+        String out = "";
+        if (keyword != null) {
+            out += keyword.getToken() + " ";
+        }
+        out += id.convertToJott() + "=" + expr.convertToJott();
+        return out;
     }
 
     @Override
