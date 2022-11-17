@@ -18,6 +18,15 @@ void printInt(int d){
 print("%d\n",d );
 
 }
+
+char* input(char* msg, int buffer){
+    
+    printf("%s\n", msg);
+    char* buff = malloc(buffer);
+    fgets(buff, buffer, stdin);
+    return buff;
+}
+
 printf()
 int main(){    
 
