@@ -6,6 +6,7 @@ foo[y:Double]:Integer{
 }
 
 main[]:Integer{
+	Integer b;
     Integer x = foo[5];
 	print[x];
 	return x;

@@ -98,7 +98,7 @@ public class Body implements JottTree {
         }
         else return "";
     }
-    }
+    
 
     @Override
     public void validateTree(SymbolTable table, Function_Def function) {
