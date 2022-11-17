@@ -100,7 +100,7 @@ public class Asmt implements JottTree {
 
     @Override
     public String convertToPython() {
-        String out = "";
+        String out = "\n";
         if (keyword != null) {
             out += keyword.getToken() + " ";
         }
