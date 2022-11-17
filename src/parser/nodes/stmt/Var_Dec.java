@@ -47,22 +47,22 @@ public class Var_Dec implements JottTree{
 
     @Override
     public String convertToJott() {
-        return this.type.getLabel()+this.id.convertToJott()+";";
+        return this.type.getLabel()+" "+this.id.convertToJott()+";";
     }
 
     @Override
     public String convertToJava() {
-        return this.type.getLabel()+this.id.convertToJava()+";";
+        return this.type.getLabel()+" "+this.id.convertToJava()+";";
     }
 
     @Override
     public String convertToC() {
-        return this.type.getLabel()+this.id.convertToC()+";";
+        return this.type.getLabel()+" "+this.id.convertToC()+";";
     }
 
     @Override
     public String convertToPython() {
-        return this.type.getLabel()+this.id.convertToPython()+";";
+        return this.type.getLabel()+" "+this.id.convertToPython()+";";
     }
 
     @Override
