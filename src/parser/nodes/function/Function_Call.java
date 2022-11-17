@@ -110,28 +110,28 @@ public class Function_Call implements JottTree {
         if(functname.equals("print")){
             switch( p.getPrimitiveType()) {
                 case BOOL:
-                return "printf(\"%d\\n\", p,"+p.convertToC()+")";
+                return "printf(\"%d\\n\", p,"+p.convertToC()+");";
                 case INT:
-                    return "printf(\"%d\\n\", p,"+p.convertToC()+")";
+                    return "printf(\"%d\\n\", p,"+p.convertToC()+");";
                 case STRING:
-                    return "printf(\"%s\\n\", p,"+p.convertToC()+")";
+                    return "printf(\"%s\\n\", p,"+p.convertToC()+");";
                 case DBL:
-                    return "printf(\"%f\\n\", p,"+p.convertToC()+")";
+                    return "printf(\"%f\\n\", p,"+p.convertToC()+");";
                 default:
                     return "\n\nSOMETHING IS HORRIBLY WRONG\n\n";
             }
-        }
+        }else{
 
-        String out = id.convertToC()+"(";
-        for(JottTree node: param){
-            out = out + node.convertToC()+",";
-        }
+            String out = id.convertToC()+"(";
+            for(JottTree node: param){
+                out = out + node.convertToC()+",";
+            }
 
-        if (out.endsWith(",")) {
-            out = out.substring(0, out.length() - 1);
-        }
-        return out + ")";
-    }
+            if (out.endsWith(",")) {
+                out = out.substring(0, out.length() - 1);
+            }
+            return out + ")";
+    }}
 
     @Override
     public String convertToPython() {
