@@ -7,13 +7,9 @@
 
 
 char* concat(char* s1, char* s2){
-
     char* a = malloc(strlen(s1)+strlen(s2)+1);
-
-    printf("size of %ld     %ld\n",strlen(s1), strlen(s2));
     strcpy(a,s1);
     strcat(a,s2);
-    printf("%s\n", a);
     return a;
 
 
