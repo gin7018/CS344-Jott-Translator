@@ -17,7 +17,7 @@ import java.util.List;
 
 public class Function_Call implements JottTree {
     Id id;
-    ArrayList<JottTree> param;
+    ArrayList<Expr> param;
     PType pType;
 
     private Function_Call() {
@@ -26,7 +26,7 @@ public class Function_Call implements JottTree {
 
     public static Function_Call createFunction_Call(ArrayList<Token> tokens) {
         Function_Call fCall = new Function_Call();
-        fCall.param = new ArrayList<JottTree>();
+        fCall.param = new ArrayList<Expr>();
         fCall.id = Id.CreateId(tokens);
         fCall.pType = null;
         var removed =tokens.remove(0);
@@ -100,6 +100,24 @@ public class Function_Call implements JottTree {
 
     @Override
     public String convertToC() {
+        String functname = id.convertToC();
+        Expr p =this.param.get(0);
+
+        if(functname.equals("print")){
+            switch( p.getPrimitiveType()) {
+                case BOOL:
+                return "printf(\"%d\\n\", p,"+p.convertToC()+")";
+                case INT:
+                    return "printf(\"%d\\n\", p,"+p.convertToC()+")";
+                case STRING:
+                    return "printf(\"%s\\n\", p,"+p.convertToC()+")";
+                case DBL:
+                    return "printf(\"%f\\n\", p,"+p.convertToC()+")";
+                default:
+                    return "\n\nSOMETHING IS HORRIBLY WRONG\n\n";
+            }
+        }
+
         String out = id.convertToC()+"(";
         for(JottTree node: param){
             out = out + node.convertToC()+",";
