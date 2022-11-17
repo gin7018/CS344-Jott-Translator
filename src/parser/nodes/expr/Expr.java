@@ -75,20 +75,30 @@ public class Expr implements JottTree {
 
     @Override
     public String convertToJava() {
-        // TODO Auto-generated method stub
-        return null;
+        
+        if (isTail) {
+            return lnode.convertToJott();
+        } else {
+            return lnode.convertToJott() + operator.getToken() + rnode.convertToJott();
+        }
     }
 
     @Override
     public String convertToC() {
-        // TODO Auto-generated method stub
-        return null;
+        if (isTail) {
+            return lnode.convertToJott();
+        } else {
+            return lnode.convertToJott() + operator.getToken() + rnode.convertToJott();
+        }
     }
 
     @Override
     public String convertToPython() {
-        // TODO Auto-generated method stub
-        return null;
+        if (isTail) {
+            return lnode.convertToJott();
+        } else {
+            return lnode.convertToJott() + operator.getToken() + rnode.convertToJott();
+        }
     }
 
     @Override

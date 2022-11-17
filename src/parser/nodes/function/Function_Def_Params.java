@@ -54,17 +54,38 @@ public class Function_Def_Params implements JottTree{
 
     @Override
     public String convertToJava() {
-        return null;
+        StringBuilder result = new StringBuilder();
+        String delim = "";
+        for (FunctionParameters param: parameters) {
+            result.append(delim).append(param.getType().label).append(" ").
+                    append(param.getId().convertToJava());
+            delim = ", ";
+        }
+        return result.toString();
     }
 
     @Override
     public String convertToC() {
-        return null;
+        StringBuilder result = new StringBuilder();
+        String delim = "";
+        for (FunctionParameters param: parameters) {
+            String typeToC  = param.getType().label; // TODO a function that takes a PTYPE and converts it to C
+            result.append(delim).append(typeToC).append(" ").
+                    append(param.getId().convertToC());
+            delim = ", ";
+        }
+        return result.toString();
     }
 
     @Override
     public String convertToPython() {
-        return null;
+        StringBuilder result = new StringBuilder();
+        String delim = "";
+        for (FunctionParameters param: parameters) {
+            result.append(delim).append(param.getId().convertToPython());
+            delim = ", ";
+        }
+        return result.toString();
     }
 
     @Override

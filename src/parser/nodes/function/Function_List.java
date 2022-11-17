@@ -44,20 +44,29 @@ public class Function_List implements JottTree {
 
     @Override
     public String convertToJava() {
-        // TODO Auto-generated method stub
-        return null;
+        StringBuilder result = new StringBuilder();
+        for (Function_Def fDef: functionDefs) {
+            result.append(fDef.convertToJava()).append("\n");
+        }
+        return result.toString();
     }
 
     @Override
     public String convertToC() {
-        // TODO Auto-generated method stub
-        return null;
+        StringBuilder result = new StringBuilder();
+        for (Function_Def fDef: functionDefs) {
+            result.append(fDef.convertToC()).append("\n");
+        }
+        return result.toString();
     }
 
     @Override
     public String convertToPython() {
-        // TODO Auto-generated method stub
-        return null;
+        StringBuilder result = new StringBuilder();
+        for (Function_Def fDef: functionDefs) {
+            result.append(fDef.convertToPython()).append("\n");
+        }
+        return result.toString();
     }
 
     @Override

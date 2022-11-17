@@ -73,17 +73,31 @@ public class Return_Stmt implements JottTree{
 
     @Override
     public String convertToJava() {
-        return null;
+        String out ="return ";
+        if(expr != null){
+            out+=expr.convertToJott();
+        }
+        out+=";";
+        return out;
     }
 
     @Override
     public String convertToC() {
-        return null;
+        String out ="return ";
+        if(expr != null){
+            out+=expr.convertToJott();
+        }
+        out+=";";
+        return out;
     }
 
     @Override
     public String convertToPython() {
-        return null;
+        String out ="return ";
+        if(expr != null){
+            out+=expr.convertToJott();
+        }
+        return out;
     }
 
     @Override
