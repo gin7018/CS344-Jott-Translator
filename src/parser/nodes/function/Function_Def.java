@@ -81,7 +81,7 @@ public class  Function_Def implements JottTree{
     @Override
     public String convertToPython() {
         return id.convertToPython() + "(" + fdParams.convertToPython() + "):\n" +
-                body.convertToC() + "\n";
+                body.convertToPython() + "\n";
     }
 
     @Override

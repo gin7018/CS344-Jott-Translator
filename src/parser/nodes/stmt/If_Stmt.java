@@ -52,17 +52,22 @@ public class If_Stmt implements JottTree{
 
     @Override
     public String convertToJava() {
-        return null;
+        return String.format("if (%s) {%s} %s %s", expr.convertToJava(), body.convertToJava(), elseIfLst.convertToJava(), singleElse.convertToJava());
     }
 
     @Override
     public String convertToC() {
-        return null;
+        return String.format("if (%s) {%s} %s %s", expr.convertToC(), body.convertToC(), elseIfLst.convertToC(), singleElse.convertToC());
     }
 
     @Override
     public String convertToPython() {
-        return null;
+        return String.format("""
+            if %s:
+            %s
+            %s
+            %s
+            """, expr.convertToPython(), body.convertToPython().indent(4), elseIfLst.convertToPython(), singleElse.convertToPython());
     }
 
     @Override

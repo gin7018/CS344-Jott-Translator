@@ -57,17 +57,33 @@ public class Else_If_Lst implements JottTree {
 
     @Override
     public String convertToJava() {
-        return null;
+        if (isEpsilon) {
+            return "";
+        }
+
+        return String.format("else if (%s) {%s} %s", expr.convertToJava(), body.convertToJava(), trailingElseIf.convertToJava());
     }
 
     @Override
     public String convertToC() {
-        return null;
+        if (isEpsilon) {
+            return "";
+        }
+
+        return String.format("else if (%s) {%s} %s", expr.convertToC(), body.convertToC(), trailingElseIf.convertToC());
     }
 
     @Override
     public String convertToPython() {
-        return null;
+        if (isEpsilon) {
+            return "";
+        }
+
+        return String.format("""
+                elif %s:
+                %s
+                %s
+                """, expr.convertToPython(), body.convertToPython().indent(4), trailingElseIf.convertToPython());
     }
 
     @Override
