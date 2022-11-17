@@ -47,7 +47,7 @@ public class Var_Dec implements JottTree{
 
     @Override
     public String convertToJott() {
-        return null;
+        return this.type.toString()+this.id.convertToJott()+this.endStmt.convertToJott();
     }
 
     @Override
