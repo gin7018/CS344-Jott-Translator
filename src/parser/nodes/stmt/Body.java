@@ -62,17 +62,42 @@ public class Body implements JottTree {
 
     @Override
     public String convertToJava() {
-        return null;
+        if(this.body_Stmt!= null &&this.body != null){
+            return this.body_Stmt.convertToJava() + this.body.convertToJava();
+        }else if(this.body_Stmt != null){
+            return this.body_Stmt.convertToJava();
+        }
+        else if(this.return_Stmt != null){
+            return this.return_Stmt.convertToJava();
+        }
+        else return "";
     }
 
     @Override
     public String convertToC() {
-        return null;
+        if(this.body_Stmt!= null &&this.body != null){
+            return this.body_Stmt.convertToC() + this.body.convertToC();
+        }else if(this.body_Stmt != null){
+            return this.body_Stmt.convertToC();
+        }
+        else if(this.return_Stmt != null){
+            return this.return_Stmt.convertToC();
+        }
+        else return "";
     }
 
     @Override
     public String convertToPython() {
-        return null;
+        if(this.body_Stmt!= null &&this.body != null){
+            return this.body_Stmt.convertToPython() + this.body.convertToPython();
+        }else if(this.body_Stmt != null){
+            return this.body_Stmt.convertToPython();
+        }
+        else if(this.return_Stmt != null){
+            return this.return_Stmt.convertToPython();
+        }
+        else return "";
+    }
     }
 
     @Override
