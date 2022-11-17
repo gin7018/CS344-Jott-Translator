@@ -58,7 +58,7 @@ public class Body_Stmt implements JottTree {
     @Override
     public String convertToPython() {
         if(this.if_Stmt !=null){
-            return this.if_Stmt.convertToPyhon();
+            return this.if_Stmt.convertToPython();
         }else if(this.while_Loop != null){
             return this.while_Loop.convertToPython();
         }
