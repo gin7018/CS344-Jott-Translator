@@ -11,9 +11,6 @@ char* concat(char* s1, char* s2){
     strcpy(a,s1);
     strcat(a,s2);
     return a;
-
-
-
 }   
 
 void printInt(int d){
