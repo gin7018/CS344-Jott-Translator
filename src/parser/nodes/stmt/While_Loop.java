@@ -47,17 +47,17 @@ public class While_Loop implements JottTree{
 
     @Override
     public String convertToJava() {
-        return null;
+        return String.format("while (%s) {%s}", expr.convertToJava(), body.convertToJava());
     }
 
     @Override
     public String convertToC() {
-        return null;
+        return String.format("while (%s) {%s}", expr.convertToC(), body.convertToC());
     }
 
     @Override
     public String convertToPython() {
-        return null;
+        return String.format("while %s:\n%s", expr.convertToPython(), body.convertToPython().indent(4));
     }
 
     @Override

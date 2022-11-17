@@ -51,17 +51,29 @@ public class Else implements JottTree {
 
     @Override
     public String convertToJava() {
-        return null;
+        if (isEpsilon) {
+            return "";
+        }
+
+        return String.format("else { %s }", body.convertToJava());
     }
 
     @Override
     public String convertToC() {
-        return null;
+        if (isEpsilon) {
+            return "";
+        }
+
+        return String.format("else { %s }", body.convertToC());
     }
 
     @Override
     public String convertToPython() {
-        return null;
+        if (isEpsilon) {
+            return "";
+        }
+
+        return String.format("else:\n%s", body.convertToPython().indent(4));
     }
 
     @Override
