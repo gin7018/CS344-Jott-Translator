@@ -66,14 +66,24 @@ public class  Function_Def implements JottTree{
 
     @Override
     public String convertToJava() {
-        return "public " + functionReturn.convertToJava() + " " +
+        var returnString = functionReturn.convertToJava();
+        if (id.getName().equals("main")) {
+            returnString = "static void";
+        }
+
+        return "public " + returnString + " " +
                 id.convertToJava() + "(" + fdParams.convertToJava() + ") {\n" +
                 body.convertToJava() + "}\n";
     }
 
     @Override
     public String convertToC() {
-        return functionReturn.convertToC() + " " +
+        var returnString = functionReturn.convertToC();
+        if (id.getName().equals("main")) {
+            returnString = "int";
+        }
+
+        return returnString + " " +
                 id.convertToC() + "(" + fdParams.convertToC() + ") {\n" +
                 body.convertToC() + "}\n";
     }
@@ -81,7 +91,7 @@ public class  Function_Def implements JottTree{
     @Override
     public String convertToPython() {
         return id.convertToPython() + "(" + fdParams.convertToPython() + "):\n" +
-                body.convertToPython() + "\n";
+                body.convertToPython().indent(4) + "\n";
     }
 
     @Override

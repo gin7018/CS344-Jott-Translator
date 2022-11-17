@@ -82,9 +82,11 @@ public class Function_Call implements JottTree {
         for(JottTree node: param){
             out = out + node.convertToJott()+",";
         }
-        char[] temp = out.toCharArray();
-        temp[temp.length-1] = ']';
-        return String.valueOf(temp);
+
+        if (out.endsWith(",")) {
+            out = out.substring(0, out.length() - 1);
+        }
+        return out + ")";
     }
 
     @Override
@@ -93,9 +95,11 @@ public class Function_Call implements JottTree {
         for(JottTree node: param){
             out = out + node.convertToJava()+",";
         }
-        char[] temp = out.toCharArray();
-        temp[temp.length-1] = ')';
-        return String.valueOf(temp);
+
+        if (out.endsWith(",")) {
+            out = out.substring(0, out.length() - 1);
+        }
+        return out + ")";
     }
 
     @Override
@@ -104,9 +108,11 @@ public class Function_Call implements JottTree {
         for(JottTree node: param){
             out = out + node.convertToC()+",";
         }
-        char[] temp = out.toCharArray();
-        temp[temp.length-1] = ')';
-        return String.valueOf(temp);
+
+        if (out.endsWith(",")) {
+            out = out.substring(0, out.length() - 1);
+        }
+        return out + ")";
     }
 
     @Override
@@ -115,9 +121,11 @@ public class Function_Call implements JottTree {
         for(JottTree node: param){
             out = out + node.convertToPython()+",";
         }
-        char[] temp = out.toCharArray();
-        temp[temp.length-1] = ')';
-        return String.valueOf(temp);
+
+        if (out.endsWith(",")) {
+            out = out.substring(0, out.length() - 1);
+        }
+        return out + ")";
     }
 
     @Override
