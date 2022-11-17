@@ -37,17 +37,32 @@ public class Body_Stmt implements JottTree {
 
     @Override
     public String convertToJava() {
-        return null;
+        if(this.if_Stmt !=null){
+            return this.if_Stmt.convertToJava();
+        }else if(this.while_Loop != null){
+            return this.while_Loop.convertToJava();
+        }
+        else return this.stmt.convertToJava();
     }
 
     @Override
     public String convertToC() {
-        return null;
+        if(this.if_Stmt !=null){
+            return this.if_Stmt.convertToC();
+        }else if(this.while_Loop != null){
+            return this.while_Loop.convertToC();
+        }
+        else return this.stmt.convertToC();
     }
 
     @Override
     public String convertToPython() {
-        return null;
+        if(this.if_Stmt !=null){
+            return this.if_Stmt.convertToPyhon();
+        }else if(this.while_Loop != null){
+            return this.while_Loop.convertToPython();
+        }
+        else return this.stmt.convertToPython();
     }
 
     @Override
