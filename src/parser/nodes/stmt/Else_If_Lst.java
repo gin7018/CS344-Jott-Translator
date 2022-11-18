@@ -6,6 +6,7 @@ import parser.nodes.expr.Expr;
 import parser.nodes.function.Function_Def;
 import parser.nodes.primitive.Constant;
 import parser.nodes.primitive.PType;
+import utils.StringUtility;
 import utils.Token;
 import utils.TokenType;
 
@@ -79,11 +80,11 @@ public class Else_If_Lst implements JottTree {
             return "";
         }
 
-        return String.format("""
+        return StringUtility.removeBlankLines(String.format("""
                 elif %s:
                 %s
                 %s
-                """, expr.convertToPython(), body.convertToPython().indent(4), trailingElseIf.convertToPython());
+                """, expr.convertToPython(), body.convertToPython().indent(4), trailingElseIf.convertToPython()));
     }
 
     @Override

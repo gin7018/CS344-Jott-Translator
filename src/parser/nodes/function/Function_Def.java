@@ -7,6 +7,7 @@ import parser.nodes.JottTree;
 import parser.nodes.primitive.Id;
 import parser.nodes.primitive.PType;
 import parser.nodes.stmt.Body;
+import utils.StringUtility;
 import utils.Token;
 import utils.TokenType;
 
@@ -90,8 +91,8 @@ public class  Function_Def implements JottTree{
 
     @Override
     public String convertToPython() {
-        return id.convertToPython() + "(" + fdParams.convertToPython() + "):\n" +
-                body.convertToPython().indent(4) + "\n";
+        return StringUtility.removeBlankLines(id.convertToPython() + "(" + fdParams.convertToPython() + "):\n" +
+                body.convertToPython().indent(4)) + "\n";
     }
 
     @Override
