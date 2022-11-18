@@ -35,8 +35,7 @@ public class Program implements JottTree {
 
     @Override
     public String convertToJava() {
-        return "import java.util.Scanner;"
-        +functionList.convertToJava();
+        return "import java.util.Scanner;\n" + functionList.convertToJava();
     }
 
     public String convertToJava(String path){
@@ -44,22 +43,22 @@ public class Program implements JottTree {
         "public Class{ "+path+
         "public static void print(Object o){ \n System.out.println(o);"+
         "\n}\npublic static String concat(String s1,String s2){"+
-        "\nreturn s1 +s2;\n}"+
+        "\nreturn s1 +s2;\n}\n"+
         "public static String input(String msg,int buffer){"+
         "System.out.println(msg);\nScanner reader = new Scanner(System.in);"+
         "\nString out = reader.nextLine();\nreader.close();\nreturn out;\n}"+
-        "public static int length(String string){\nreturn string.length();\n}"+
+        "public static int length(String string){\nreturn string.length();\n}\n"+
         functionList.convertToJava()+"\n}";
     }
 
     @Override
     public String convertToC() {
-        return null;
+        return functionList.convertToC();
     }
 
     @Override
     public String convertToPython() {
-        return null;
+        return functionList.convertToPython();
     }
 
     @Override

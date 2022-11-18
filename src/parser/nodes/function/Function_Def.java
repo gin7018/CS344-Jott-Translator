@@ -60,8 +60,8 @@ public class  Function_Def implements JottTree{
     public String convertToJott() {
         return id.convertToJott() +
                 "[" + fdParams.convertToJott() + "]:" +
-                functionReturn.convertToJott() + "{" +
-                body.convertToJott() + "}";
+                functionReturn.convertToJott() + "{\n" +
+                body.convertToJott() + "\n}";
     }
 
     @Override
@@ -73,7 +73,7 @@ public class  Function_Def implements JottTree{
 
         return "public " + returnString + " " +
                 id.convertToJava() + "(" + fdParams.convertToJava() + ") {\n" +
-                body.convertToJava() + "}\n";
+                body.convertToJava() + "\n}\n";
     }
 
     @Override
@@ -85,7 +85,7 @@ public class  Function_Def implements JottTree{
 
         return returnString + " " +
                 id.convertToC() + "(" + fdParams.convertToC() + ") {\n" +
-                body.convertToC() + "}\n";
+                body.convertToC() + "\n}\n";
     }
 
     @Override

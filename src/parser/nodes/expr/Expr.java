@@ -77,27 +77,27 @@ public class Expr implements JottTree {
     public String convertToJava() {
         
         if (isTail) {
-            return lnode.convertToJott();
+            return lnode.convertToJava();
         } else {
-            return lnode.convertToJott() + operator.getToken() + rnode.convertToJott();
+            return lnode.convertToJava() + operator.getToken() + rnode.convertToJava();
         }
     }
 
     @Override
     public String convertToC() {
         if (isTail) {
-            return lnode.convertToJott();
+            return lnode.convertToC();
         } else {
-            return lnode.convertToJott() + operator.getToken() + rnode.convertToJott();
+            return lnode.convertToC() + operator.getToken() + rnode.convertToC();
         }
     }
 
     @Override
     public String convertToPython() {
         if (isTail) {
-            return lnode.convertToJott();
+            return lnode.convertToPython();
         } else {
-            return lnode.convertToJott() + operator.getToken() + rnode.convertToJott();
+            return lnode.convertToPython() + operator.getToken() + rnode.convertToPython();
         }
     }
 

@@ -59,19 +59,19 @@ public class Constant implements JottTree {
     @Override
     public String convertToJava() {
         // TODO Auto-generated method stub
-        return null;
+        return getContents();
     }
 
     @Override
     public String convertToC() {
         // TODO Auto-generated method stub
-        return null;
+        return getContents();
     }
 
     @Override
     public String convertToPython() {
         // TODO Auto-generated method stub
-        return null;
+        return getContents();
     }
 
     @Override

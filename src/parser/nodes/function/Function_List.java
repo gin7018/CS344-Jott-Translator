@@ -37,7 +37,7 @@ public class Function_List implements JottTree {
     public String convertToJott() {
         StringBuilder result = new StringBuilder();
         for (Function_Def fDef: functionDefs) {
-            result.append(fDef.convertToJott());
+            result.append(fDef.convertToJott()).append("\n");
         }
         return result.toString();
     }
@@ -71,8 +71,6 @@ public class Function_List implements JottTree {
 
     @Override
     public void validateTree(SymbolTable table, Function_Def unused) {
-//        System.out.println("Func list checking funfs: " + functionDefs);
-//        new RuntimeException().printStackTrace();
         if (tableOfFunctions.lookup("main") == null) {
             throw new SemanticException("main method required", null);
         }

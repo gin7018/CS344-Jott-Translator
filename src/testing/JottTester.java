@@ -7,7 +7,7 @@ import utils.Token;
 
 import java.util.ArrayList;
 
-public class JottValidatorTester {
+public class JottTester {
 
     static ArrayList<TestCase> testCases;
 
@@ -46,23 +46,40 @@ public class JottValidatorTester {
         testCases.add(new TestCase("using while keyword as an id (error)", "whileKeyword.jott", true));
     }
 
-    private static boolean testValidator(TestCase tc) {
+    private static boolean testJott(TestCase tc) {
         ArrayList<Token> tokens = JottTokenizer.tokenize("phase3TestCases/" + tc.fileName);
         assert tokens != null;
         Program parseTree = JottParser.parse(tokens);
         if (parseTree == null) {
             return false;
         }
-
-        return parseTree.validateTree();
+        boolean isValidTree = parseTree.validateTree();
+        if (isValidTree) {
+            System.out.println("+++++++++++++++++\n");
+            System.out.println("Original Jott\n");
+            System.out.println(parseTree.convertToJott());
+            System.out.println("==========");
+            System.out.println("To Java\n");
+            System.out.println(parseTree.convertToJava());
+            System.out.println("==========");
+            System.out.println("To Python\n");
+            System.out.println(parseTree.convertToPython());
+            System.out.println("==========");
+            System.out.println("To C");
+            System.out.println(parseTree.convertToC());
+            System.out.println();
+            return true;
+        }
+        return false;
     }
 
     public static void main(String[] args) {
         createTestCases();
 
         for (TestCase tc: testCases) {
+            if (tc.error) continue;
             System.out.println(tc.testName);
-            var test = testValidator(tc);
+            var test = testJott(tc);
             if (!tc.error && test) {
                 System.out.println("PASSED");
             }

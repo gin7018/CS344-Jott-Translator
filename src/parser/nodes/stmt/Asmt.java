@@ -1,7 +1,6 @@
 package parser.nodes.stmt;
 
 import parser.Symbol;
-
 import parser.SymbolTable;
 import parser.exceptions.SemanticException;
 import parser.exceptions.SyntaxException;
@@ -14,7 +13,6 @@ import utils.Token;
 import utils.TokenType;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 public class Asmt implements JottTree {
     private Token keyword;
@@ -74,7 +72,7 @@ public class Asmt implements JottTree {
         if (keyword != null) {
             out += keyword.getToken() + " ";
         }
-        out += id.convertToJott() + "=" + expr.convertToJott() + ";";
+        out += id.convertToJott() + "=" + expr.convertToJott();
         return out;
     }
 
@@ -84,7 +82,7 @@ public class Asmt implements JottTree {
         if (keyword != null) {
             out += keyword.getToken() + " ";
         }
-        out += id.convertToJott() + "=" + expr.convertToJott() + ";";
+        out += id.convertToJava() + "=" + expr.convertToJava();
         return out;
     }
 
@@ -94,17 +92,17 @@ public class Asmt implements JottTree {
         if (keyword != null) {
             out += keyword.getToken() + " ";
         }
-        out += id.convertToJott() + "=" + expr.convertToJott() + ";";
+        out += id.convertToC() + "=" + expr.convertToC();
         return out;
     }
 
     @Override
     public String convertToPython() {
         String out = "\n";
-        if (keyword != null) {
-            out += keyword.getToken() + " ";
-        }
-        out += id.convertToJott() + "=" + expr.convertToJott();
+//        if (keyword != null) {
+//            out += keyword.getToken() + " ";
+//        } python does not have type declarations!
+        out += id.convertToPython() + "=" + expr.convertToPython();
         return out;
     }
 
