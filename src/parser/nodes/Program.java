@@ -54,9 +54,12 @@ public class Program implements JottTree {
 
     @Override
     public String convertToC() {
-        String includes = "#include <stdio.h>\n" +
-                "#include <string.h>\n" +
-                "#include <stdlib.h>\n\n";
+        String includes = """
+                #include <stdio.h>
+                #include <string.h>
+                #include <stdlib.h>
+                #include "Clibrary.c"
+                """;
         return includes + functionList.convertToC();
     }
 
@@ -79,7 +82,6 @@ public class Program implements JottTree {
         try {
             validateTree(null, null);
         } catch (SemanticException e) {
-//            e.printStackTrace();
             e.report();
             return false;
         }
