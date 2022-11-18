@@ -58,7 +58,7 @@ public class While_Loop implements JottTree{
 
     @Override
     public String convertToPython() {
-        return StringUtility.removeBlankLines(String.format("while %s:\n%s", expr.convertToPython(), body.convertToPython().indent(4)));
+        return StringUtility.removeBlankLines(String.format("while %s:\n%s", expr.convertToPython(), body.convertToPython().indent(4))) + "\n";
     }
 
     @Override
