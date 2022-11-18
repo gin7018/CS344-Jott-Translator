@@ -13,7 +13,11 @@
    IMPORTANT: We added our own enum to TokenType The enum EOF to help with error handling if we unexpecditly reach the end of tokens
 3. Utils:
    This directory has the Token and TokenType classes used by the Jott tokenizer.
+   It also contains libraries responsible for translating Jott built in functions
+   to their respective languages
 4. Testing:
    Contains the JottTokenizerTestCases and their tester.
    Contains the JottParserTester (the files are at the root level).
+   Contains the JottValidatorTester
+   Contains the JottTester which prints valid jott code in all four languages
    
