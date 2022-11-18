@@ -35,7 +35,7 @@ public class Program implements JottTree {
 
     @Override
     public String convertToJava() {
-        return "import java.util.Scanner;\n" + functionList.convertToJava();
+        return "import java.util.Scanner;\nimport JavaLibrary\n" + functionList.convertToJava();
     }
 
     public String convertToJava(String path){
@@ -58,14 +58,14 @@ public class Program implements JottTree {
                 #include <stdio.h>
                 #include <string.h>
                 #include <stdlib.h>
-                #include "Clibrary.c"
+                #include "CLibrary.c"
                 """;
         return includes + functionList.convertToC();
     }
 
     @Override
     public String convertToPython() {
-        return functionList.convertToPython();
+        return "from utils.PythonLibrary import *\n" + functionList.convertToPython();
     }
 
     @Override

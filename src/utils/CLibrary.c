@@ -16,3 +16,7 @@ char* input(char* msg, int buffer){
     fgets(buff, buffer, stdin);
     return buff;
 }
+
+int length(char *str) {
+    return strlen(str);
+}

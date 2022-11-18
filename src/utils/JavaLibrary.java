@@ -2,7 +2,7 @@ package utils;
 
 import java.util.Scanner;
 
-public class javaConvertLibraires {
+public class JavaLibrary {
 public static void print(Object o){
     System.out.println(o);
 }    

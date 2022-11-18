@@ -12,6 +12,7 @@ import utils.Token;
 import utils.TokenType;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static parser.nodes.NodeUtility.popAndExpect;
 
@@ -21,6 +22,7 @@ public class  Function_Def implements JottTree{
     private Function_Return functionReturn;
     private Body body;
     private final SymbolTable table;
+    private final List<String> builtInFunc = List.of("print", "input", "concat", "length");
 
     private Function_Def(SymbolTable globalSymbolTable) {
         table = new SymbolTable(globalSymbolTable);
@@ -100,6 +102,10 @@ public class  Function_Def implements JottTree{
 
     @Override
     public void validateTree(SymbolTable globalTable, Function_Def function) {
+        if (builtInFunc.contains(id.getName())) {
+            throw new SemanticException("Function name reserved", null);
+        }
+
         // check if there is a function with a similar name
         if (globalTable.lookup(id.getName()) == null) {
             throw new SemanticException("Function not defined", null);
@@ -112,7 +118,6 @@ public class  Function_Def implements JottTree{
         }
 
         // check if the body is valid
-        //table.insert(new Symbol(functionReturn.toString(), "", ""));
         body.validateTree(table, this);
     }
 
