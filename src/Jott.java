@@ -30,7 +30,7 @@ public class Jott {
                     Files.writeString(path, result);
                 }
                 case "Java" -> {
-                    String result = parseTree.convertToJava("path");
+                    String result = parseTree.convertToJava(path.getFileName().toString());
                     Files.writeString(path, result);
                 }
                 case "C" -> {

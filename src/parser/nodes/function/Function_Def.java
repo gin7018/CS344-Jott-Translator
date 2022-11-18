@@ -68,12 +68,15 @@ public class  Function_Def implements JottTree{
     @Override
     public String convertToJava() {
         var returnString = functionReturn.convertToJava();
+        String mainArgs ="";
         if (id.getName().equals("main")) {
-            returnString = "static void";
+            returnString = " void";
+            mainArgs ="String[] args";
+            
         }
 
-        return "public " + returnString + " " +
-                id.convertToJava() + "(" + fdParams.convertToJava() + ") {\n" +
+        return "public static " + returnString + " " +
+                id.convertToJava() + "(" +mainArgs+  fdParams.convertToJava() + ") {\n" +
                 body.convertToJava() + "\n}\n";
     }
 

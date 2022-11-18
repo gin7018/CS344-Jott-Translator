@@ -39,14 +39,15 @@ public class Program implements JottTree {
     }
 
     public String convertToJava(String path){
-        return "import java.util.Scanner;"+
-        "public Class{ "+path+
+        String result = path.substring(0, path.indexOf("."));
+        return "import java.util.Scanner;\n"+
+        "public class "+result + "{\n"+ 
         "public static void print(Object o){ \n System.out.println(o);"+
         "\n}\npublic static String concat(String s1,String s2){"+
         "\nreturn s1 +s2;\n}\n"+
         "public static String input(String msg,int buffer){"+
         "System.out.println(msg);\nScanner reader = new Scanner(System.in);"+
-        "\nString out = reader.nextLine();\nreader.close();\nreturn out;\n}"+
+        "\nString out = reader.nextLine();\nreader.close();\nreturn out;\n}\n"+
         "public static int length(String string){\nreturn string.length();\n}\n"+
         functionList.convertToJava()+"\n}";
     }
